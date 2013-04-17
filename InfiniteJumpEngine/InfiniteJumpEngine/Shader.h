@@ -59,35 +59,38 @@ public:
 		glLinkProgram(program);
 	}
 
-
 	/**
-	* @return GLint
-	* @param  file
-	* @param  type
+	* @param source file
+	* @param type of shader
 	*/
-	GLint setShaderSource (string file, GLenum type )
-	{
-		//read source code
-		ifstream fin(file.c_str());
-		if (fin.fail()) {
-			cerr << "Could not open " << file << " for reading" << endl;
-			return -1;
-		}
-		fin.seekg(0, ios::end);
-		int count  = fin.tellg();
-		char *data = NULL;
-		if (count > 0) {
-			fin.seekg(ios::beg);
-			data = new char[count+1];
-			fin.read(data,count);
-			data[count] = '\0';
-		}
-		fin.close();
+	GLint setShaderSource(string fn, GLenum type) {
 
+		FILE *fp;
+		char *content = NULL;
+
+		int count=0;
+
+		if (!fn.empty( )) {
+			fp = fopen(fn.data( ),"rt");
+
+			if (fp != NULL) {
+
+				fseek(fp, 0, SEEK_END);
+				count = ftell(fp);
+				rewind(fp);
+
+				if (count > 0) {
+					content = (char *)malloc(sizeof(char) * (count+1));
+					count = fread(content,sizeof(char),count,fp);
+					content[count] = '\0';
+				}
+				fclose(fp);
+			}
+		}
 		//create the shader
 		GLint s = glCreateShader(type);
-		glShaderSource(s, 1, const_cast<const char **>(&data), NULL);
-		delete [] data;
+		glShaderSource(s, 1, const_cast<const char **>(&content), NULL);
+		delete [] content;
 		return s;
 	}
 
