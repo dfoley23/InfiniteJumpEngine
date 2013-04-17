@@ -47,24 +47,29 @@ public:
 
 	void loadLevel(string file )
 	{
-		//read source code
-		ifstream fin(file.c_str());
-		if (fin.fail()) {
-			cerr << "Could not open " << file << " for reading" << endl;
-		} else {
-			fin.seekg(0, ios::end);
-			int count  = fin.tellg();
-			char *data = NULL;
-			if (count > 0) {
-				fin.seekg(ios::beg);
-				data = new char[count+1];
-				fin.read(data,count);
-				data[count] = '\0';
-			}
-			fin.close();
+		FILE *fp;
+		char *content = NULL;
 
-			delete [] data;
+		int count=0;
+
+		if (!file.empty( )) {
+			fp = fopen(file.data( ),"rt");
+
+			if (fp != NULL) {
+
+				fseek(fp, 0, SEEK_END);
+				count = ftell(fp);
+				rewind(fp);
+
+				if (count > 0) {
+					content = (char *)malloc(sizeof(char) * (count+1));
+					count = fread(content,sizeof(char),count,fp);
+					content[count] = '\0';
+				}
+				fclose(fp);
+			}
 		}
+		delete [] content;
 	}
 
 	void loadLevel ( int i ) {
