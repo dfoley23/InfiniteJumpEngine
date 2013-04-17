@@ -3,7 +3,6 @@
 #define SHADER_H
 #include <GL/glew.h> //must include this before gl.h
 #include <GL/freeglut.h>
-#include <GL/gl.h>
 
 #include <iostream>
 #include <vector>

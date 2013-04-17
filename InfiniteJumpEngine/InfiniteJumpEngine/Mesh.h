@@ -4,7 +4,6 @@
 
 #include <GL/glew.h> //must include this before gl.h
 #include <GL/freeglut.h>
-#include <GL/gl.h>
 
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
