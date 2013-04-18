@@ -34,6 +34,7 @@
 *.manifest
 *.lastbuildstate
 *.rc
+*.res
 ipch/
 obj/
 [Bb]in
