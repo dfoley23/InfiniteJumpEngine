@@ -1,6 +1,8 @@
 
 #ifndef SHADER_H
 #define SHADER_H
+
+#define GLEW_STATIC
 #include <GL/glew.h> //must include this before gl.h
 #include <GL/freeglut.h>
 

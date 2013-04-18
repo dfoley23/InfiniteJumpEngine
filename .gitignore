@@ -26,11 +26,17 @@
 *.sdf
 *.opensdf
 *.unsuccessfulbuild
+*.pdb
+*.exp
+*.tlog
+*.obj
+*.idb
+*.manifest
+*.lastbuildstate
+*.rc
 ipch/
 obj/
 [Bb]in
-[Dd]ebug*/
-[Rr]elease*/
 Ankh.NoLoad
 
 #MonoDevelop
