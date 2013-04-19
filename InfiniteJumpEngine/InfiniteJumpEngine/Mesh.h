@@ -15,15 +15,16 @@
 #include <vector>
 #include <string>
 
+#include "EntityComponent.h"
 #include "MeshBatch.h"
+
 using namespace std;
 /**
   * class Mesh
   * 
   */
 
-class Mesh
-{
+class Mesh: public EntityComponent {
 public:
 
     // Constructors/Destructors

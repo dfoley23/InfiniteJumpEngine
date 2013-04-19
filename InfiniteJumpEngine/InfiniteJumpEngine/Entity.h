@@ -10,13 +10,17 @@
 
 #include <string>
 
+#include "EntityComponent.h"
 #include "Mesh.h"
+
 using namespace std;
 
 /**
   * class Entity
   * 
   */
+typedef vector<EntityComponent*> componentVector;
+typedef componentVector::iterator componentIter;
 
 class Entity
 {
@@ -24,99 +28,27 @@ public:
 
     // Constructors/Destructors
     //  
-
-
     /**
      * Empty Constructor
      */
     Entity ( );
-	Entity ( string name ) { mesh = new Mesh( ); }
     /**
      * Empty Destructor
      */
     virtual ~Entity ( );
 
-    // Static Public attributes
-    //  
-
-    // Public attributes
-    //  
-
-
-    // Public attribute accessor methods
-    //  
-
-
-    // Public attribute accessor methods
-    //  
-
-
-protected:
-
-    // Static Protected attributes
-    //  
-
-    // Protected attributes
-    //  
-
-public:
-
-
-    // Protected attribute accessor methods
-    //  
-
-protected:
-
-public:
-
-
-    // Protected attribute accessor methods
-    //  
-
-protected:
-
-
-private:
-
-    // Static Private attributes
-    //  
-
-    // Private attributes
-    //  
-
-    glm::vec3 center;
-public:
-	
-    Mesh* mesh;
-
-    // Private attribute accessor methods
-    //  
-
-private:
-
-public:
-
-	void draw( MeshBatch * batch ) {
-		mesh->draw( batch );
-	}
-
+	void update( float dT );
+	void draw( MeshBatch * batch );
     /**
      * Set the value of mesh
      * @param new_var the new value of mesh
      */
-    void setMesh ( Mesh * new_var )     {
-            mesh = new_var;
+    void addComponent ( EntityComponent *new_var )     {
+		components.push_back(new_var);
+		new_var->setParent(this);
     }
 
-    /**
-     * Get the value of mesh
-     * @return the value of mesh
-     */
-    Mesh * getMesh ( )     {
-        return mesh;
-    }
-
-    /**
+	/**
      * Set the value of center
      * @param new_var the new value of center
      */
@@ -131,10 +63,20 @@ public:
     glm::vec3 getCenter ( )     {
         return center;
     }
-private:
+protected:
 
+	
+    // Static Protected attributes
+    //  
 
-    void initAttributes ( ) ;
+	// Protected methods
+	//
+	void initAttributes ( ) ;
+
+    // Protected attributes
+    //  
+	componentVector components;
+    glm::vec3 center;
 
 };
 

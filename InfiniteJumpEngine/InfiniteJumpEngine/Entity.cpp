@@ -7,12 +7,24 @@ Entity::Entity ( ) {
 initAttributes();
 }
 
-Entity::~Entity ( ) { }
+Entity::~Entity ( ) { 
+
+}
 
 //  
 // Methods
 //  
+void Entity::update (float dT){
+	for (componentIter c = components.begin(); c != components.end(); c++){
+		(*c)->update(dT);
+	}
+}
 
+void Entity::draw (MeshBatch *batch){
+	for (componentIter c = components.begin(); c != components.end(); c++){
+		(*c)->draw(batch);
+	}
+}
 
 // Accessor methods
 //  

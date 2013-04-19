@@ -81,27 +81,30 @@ void buildTriangle() {
 
 	//initiallize vertex and normal arrays
 	//this is where you might want to read in your model
-	Entity * entity = new Entity( "first" );
-	entity->mesh->verts.push_back(-1);
-	entity->mesh->verts.push_back(-1);
-	entity->mesh->verts.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(1);
+	Entity * entity = new Entity( );
+	Mesh * mesh = new Mesh();
+	mesh->verts.push_back(-1);
+	mesh->verts.push_back(-1);
+	mesh->verts.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(1);
 
-	entity->mesh->verts.push_back(1);
-	entity->mesh->verts.push_back(-1);
-	entity->mesh->verts.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(1);
+	mesh->verts.push_back(1);
+	mesh->verts.push_back(-1);
+	mesh->verts.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(1);
 
-	entity->mesh->verts.push_back(0);
-	entity->mesh->verts.push_back(1);
-	entity->mesh->verts.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(0);
-	entity->mesh->norms.push_back(1);
+	mesh->verts.push_back(0);
+	mesh->verts.push_back(1);
+	mesh->verts.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(0);
+	mesh->norms.push_back(1);
+	
+	entity->addComponent(mesh);
 
 	level->entities.push_back(entity);
 
