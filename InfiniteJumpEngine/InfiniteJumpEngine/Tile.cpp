@@ -4,19 +4,16 @@
 //  
 
 Tile::Tile ( ) {
-initAttributes();
+	initAttributes();
 }
 
-Tile::~Tile ( ) { }
+Tile::~Tile ( ) {
+}
 
-//  
-// Methods
-//  
-
-
-// Accessor methods
-//  
-
+vector<float>* getVerts(){
+	vector<float> *verts = new vector<float>();
+	return verts;
+}
 
 // Other methods
 //  

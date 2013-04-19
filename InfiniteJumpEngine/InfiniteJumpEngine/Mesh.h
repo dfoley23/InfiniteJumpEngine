@@ -93,6 +93,8 @@ public:
 private:
 
 public:
+	static const int VERT_SIZE;
+	static const int UV_SIZE;
 
     vector<float> verts;
     vector<float> norms;

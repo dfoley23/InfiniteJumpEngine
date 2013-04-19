@@ -93,6 +93,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
@@ -100,6 +101,8 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshBatch.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
