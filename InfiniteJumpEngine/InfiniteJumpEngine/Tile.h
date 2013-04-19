@@ -31,6 +31,7 @@ public:
 
     // Static Public attributes
     //  
+	static const int GROUND_VERTS;
 
     // Public attributes
     //  
@@ -52,6 +53,7 @@ protected:
 
     // Protected attributes
     //  
+	float **groundVerts;
 
 public:
 
