@@ -4,8 +4,8 @@
 
 #include <string>
 #include <vector>
-
-#include "Edge.h"
+#include "glIncludes.h"
+#include "TileSet.h"
 using namespace std;
 /**
   * class Tile
@@ -15,107 +15,23 @@ using namespace std;
 class Tile
 {
 public:	
+	friend class TileSet;
     // Constructors/Destructors
     //  
-
-
-    /**
-     * Empty Constructor
-     */
-    Tile ( );
-
-    /**
-     * Empty Destructor
-     */
-    virtual ~Tile ( );
-
-    // Static Public attributes
-    //  
-	static const int GROUND_VERTS;
-
-    // Public attributes
-    //  
-
-
-    // Public attribute accessor methods
-    //  
-
-
-    // Public attribute accessor methods
-    //  
-	vector<float> getVerts();
-
+	virtual ~Tile ( );
+	inline bool hasNeighbor(int e){return neighbors[e] != NO_NEIGHBOR;}
+	int findNeighbor(int id);
+	int getNeighbor(int e);
+	static const int NO_NEIGHBOR = -1;
+	Mesh *getMesh();
+	Mesh *generateMesh();
+	void deleteMesh();
 protected:
-
-    // Static Protected attributes
-    //  
-	const vector<Tile*> tiles;
-
-    // Protected attributes
-    //  
-	float **groundVerts;
-
-public:
-
-
-    // Protected attribute accessor methods
-    //  
-
-protected:
-
-public:
-
-
-    // Protected attribute accessor methods
-    //  
-
-protected:
-
-
-private:
-
-    // Static Private attributes
-    //  
-
-    // Private attributes
-    //  
-
-    vector<Edge> edges;
-public:
-
-
-    // Private attribute accessor methods
-    //  
-
-private:
-
-public:
-
-
-    // Private attribute accessor methods
-    //  
-
-
-    /**
-     * Set the value of edges
-     * @param new_var the new value of edges
-     */
-    void setEdges ( vector<Edge> new_var )     {
-            edges = new_var;
-    }
-
-    /**
-     * Get the value of edges
-     * @return the value of edges
-     */
-    vector<Edge> getEdges ( ) {
-        return edges;
-    }
-private:
-
-
-    void initAttributes ( ) ;
-
+	Tile ( int, vector<glm::vec3>, vector<int>);
+	unsigned int id;
+	vector<glm::vec3>verts;
+	vector<int> neighbors;
+	Mesh * mesh;
 };
 
 #endif // TILE_H

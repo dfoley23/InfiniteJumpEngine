@@ -127,7 +127,6 @@ public:
     {
 		modelView = glm::scale( modelView, glm::vec3( x, y, z ) );
     }
-
 private:
 
 public:

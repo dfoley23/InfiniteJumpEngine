@@ -1,33 +1,54 @@
 #include "Tile.h"
 #include "Mesh.h"
 
-// Constants
-const int Tile::GROUND_VERTS = 4;
-
-// Constructors/Destructors
-//  
-
-Tile::Tile ( ) {
-	initAttributes();
-	//Initialize array of ground vertices
-
-	groundVerts = new float*[GROUND_VERTS];
-	for (int i = 0; i < GROUND_VERTS; ++i)
-		groundVerts[i] = new float[Mesh::VERT_SIZE];
+Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges ) {
+	id = nId;
+	mesh = NULL;
+	for (int v = 0; v < nVerts.size(); v++){
+		verts[v] = nVerts[v];
+		if (v < nEdges.size()){
+			neighbors[v] = nEdges[v];
+		} else {
+			neighbors[v] = NO_NEIGHBOR;
+		}
+	}
 }
 
 Tile::~Tile ( ) {
+	deleteMesh();
 }
 
-vector<float>* getVerts(){
-	vector<float> *verts = new vector<float>();
-
-	return verts;
+int Tile::findNeighbor(int nid){
+	for (int e = 0; e < neighbors.size(); e++){
+		if (neighbors[e] == nid)
+			return e;
+	}
+	return NO_NEIGHBOR;
 }
 
-// Other methods
-//  
-
-void Tile::initAttributes ( ) {
+int Tile::getNeighbor(int e){
+	if (e > 0 && e < neighbors.size())
+		return neighbors[e];
+	return NO_NEIGHBOR;
 }
 
+void Tile::deleteMesh(){
+	if (mesh){
+		delete mesh; mesh = NULL;
+	}
+}
+
+Mesh* Tile::getMesh(){
+	if (!mesh){ mesh = generateMesh();}
+	return mesh;
+}
+
+Mesh* Tile::generateMesh(){
+	Mesh *out = new Mesh();
+	glm::vec3 vert;
+	for (int v = 0; v < verts.size(); v++){
+		vert = verts[v];
+		//out.addVert(vert.x, vert.y, vert.z);
+	}
+	return out;
+}

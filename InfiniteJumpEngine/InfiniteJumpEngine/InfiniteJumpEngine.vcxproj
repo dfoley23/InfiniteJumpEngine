@@ -85,23 +85,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Edge.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="glew.c" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ResManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Edge.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityComponent.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="glIncludes.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ResManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
