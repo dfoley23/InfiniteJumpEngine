@@ -12,6 +12,7 @@
 
 #include "EntityComponent.h"
 #include "Mesh.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -38,7 +39,9 @@ public:
     virtual ~Entity ( );
 
 	void update( float dT );
-	void draw( MeshBatch * batch );
+	void draw( Camera * camera );
+	void remove( );
+
     /**
      * Set the value of mesh
      * @param new_var the new value of mesh

@@ -16,7 +16,7 @@
 #include <fstream>
 
 #include "Shader.h"
-#include "MeshBatch.h"
+#include "Mesh.h"
 #include "Level.h"
 using namespace std;
 
@@ -27,7 +27,7 @@ Level * level;
 void reshape(int w, int h) {
 	WIN_WIDTH = w;
 	WIN_HEIGHT = h;
-	level->meshBatch->projection = glm::perspective(
+	level->camera->proj = glm::perspective(
 		glm::float_t(45),
 		glm::float_t(WIN_WIDTH) / glm::float_t(WIN_HEIGHT),
 		glm::float_t(0.1),
@@ -79,10 +79,17 @@ void setupGLUT() {
 void buildTriangle() {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+	level->camera->cam = glm::lookAt(glm::vec3(0,0,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+	level->camera->proj = glm::perspective(
+		glm::float_t(45),
+		glm::float_t(WIN_WIDTH) / glm::float_t(WIN_HEIGHT),
+		glm::float_t(0.1),
+		glm::float_t(1000.0)
+		);
 	//initiallize vertex and normal arrays
 	//this is where you might want to read in your model
 	Entity * entity = new Entity( );
-	Mesh * mesh = new Mesh();
+	Mesh * mesh = new Mesh( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
 	mesh->verts.push_back(-1);
 	mesh->verts.push_back(-1);
 	mesh->verts.push_back(0);
@@ -107,27 +114,22 @@ void buildTriangle() {
 	entity->addComponent(mesh);
 
 	level->entities.push_back(entity);
-
-	level->meshBatch->camera = glm::lookAt(glm::vec3(0,0,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
-
-	level->meshBatch->projection = glm::perspective(
-		glm::float_t(45),
-		glm::float_t(WIN_WIDTH) / glm::float_t(WIN_HEIGHT),
-		glm::float_t(0.1),
-		glm::float_t(1000.0)
-		);
 }
 
 void initLevel() {
 	if ( level ) { 
-		delete level->meshBatch->shader;
-		delete level->meshBatch;
+		level->remove( );
 		delete level;
 	}
 	level = new Level( 0 );
 }
 
 int main(int argc, char **argv) {
+	if ( argc > 1 ) {
+
+	} else {
+
+	}
 	glutInit(&argc, argv);
 	setupGLUT();
 
@@ -140,9 +142,9 @@ int main(int argc, char **argv) {
 
 	glutMainLoop();
 
-	if (level->meshBatch->shader) delete level->meshBatch->shader;
-	delete level->meshBatch;
-	delete level;
+	if (level) 
+		level->remove( );
+		delete level;
 
 	return 0;
 }

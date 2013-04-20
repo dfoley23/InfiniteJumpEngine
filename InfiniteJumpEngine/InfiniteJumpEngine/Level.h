@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Entity.h"
+#include "Camera.h"
 using namespace std;
 /**
 * class Level
@@ -31,18 +32,22 @@ public:
 	*/
 	virtual ~Level ( );
 
-	Level ( string filename ) { loadLevel( filename ); };
-	Level ( int i ) { loadLevel( i ); };
-public:
-	
+	Level ( string filename ) { 
+		loadLevel( filename ); 
+		camera = new Camera( ); 
+	};
+	Level ( int i ) { 
+		camera = new Camera( ); 
+		loadLevel( i ); 
+	};
+
+	Camera * camera;
 	vector<Entity*> entities;
-	MeshBatch * meshBatch;
 
 	void draw( ) {
 		for(std::vector<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
-			(*it)->draw( meshBatch );
+			(*it)->draw( camera );
 		}
-		meshBatch->draw( );
 	}
 
 	void loadLevel(string file )
@@ -73,8 +78,12 @@ public:
 	}
 
 	void loadLevel ( int i ) {
-		if ( i == 0 ) {
-			meshBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
+	}
+
+	void remove( ) {
+		for(std::vector<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) {
+			//(*it)->remove( );
+			//delete (*it)->shader;
 		}
 	}
 

@@ -16,7 +16,8 @@
 #include <string>
 
 #include "EntityComponent.h"
-#include "MeshBatch.h"
+#include "Shader.h"
+#include "Camera.h"
 
 using namespace std;
 /**
@@ -35,6 +36,8 @@ public:
      * Empty Constructor
      */
     Mesh ( );
+	
+	Mesh ( Shader * shader ) { setShader( shader ); };
 
     /**
      * Empty Destructor
@@ -49,19 +52,50 @@ public:
     }
 
 
-    /**
-     * @param  batch
-     */
-    void draw (MeshBatch * batch )
-    {
-		for(std::vector<float>::size_type i = 0; i != verts.size(); i++) {
-			batch->verts.push_back( verts.at(i) );
-		}
-		for(std::vector<float>::size_type i = 0; i != norms.size(); i++) {
-			batch->norms.push_back( norms.at(i) );
-		}
-    }
+	void draw( Camera * camera ) {
+		bindBuffers( );
+		glm::mat4 modelCam = camera->cam * modelView;
 
+		glm::mat3 normalMatrix(modelCam);
+		normalMatrix = glm::inverse(normalMatrix);
+		normalMatrix = glm::transpose(normalMatrix);
+
+		glUseProgram(shader->program);
+
+		glUniformMatrix4fv(shader->modelViewLoc, 1, GL_FALSE, glm::value_ptr(modelCam));
+		glUniformMatrix4fv(shader->projectionLoc, 1, GL_FALSE, glm::value_ptr(camera->proj));
+		glUniformMatrix3fv(shader->normalMatLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
+
+		glBindBuffer(GL_ARRAY_BUFFER, shader->vertexBuffer); 
+		glEnableVertexAttribArray(shader->vertexLoc); 
+		glVertexAttribPointer(shader->vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+		//same procedure for the normal array
+		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
+		glEnableVertexAttribArray(shader->normalLoc);
+		glVertexAttribPointer(shader->normalLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+		//draw the vertices/normals we just specified.
+		glDrawArrays(GL_TRIANGLES, 0, numVerts);
+	}
+
+	void bindBuffers( ) {
+		//Create buffers for the vertex and normal attribute arrays
+		GLuint bufs[2];
+		glGenBuffers(2, bufs);
+
+		shader->vertexBuffer = bufs[0];
+		shader->normalBuffer = bufs[1];
+
+		glBindBuffer(GL_ARRAY_BUFFER, shader->vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_STATIC_DRAW );
+
+		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
+		glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_STATIC_DRAW );
+		
+		numVerts = verts.size() / 3;
+	}
 
     /**
      * @param  x
@@ -70,6 +104,7 @@ public:
      */
     void translate (float x, float y, float z )
     {
+		modelView = glm::translate( modelView, glm::vec3( x, y, z ) );
     }
 
 
@@ -77,8 +112,9 @@ public:
      * @param  dir
      * @param  up
      */
-    void rotate (glm::vec3 dir, glm::vec3 up )
+    void rotate (float angle, glm::vec3 axis)
     {
+		modelView = glm::rotate( modelView, angle, axis );
     }
 
 
@@ -89,6 +125,7 @@ public:
      */
     void scale (float x, float y, float z )
     {
+		modelView = glm::scale( modelView, glm::vec3( x, y, z ) );
     }
 
 private:
@@ -96,15 +133,34 @@ private:
 public:
 	static const int VERT_SIZE;
 	static const int UV_SIZE;
-
-    vector<float> verts;
-    vector<float> norms;
-    size_t numVerts;
-    vector<GLuint> textureNames;
+	
+	Shader * shader;
+	vector<float> verts;
+	vector<float> norms;
     vector<float> colors;
+    vector<GLuint> textureNames;
+	size_t numVerts;
+	glm::mat4 modelView; //matrices for shaders
     //vector<GLDataObject *> uniforms;
     // Private attribute accessor methods
     //  
+
+	void setShader ( Shader * new_var )     {
+		shader = new_var;
+		shader->modelViewLoc = glGetUniformLocation(shader->program, "M");
+		shader->projectionLoc = glGetUniformLocation(shader->program, "P");
+		shader->normalMatLoc = glGetUniformLocation(shader->program, "M_n");
+
+		shader->vertexLoc = glGetAttribLocation(shader->program, "pos");
+		shader->normalLoc = glGetAttribLocation(shader->program, "norm");
+	}
+
+	void remove ( ) {
+		verts.erase( verts.begin( ), verts.end( ) );
+		norms.erase( norms.begin( ), norms.end( ) );
+		colors.erase( colors.begin( ), colors.end( ) );
+		textureNames.erase( textureNames.begin( ), textureNames.end( ) );
+	}
 
     /**
      * Set the value of verts

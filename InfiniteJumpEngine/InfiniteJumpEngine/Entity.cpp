@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Camera.h"
 
 // Constructors/Destructors
 //  
@@ -20,9 +21,9 @@ void Entity::update (float dT){
 	}
 }
 
-void Entity::draw (MeshBatch *batch){
+void Entity::draw ( Camera * camera ){
 	for (componentIter c = components.begin(); c != components.end(); c++){
-		(*c)->draw(batch);
+		(*c)->draw(camera);
 	}
 }
 
