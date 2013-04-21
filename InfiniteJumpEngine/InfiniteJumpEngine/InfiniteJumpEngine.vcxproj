@@ -98,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="constants.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="Game.h" />
