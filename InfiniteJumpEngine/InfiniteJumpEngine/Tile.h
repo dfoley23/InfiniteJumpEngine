@@ -1,23 +1,23 @@
-
 #ifndef TILE_H
 #define TILE_H
 
 #include <string>
 #include <vector>
 #include "glIncludes.h"
+#include "Mesh.h"
 #include "TileSet.h"
 using namespace std;
 /**
-  * class Tile
-  * 
-  */
+* class Tile
+*
+*/
 
 class Tile
 {
 public:	
 	friend class TileSet;
     // Constructors/Destructors
-    //  
+    //
 	virtual ~Tile ( );
 	inline bool hasNeighbor(int e){return neighbors[e] != NO_NEIGHBOR;}
 	int findNeighbor(int id);

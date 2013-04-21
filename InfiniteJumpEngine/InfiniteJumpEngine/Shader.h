@@ -49,11 +49,11 @@ public:
 
 		//Compile the source code for each shader and attach it to the program.
 		glCompileShader(vSource);
-		printLog("vertex compile log: ", vSource);
+		printLog("vertex shader: ", vSource);
 		glAttachShader(program, vSource);
 
 		glCompileShader(fSource);
-		printLog("fragment compile log: ", fSource);
+		printLog("fragment shader: ", fSource);
 		glAttachShader(program, fSource);
 
 		//link all of the attached shader objects
@@ -114,15 +114,15 @@ public:
 
 		//Compile the source code for each shader and attach it to the program.
 		glCompileShader(vSource);
-		printLog("vertex compile log: ", vSource);
+		printLog("vertex shader: ", vSource);
 		glAttachShader(program, vSource);
 
 		glCompileShader(gSource);
-		printLog("geometry compile log: ", gSource);
+		printLog("geometry shader: ", gSource);
 		glAttachShader(program, gSource);
 
 		glCompileShader(fSource);
-		printLog("fragment compile log: ", fSource);
+		printLog("fragment shader: ", fSource);
 		glAttachShader(program, fSource);
 
 		//link all of the attached shader objects
@@ -137,24 +137,20 @@ public:
 	void printLog (string label, GLint obj )
 	{       
 		int infologLength = 0;
-		int maxLength = 0;
+		const int maxLength = 1024;
 
-		if(glIsShader(obj)) {
-			glGetShaderiv(obj,GL_INFO_LOG_LENGTH,&maxLength);
-		} else {
-			glGetProgramiv(obj,GL_INFO_LOG_LENGTH,&maxLength);
-		}
+		GLint  compiled;
+		glGetShaderiv( obj, GL_COMPILE_STATUS, &compiled );
+		if ( !compiled ) {
+			std::cerr << label << " failed to compile:" << std::endl;
+			GLint  logSize;
+			glGetShaderiv( obj, GL_INFO_LOG_LENGTH, &logSize );
+			char* logMsg = new char[logSize];
+			glGetShaderInfoLog( obj, logSize, NULL, logMsg );
+			std::cerr << logMsg << std::endl;
+			delete [] logMsg;
 
-		char infoLog[128];
-
-		if (glIsShader(obj)) {
-			glGetShaderInfoLog(obj, maxLength, &infologLength, infoLog);
-		} else {
-			glGetProgramInfoLog(obj, maxLength, &infologLength, infoLog);
-		}
-
-		if (infologLength > 0) {
-			cerr << label << infoLog << endl;
+			exit( EXIT_FAILURE );
 		}
 	}
 
@@ -164,10 +160,13 @@ public:
 	GLint modelViewLoc;
 	GLint projectionLoc;
 	GLint normalMatLoc;
+	GLint lightPosLoc;
 	GLint vertexLoc;
 	GLint normalLoc;
+	GLint colorLoc;
 	GLuint vertexBuffer;
 	GLuint normalBuffer;
+	GLuint colorBuffer;
 
 	// Private attribute accessor methods
 	//  

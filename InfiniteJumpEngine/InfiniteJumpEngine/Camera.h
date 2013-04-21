@@ -17,6 +17,7 @@ public:
     virtual ~Camera ( );
 
 	glm::mat4 cam, proj;
+	glm::vec3 lightPos;
 
 	virtual void update(float dT);
 

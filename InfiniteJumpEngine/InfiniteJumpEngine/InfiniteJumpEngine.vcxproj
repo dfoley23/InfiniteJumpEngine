@@ -62,7 +62,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glui32.lib;glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,8 +89,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glew.c" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ResManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -101,7 +101,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="glIncludes.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ResManager.h" />
