@@ -12,20 +12,13 @@ TileSet::~TileSet(void)
 }
 
 void TileSet::update(float dT){
-if (!mesh){
-mesh = createMesh();
-}
-if (mesh){
-mesh->update(dT);
-}
+	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
+		(*t)->update(dT);
+	}
 }
 
 void TileSet::draw( Camera * camera ){
-if (mesh){
-mesh->draw(camera);
-}
-}
-
-Mesh* TileSet::createMesh(){
-return NULL;
+	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
+		(*t)->draw(camera);
+	}
 }

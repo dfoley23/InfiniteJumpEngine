@@ -10,4 +10,7 @@ Game::Game(void)
 
 Game::~Game(void)
 {
+	for (componentIter c = components.begin(); c != components.end(); c++){
+		delete (*c);
+	}
 }

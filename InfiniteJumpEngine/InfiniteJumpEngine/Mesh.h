@@ -15,7 +15,7 @@
 #include <vector>
 #include <string>
 
-#include "EntityComponent.h"
+#include "Component.h"
 #include "Shader.h"
 #include "Camera.h"
 
@@ -25,7 +25,7 @@ using namespace std;
 * 
 */
 
-class Mesh: public EntityComponent {
+class Mesh: public Component {
 public:
 
 	// Constructors/Destructors
