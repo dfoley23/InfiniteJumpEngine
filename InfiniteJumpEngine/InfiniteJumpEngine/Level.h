@@ -33,8 +33,8 @@ public:
 	virtual ~Level ( );
 
 	Level ( string filename ) { 
-		loadLevel( filename ); 
 		camera = new Camera( ); 
+		loadLevel( filename ); 
 	};
 	Level ( int i ) { 
 		camera = new Camera( ); 
@@ -52,29 +52,7 @@ public:
 
 	void loadLevel(string file )
 	{
-		FILE *fp;
-		char *content = NULL;
-
-		int count=0;
-
-		if (!file.empty( )) {
-			fp = fopen(file.data( ),"rt");
-
-			if (fp != NULL) {
-
-				fseek(fp, 0, SEEK_END);
-				count = ftell(fp);
-				rewind(fp);
-
-				if (count > 0) {
-					content = (char *)malloc(sizeof(char) * (count+1));
-					count = fread(content,sizeof(char),count,fp);
-					content[count] = '\0';
-				}
-				fclose(fp);
-			}
-		}
-		delete [] content;
+		
 	}
 
 	void loadLevel ( int i ) {
