@@ -35,7 +35,6 @@ public:
 	virtual ~Level ( );
 
 	Camera * camera;
-	vector<Entity*> entities;
 
 	void update(float);
 
@@ -43,10 +42,13 @@ public:
 
 	void clear( );
 
-private:
+	void addEntity( Entity * entity );
 
+private:
+	
+	vector<Entity*> entities;
 
 
 };
 
-#endif LEVEL_H
+#endif //LEVEL_H

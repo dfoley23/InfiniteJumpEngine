@@ -1,39 +1,54 @@
-main.d: ../main.cpp \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h \
- ../Shader.h ../Mesh.h ../EntityComponent.h ../Camera.h ../Level.h \
- ../Entity.h
+main.d: ../main.cpp ../glIncludes.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h \
+ ../Game.h ../ResManager.h ../Level.h ../Entity.h ../Component.h \
+ ../Drawable.h ../Updatable.h ../Camera.h ../Mesh.h ../Shader.h ../Tile.h \
+ ../TileSet.h
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h:
+../glIncludes.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h:
 
-../Shader.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h:
 
-../Mesh.h:
+../Game.h:
 
-../EntityComponent.h:
-
-../Camera.h:
+../ResManager.h:
 
 ../Level.h:
 
 ../Entity.h:
+
+../Component.h:
+
+../Drawable.h:
+
+../Updatable.h:
+
+../Camera.h:
+
+../Mesh.h:
+
+../Shader.h:
+
+../Tile.h:
+
+../TileSet.h:

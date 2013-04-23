@@ -4,7 +4,7 @@
 Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges ) {
 	id = nId;
 	mesh = NULL;
-	for (int v = 0; v < nVerts.size(); v++){
+	for (unsigned int v = 0; v < nVerts.size(); v++){
 		verts[v] = nVerts[v];
 		if (v < nEdges.size()){
 			neighbors[v] = nEdges[v];
@@ -18,15 +18,15 @@ Tile::~Tile ( ) {
 	deleteMesh();
 }
 
-int Tile::findNeighbor(int nid){
-	for (int e = 0; e < neighbors.size(); e++){
+int Tile::findNeighbor(unsigned int nid){
+	for (unsigned int e = 0; e < neighbors.size(); e++){
 		if (neighbors[e] == nid)
 			return e;
 	}
 	return NO_NEIGHBOR;
 }
 
-int Tile::getNeighbor(int e){
+int Tile::getNeighbor(unsigned int e){
 	if (e > 0 && e < neighbors.size())
 		return neighbors[e];
 	return NO_NEIGHBOR;

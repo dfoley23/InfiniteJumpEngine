@@ -1398,7 +1398,7 @@ public:
     void            set_format(int f) { format = f; }
 
     /* Adds branch to curr_root */
-    GLUI_Tree *     ab(const char *name, GLUI_Tree *root = NULL);
+    //GLUI_Tree *     ab(const char *name, GLUI_Tree *root = NULL);
     /* Goes up one level, resets curr_root and curr_branch to parents*/
     void            fb(GLUI_Tree *branch= NULL);
     /* Deletes the curr_branch, goes up one level using fb */

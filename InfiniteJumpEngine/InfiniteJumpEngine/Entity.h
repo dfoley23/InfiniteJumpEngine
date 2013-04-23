@@ -9,8 +9,9 @@
 #include <glm/gtc/matrix_access.hpp>
 
 #include <string>
+#include <vector>
 
-#include "EntityComponent.h"
+#include "Component.h"
 #include "Mesh.h"
 #include "Camera.h"
 
@@ -20,10 +21,8 @@ using namespace std;
   * class Entity
   * 
   */
-typedef vector<EntityComponent*> componentVector;
-typedef componentVector::iterator componentIter;
 
-class Entity
+class Entity : Component
 {
 public:
 
@@ -46,7 +45,7 @@ public:
      * Set the value of mesh
      * @param new_var the new value of mesh
      */
-    void addComponent ( EntityComponent *new_var )     {
+    void addComponent ( Component *new_var )     {
 		components.push_back(new_var);
 		new_var->setParent(this);
     }

@@ -32,6 +32,11 @@ void Level::clear( ){
 		delete (*it);
 	}
 }
+
+void Level::addEntity( Entity * entity ){
+	entities.push_back(entity);
+}
+
 // Accessor methods
 //  
 
