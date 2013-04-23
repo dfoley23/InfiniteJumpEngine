@@ -69,7 +69,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				tee->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
 				tee->addVert( x+0.1, y, z, 0, 1, 0, 0, 0, 1 ); 
 				tee->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
-				
+
 				tee->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
 				tee->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
 				tee->addVert( x, y, z-0.1, 0, 1, 0, 0, 0, 1 ); 
@@ -92,7 +92,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				cup->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
 				cup->addVert( x+0.1, y, z, 0, 1, 0, 0, 0, 1 ); 
 				cup->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
-				
+
 				cup->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
 				cup->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
 				cup->addVert( x, y, z-0.1, 0, 1, 0, 0, 0, 1 );  
@@ -100,39 +100,12 @@ Level* ResManager::getTriangleLevel(string filename){
 				level->addEntity( cupEntity );
 			} else {
 				cerr << "Found a unknown class type in " << filename << endl;
+				return NULL;
 			}
-
 
 		}
 		return level;
-	}
+	} 
 
-	/*
-	Level *level = new Level();
-
-	level->camera->cam = glm::lookAt(glm::vec3(0,6,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
-	level->camera->proj = glm::perspective(
-	glm::float_t(45),
-	glm::float_t(getGame()->getWinWidth()) / glm::float_t(getGame()->getWinHeight()),
-	glm::float_t(0.1),
-	glm::float_t(1000.0)
-	);
-	level->camera->lightPos = glm::vec3( 0.0, 10.0f, 0.0 );
-
-	//initiallize vertex and normal arrays
-	//this is where you might want to read in your model
-	Entity * entity = new Entity( );
-	Mesh * mesh = new Mesh( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
-	mesh->addVert(-1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,-1, 0,1,0, 0,1,0);
-
-	mesh->addVert(-1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,-1, 0,1,0, 0,1,0);
-	mesh->addVert(-1,0,-1, 0,1,0, 0,1,0);
-
-	entity->addComponent(mesh);
-
-	level->entities.push_back(entity);
-	return NULL;*/
+	return NULL;
 }
