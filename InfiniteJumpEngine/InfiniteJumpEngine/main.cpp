@@ -116,7 +116,7 @@ void buildTriangle() {
 }
 
 void initLevel() {
-	if ( level ) { 
+	if ( level ) {
 		delete level;
 	}
 	level = new Level( );

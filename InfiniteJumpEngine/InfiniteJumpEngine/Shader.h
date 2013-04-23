@@ -136,8 +136,6 @@ public:
 	*/
 	void printLog (string label, GLint obj )
 	{       
-		int infologLength = 0;
-		const int maxLength = 1024;
 
 		GLint  compiled;
 		glGetShaderiv( obj, GL_COMPILE_STATUS, &compiled );

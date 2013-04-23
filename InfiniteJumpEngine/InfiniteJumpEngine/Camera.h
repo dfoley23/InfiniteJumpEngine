@@ -27,4 +27,4 @@ private:
     void initAttributes ( ) ;
 };
 
-#endif CAMERA_H
+#endif //CAMERA_H

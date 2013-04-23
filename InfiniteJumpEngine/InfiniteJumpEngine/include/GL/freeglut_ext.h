@@ -38,12 +38,6 @@
 #define GLUT_KEY_NUM_LOCK           0x006D
 #define GLUT_KEY_BEGIN              0x006E
 #define GLUT_KEY_DELETE             0x006F
-#define GLUT_KEY_SHIFT_L            0x0070
-#define GLUT_KEY_SHIFT_R            0x0071
-#define GLUT_KEY_CTRL_L             0x0072
-#define GLUT_KEY_CTRL_R             0x0073
-#define GLUT_KEY_ALT_L              0x0074
-#define GLUT_KEY_ALT_R              0x0075
 
 /*
  * GLUT API Extension macro definitions -- behaviour when the user clicks on an "x" to close a window
@@ -127,7 +121,6 @@ FGAPI void    FGAPIENTRY glutExit         ( void );
  * Window management functions, see freeglut_window.c
  */
 FGAPI void    FGAPIENTRY glutFullScreenToggle( void );
-FGAPI void    FGAPIENTRY glutLeaveFullScreen( void );
 
 /*
  * Window-specific callback functions, see freeglut_callbacks.c
@@ -174,17 +167,6 @@ typedef void (*GLUTproc)();
 FGAPI GLUTproc FGAPIENTRY glutGetProcAddress( const char *procName );
 
 /*
- * Multi-touch/multi-pointer extensions
- */
-
-#define GLUT_HAS_MULTI 1
-
-FGAPI void FGAPIENTRY glutMultiEntryFunc( void (* callback)( int, int ) );
-FGAPI void FGAPIENTRY glutMultiButtonFunc( void (* callback)( int, int, int, int, int ) );
-FGAPI void FGAPIENTRY glutMultiMotionFunc( void (* callback)( int, int, int ) );
-FGAPI void FGAPIENTRY glutMultiPassiveFunc( void (* callback)( int, int, int ) );
-
-/*
  * Joystick functions, see freeglut_joystick.c
  */
 /* USE OF THESE FUNCTIONS IS DEPRECATED !!!!! */
@@ -199,7 +181,7 @@ int     glutJoystickNotWorking( int ident );
 float   glutJoystickGetDeadBand( int ident, int axis );
 void    glutJoystickSetDeadBand( int ident, int axis, float db );
 float   glutJoystickGetSaturation( int ident, int axis );
-void    glutJoystickSetSaturation( int ident, int axis, float st );
+//void    glutJoystickSetSaturation( int ident, int axis, float st );
 void    glutJoystickSetMinRange( int ident, float *axes );
 void    glutJoystickSetMaxRange( int ident, float *axes );
 void    glutJoystickSetCenter( int ident, float *axes );
@@ -213,12 +195,6 @@ void    glutJoystickGetCenter( int ident, float *axes );
 FGAPI void    FGAPIENTRY glutInitContextVersion( int majorVersion, int minorVersion );
 FGAPI void    FGAPIENTRY glutInitContextFlags( int flags );
 FGAPI void    FGAPIENTRY glutInitContextProfile( int profile );
-
-/* to get the typedef for va_list */
-#include <stdarg.h>
-
-FGAPI void    FGAPIENTRY glutInitErrorFunc( void (* vError)( const char *fmt, va_list ap ) );
-FGAPI void    FGAPIENTRY glutInitWarningFunc( void (* vWarning)( const char *fmt, va_list ap ) );
 
 /*
  * GLUT API macro definitions -- the display mode definitions

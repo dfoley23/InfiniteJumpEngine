@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;InfiniteJumpEngine/main.Kevin.cpp&apos;" deleteContents="false" description="Delete resource &apos;InfiniteJumpEngine/main.Kevin.cpp&apos;" element1="/InfiniteJumpEngine/main.Kevin.cpp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1366570673504"/>
+</session>
