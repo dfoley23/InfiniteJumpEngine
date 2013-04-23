@@ -12,10 +12,12 @@ ResManager::~ResManager(void)
 Level* ResManager::getTriangleLevel(){
 	Level *level = new Level();
 
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
 	level->camera->cam = glm::lookAt(glm::vec3(0,6,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	level->camera->proj = glm::perspective(
 		glm::float_t(45),
-		glm::float_t(getGame()->getWinWidth()) / glm::float_t(getGame()->getWinHeight()),
+		glm::float_t(Game::game()->getWinWidth()) / glm::float_t(Game::game()->getWinHeight()),
 		glm::float_t(0.1),
 		glm::float_t(1000.0)
 		);
@@ -36,5 +38,5 @@ Level* ResManager::getTriangleLevel(){
 	entity->addComponent(mesh);
 
 	level->entities.push_back(entity);
-	return NULL;
+	return level;
 }

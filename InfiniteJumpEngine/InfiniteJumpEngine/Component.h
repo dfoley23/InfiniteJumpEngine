@@ -11,11 +11,6 @@ class Component: public Drawable
 public:
 	virtual Component * getParent(){return parent;};
 	virtual void setParent(Component * p){parent = p;};
-	virtual Game *getGame(){
-		if (getParent())
-			return getParent()->getGame();
-		return NULL;
-	}
 protected:
 	Component *parent;
 };
