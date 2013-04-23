@@ -3,6 +3,7 @@
 #include "glIncludes.h"
 #include "Tile.h"
 #include "Component.h"
+#include "Camera.h"
 using std::vector;
 
 class Tile;
@@ -10,7 +11,7 @@ class Tile;
 typedef vector<Tile*> tileVector;
 typedef tileVector::iterator tileIter;
 
-class TileSet: Component
+class TileSet: public Component
 {
 public:
 	TileSet(void);

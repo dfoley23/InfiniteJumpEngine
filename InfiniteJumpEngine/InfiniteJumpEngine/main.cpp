@@ -112,7 +112,7 @@ void buildTriangle() {
 
 	entity->addComponent(mesh);
 
-	level->entities.push_back(entity);
+	level->addEntity(entity);
 }
 
 void initLevel() {

@@ -1,5 +1,4 @@
 #include "TileSet.h"
-#include "Camera.h"
 
 
 TileSet::TileSet(void)
