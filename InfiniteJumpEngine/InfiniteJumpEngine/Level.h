@@ -44,6 +44,8 @@ public:
 
 	void addEntity( Entity * entity );
 
+	Mesh * cupMeshToMove;
+
 private:
 	
 	vector<Entity*> entities;

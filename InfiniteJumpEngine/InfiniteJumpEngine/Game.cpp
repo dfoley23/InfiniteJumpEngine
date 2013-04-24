@@ -50,6 +50,9 @@ void Game::display(){
 	glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	level->cupMeshToMove->rotate( rotX, glm::vec3( 1, 0, 0 ) );
+	level->cupMeshToMove->rotate( rotY, glm::vec3( 0, 1, 0 ) );
+	level->cupMeshToMove->translate( transX, transY, transZ );
 	if (level){
 		level->update(0.0f);
 		level->draw();
@@ -71,22 +74,31 @@ void Game::keyboard(unsigned char key, int x, int y){
 }
 
 void Game::setupInterface(){
-	glui = GLUI_Master.create_glui( "GLUI" );
+	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
 	glui->set_main_gfx_window( main_window );
 
 	GLUI_Panel *main_panel = glui->add_panel("Golf Cup Interface");
+	
+	GLUI_Translation *translation_x = glui->add_translation_to_panel( main_panel, "Cup Translation X", GLUI_TRANSLATION_X, &transX );
+	translation_x->set_speed( 0.1 );
+	GLUI_Translation *translation_y = glui->add_translation_to_panel( main_panel, "Cup Translation Y", GLUI_TRANSLATION_Y, &transY );
+	translation_y->set_speed( 0.1 );
+	GLUI_Translation *translation_z = glui->add_translation_to_panel( main_panel, "Cup Translation Z", GLUI_TRANSLATION_Z, &transZ );
+	translation_z->set_speed( 0.1 );
 
+	/*
 	GLUI_Spinner *trans1_spinner =
 		glui->add_spinner_to_panel( main_panel, "Cup position on x-axis:", GLUI_SPINNER_FLOAT, &transX );
-	trans1_spinner->set_float_limits(-50, 50);
-
+	trans1_spinner->set_float_limits(-5, 5);
+	
 	GLUI_Spinner *trans2_spinner =
 		glui->add_spinner_to_panel( main_panel, "Cup position on y-axis:", GLUI_SPINNER_FLOAT, &transY );
-	trans2_spinner->set_float_limits(-50, 50);
+	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
 		glui->add_spinner_to_panel( main_panel, "Cup position on z-axis:", GLUI_SPINNER_FLOAT, &transZ );
-	trans3_spinner->set_float_limits(-50, 50);
+	trans3_spinner->set_float_limits(-5, 5);
+	*/
 
 	GLUI_Spinner *angleX_spinner =
 		glui->add_spinner_to_panel( main_panel, "Cup Angle on x-axis:", GLUI_SPINNER_FLOAT, &rotX);
@@ -139,5 +151,23 @@ Level * Game::buildTestLevel( ) {
 	entity->addComponent(mesh);
 
 	level->addEntity(entity);
+
+	Entity * cupEntity = new Entity( );
+	Mesh * cup = new Mesh( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
+	float x = 0.5;
+	float y = 0;
+	float z = 0.5;
+	//cup mesh
+	cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
+	cup->addVert( x+0.5, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
+	cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
+
+	cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
+	cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
+	cup->addVert( x, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );  
+	cupEntity->addComponent( cup );
+	level->addEntity( cupEntity );
+	level->cupMeshToMove = cup;
+
 	return level;
 }

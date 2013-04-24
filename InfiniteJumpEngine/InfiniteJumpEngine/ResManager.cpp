@@ -99,6 +99,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				cup->addVert( x, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );  
 				cupEntity->addComponent( cup );
 				level->addEntity( cupEntity );
+				level->cupMeshToMove = cup;
 			} else if ( !type.empty( ) ){
 				cerr << "Found a unknown class type in " << filename << endl;
 				return NULL;

@@ -47,6 +47,8 @@ public:
 		bindBuffers( );
 		glm::mat4 modelCam = camera->cam * modelView;
 
+		modelView = translations * rotations * scaling;
+
 		glm::mat3 normalMatrix(modelCam);
 		normalMatrix = glm::inverse(normalMatrix);
 		normalMatrix = glm::transpose(normalMatrix);
@@ -96,7 +98,7 @@ public:
 	*/
 	void translate (float x, float y, float z )
 	{
-		modelView = glm::translate( modelView, glm::vec3( x, y, z ) );
+		translations = glm::translate( glm::mat4( ), glm::vec3( x, y, z ) );
 	}
 
 
@@ -106,9 +108,19 @@ public:
 	*/
 	void rotate (float angle, glm::vec3 axis)
 	{
-		modelView = glm::rotate( modelView, angle, axis );
+		rotations = glm::rotate( glm::mat4( ), angle, axis );
 	}
 
+	/**
+	*
+	*
+	*/
+	void rotate( float x, float y, float z ) {
+		glm::mat4 rotateX = glm::rotate( glm::mat4( ), x, glm::vec3( 1, 0, 0 ) );
+		glm::mat4 rotateY = glm::rotate( glm::mat4( ), y, glm::vec3( 0, 1, 0 ) );
+		glm::mat4 rotateZ = glm::rotate( glm::mat4( ), z, glm::vec3( 0, 0, 1 ) );
+		rotations = rotateX * rotateY * rotateZ;
+	}
 
 	/**
 	* @param  x
@@ -117,10 +129,12 @@ public:
 	*/
 	void scale (float x, float y, float z )
 	{
-		modelView = glm::scale( modelView, glm::vec3( x, y, z ) );
+		scaling = glm::scale( glm::mat4( ), glm::vec3( x, y, z ) );
 	}
 private:
-
+	glm::mat4 translations;
+	glm::mat4 rotations;
+	glm::mat4 scaling;
 public:
 	static const int VERT_SIZE;
 	static const int UV_SIZE;
