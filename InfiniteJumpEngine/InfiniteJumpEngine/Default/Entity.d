@@ -1,30 +1,43 @@
-Entity.d: ../Entity.cpp ../Entity.h ../EntityComponent.h ../Mesh.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h \
- /home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h \
- ../Shader.h ../Camera.h
+Entity.d: ../Entity.cpp ../Entity.h ../Component.h ../Drawable.h \
+ ../Updatable.h ../Camera.h ../Mesh.h ../glIncludes.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h \
+ /home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h \
+ ../Shader.h
 
 ../Entity.h:
 
-../EntityComponent.h:
+../Component.h:
+
+../Drawable.h:
+
+../Updatable.h:
+
+../Camera.h:
 
 ../Mesh.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h:
+../glIncludes.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glew.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glu.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/gl.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut.h:
 
-/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h:
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_std.h:
+
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/freeglut_ext.h:
+
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glui.h:
+
+/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include/GL/glut.h:
 
 ../Shader.h:
-
-../Camera.h:

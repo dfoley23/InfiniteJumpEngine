@@ -15,9 +15,14 @@ in vec3 color; //vertex color
 out vec4 frag_color;
 
 void main() {
-    gl_Position = P * (M * vec4(pos, 1.0));
+	vec4 posT = M * vec4(pos,1.0);
     
-	float LDotN = dot( norm, lightPos ); 
+    vec3 L = normalize(M * vec4(lightPos, 1.0)).xyz;
+    L = normalize(L - posT.xyz); 
+	
+    vec3 N = normalize(M_n * norm);
+	
+	float LDotN = dot( N, L ); 
 	vec3 diff = vec3( 0.0, 0.0, 0.0 );
 	if ( LDotN > 0.0 ) {
         diff = color * LDotN;
@@ -25,4 +30,6 @@ void main() {
 	
     vec4 newColor = vec4(diff, 1.0);
     frag_color = clamp(newColor, 0.0, 1.0);
+	
+    gl_Position = P * posT;
 }

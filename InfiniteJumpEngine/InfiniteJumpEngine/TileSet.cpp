@@ -1,5 +1,4 @@
 #include "TileSet.h"
-#include "Camera.h"
 
 
 TileSet::TileSet(void)
@@ -12,20 +11,17 @@ TileSet::~TileSet(void)
 }
 
 void TileSet::update(float dT){
-if (!mesh){
-mesh = createMesh();
-}
-if (mesh){
-mesh->update(dT);
-}
+	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
+		(*t)->update(dT);
+	}
 }
 
 void TileSet::draw( Camera * camera ){
-if (mesh){
-mesh->draw(camera);
-}
+	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
+		(*t)->draw(camera);
+	}
 }
 
-Mesh* TileSet::createMesh(){
-return NULL;
+void TileSet::addTile( Tile * tile ) {
+	this->tiles.push_back( tile );
 }

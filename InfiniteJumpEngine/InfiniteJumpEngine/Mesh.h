@@ -2,20 +2,11 @@
 #ifndef MESH_H
 #define MESH_H
 
-#define GLEW_STATIC
-#include <GL/glew.h> //must include this before gl.h
-#include <GL/freeglut.h>
-
-#define GLM_SWIZZLE
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/matrix_access.hpp>
-
+#include "glIncludes.h"
 #include <vector>
 #include <string>
 
-#include "EntityComponent.h"
+#include "Component.h"
 #include "Shader.h"
 #include "Camera.h"
 
@@ -25,7 +16,7 @@ using namespace std;
 * 
 */
 
-class Mesh: public EntityComponent {
+class Mesh: public Component {
 public:
 
 	// Constructors/Destructors
@@ -85,12 +76,6 @@ public:
 
 	void bindBuffers( ) {
 		//Create buffers for the vertex and normal attribute arrays
-		GLuint bufs[3];
-		glGenBuffers(3, bufs);
-
-		shader->vertexBuffer = bufs[0];
-		shader->normalBuffer = bufs[1];
-		shader->colorBuffer = bufs[2];
 
 		glBindBuffer(GL_ARRAY_BUFFER, shader->vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_DYNAMIC_DRAW );
@@ -99,7 +84,7 @@ public:
 		glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_DYNAMIC_DRAW );
 
 		glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
-		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_STATIC_DRAW );
+		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_DYNAMIC_DRAW );
 
 		numVerts = verts.size() / 3;
 	}
@@ -145,6 +130,7 @@ public:
 	vector<float> norms;
 	vector<float> colors;
 	vector<GLuint> textureNames;
+	
 	size_t numVerts;
 	glm::mat4 modelView; //matrices for shaders
 	//vector<GLDataObject *> uniforms;
@@ -161,6 +147,15 @@ public:
 		shader->vertexLoc = glGetAttribLocation(shader->program, "pos");
 		shader->normalLoc = glGetAttribLocation(shader->program, "norm");
 		shader->colorLoc = glGetAttribLocation(shader->program, "color");
+
+		GLuint bufs[3];
+		glGenBuffers(3, bufs);
+
+		shader->vertexBuffer = bufs[0];
+		shader->normalBuffer = bufs[1];
+		shader->colorBuffer = bufs[2];
+
+		bindBuffers( );
 	}
 
 	void remove ( ) {

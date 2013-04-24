@@ -2,27 +2,26 @@
 #include <vector>
 #include "glIncludes.h"
 #include "Tile.h"
-#include "EntityComponent.h"
+#include "Component.h"
+#include "Camera.h"
 using std::vector;
 
 class Tile;
 
-class TileSet: EntityComponent
+typedef vector<Tile*> tileVector;
+typedef tileVector::iterator tileIter;
+
+class TileSet: public Component
 {
 public:
-TileSet(void);
-virtual ~TileSet(void);
+	TileSet(void);
+	virtual ~TileSet(void);
 
-Mesh *createMesh();
-Mesh *getMesh(){return mesh;}
-void clearMesh(){delete mesh; mesh = NULL;}
-void update(float);
-void draw( Camera * );
-
-
+	void update(float);
+	void draw( Camera * );
 	void addTile(unsigned int, vector<glm::vec3>, vector<unsigned int>);
+	void addTile( Tile * );
 protected:
 	vector<Tile*> tiles;
-	Mesh* mesh;
 }
 ;

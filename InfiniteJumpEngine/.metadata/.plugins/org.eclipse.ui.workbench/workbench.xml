@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="26" version="2.0">
+<workbench progressCount="27" version="2.0">
 <workbenchAdvisor/>
-<window height="939" width="1249" x="223" y="191">
+<window height="940" width="1245" x="293" y="83">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -35,22 +35,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" partName="main.cpp" path="/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/main.cpp" title="main.cpp" tooltip="InfiniteJumpEngine/main.cpp" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/InfiniteJumpEngine/main.cpp"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4110" selectionTopPixel="2584"/>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="Level.h" partName="Level.h" path="/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/Level.h" title="Level.h" tooltip="InfiniteJumpEngine/Level.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/InfiniteJumpEngine/Level.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="570" selectionTopPixel="575"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="Shader.h" partName="Shader.h" path="/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/Shader.h" title="Shader.h" tooltip="InfiniteJumpEngine/Shader.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/InfiniteJumpEngine/Shader.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2886" selectionTopPixel="2261"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="Camera.h" partName="Camera.h" path="/home/dennis/Documents/cmps164/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/Camera.h" title="Camera.h" tooltip="InfiniteJumpEngine/Camera.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/InfiniteJumpEngine/Camera.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="399" selectionTopPixel="171"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="Level.cpp" partName="Level.cpp" path="/media/27E3D5880281FC3E/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/Level.cpp" title="Level.cpp" tooltip="InfiniteJumpEngine/Level.cpp" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/InfiniteJumpEngine/Level.cpp"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -65,9 +60,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Infos (1 item)"/>
-<category IMemento.internal.id="Warnings"/>
-<category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings (3 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="150" org.eclipse.ui.ide.pathField="190" org.eclipse.ui.ide.resourceField="154" org.eclipse.ui.ide.severityAndDescriptionField="698"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -326,170 +319,171 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.Kevin.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/include/GL/freeglut_ext.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Shader.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Camera.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/include/GL/freeglut_std.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Entity.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Entity.cpp"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.Kevin.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/glew.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" path="/InfiniteJumpEngine/Default/makefile"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/include/GL/glew.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Camera.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Shader.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/include/GL/glui.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/glew.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.Dennis.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/main.Kevin.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Level.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Level.cpp"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/InfiniteJumpEngine/Level.h"/>
 </editors>
-<item historyLabel="main.Kevin.cpp" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="2033" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="5619" y="10"/>
-</item>
-<item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="2178" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="6257" y="0"/>
-</item>
-<item historyLabel="main.cpp" index="1">
-<position info="not_deleted" x="2178" y="0"/>
-</item>
-<item historyLabel="Shader.h" index="3">
-<position info="not_deleted" x="2886" y="0"/>
-</item>
-<item historyLabel="Camera.h" index="4">
-<position info="not_deleted" x="399" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="1922" y="0"/>
-</item>
-<item historyLabel="freeglut_std.h" index="5">
-<position info="not_deleted" x="2300" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="1922" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="7749" y="67"/>
-</item>
-<item historyLabel="Entity.h" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Entity.cpp" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Entity.h" index="6">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="8514" y="5"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="8630" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="5619" y="10"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="4608" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
-<position info="not_deleted" x="7751" y="67"/>
-</item>
-<item historyLabel="main.cpp" index="8">
-<position info="not_deleted" x="2178" y="0"/>
-</item>
-<item historyLabel="freeglut_ext.h" index="2">
+<item historyLabel="freeglut_ext.h" index="0">
 <position/>
 </item>
-<item historyLabel="main.Kevin.cpp" index="9">
+<item historyLabel="main.Kevin.cpp" index="1">
 <position info="not_deleted" x="2" y="0"/>
 </item>
-<item historyLabel="main.Kevin.cpp" index="9">
+<item historyLabel="main.Kevin.cpp" index="1">
 <position info="not_deleted" x="97" y="1"/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="freeglut_ext.h" index="2">
+<item historyLabel="freeglut_ext.h" index="0">
 <position/>
 </item>
-<item historyLabel="freeglut_ext.h" index="2">
+<item historyLabel="freeglut_ext.h" index="0">
 <position/>
 </item>
-<item historyLabel="glew.c" index="11">
+<item historyLabel="glew.c" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="freeglut_ext.h" index="2">
+<item historyLabel="freeglut_ext.h" index="0">
 <position info="not_deleted" x="6834" y="0"/>
 </item>
-<item historyLabel="glew.c" index="11">
+<item historyLabel="glew.c" index="3">
 <position info="not_deleted" x="684518" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position info="not_deleted" x="77" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="glew.c" index="11">
+<item historyLabel="glew.c" index="3">
 <position info="not_deleted" x="684518" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="glew.h" index="13">
+<item historyLabel="glew.h" index="5">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="glew.c" index="11">
+<item historyLabel="glew.c" index="3">
 <position info="not_deleted" x="684451" y="64"/>
 </item>
-<item historyLabel="makefile" index="12">
+<item historyLabel="makefile" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position info="not_deleted" x="4127" y="0"/>
 </item>
-<item historyLabel="main.cpp" index="10">
+<item historyLabel="main.cpp" index="2">
 <position info="not_deleted" x="2635" y="0"/>
 </item>
-<item active="true" historyLabel="main.cpp" index="10">
-<position info="not_deleted" x="3896" y="33"/>
+<item historyLabel="main.cpp" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.cpp" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Camera.h" index="6">
+<position info="not_deleted" x="399" y="0"/>
+</item>
+<item historyLabel="Shader.h" index="7">
+<position info="not_deleted" x="2886" y="0"/>
+</item>
+<item historyLabel="Camera.h" index="6">
+<position info="not_deleted" x="399" y="0"/>
+</item>
+<item historyLabel="main.cpp" index="2">
+<position info="not_deleted" x="103" y="0"/>
+</item>
+<item historyLabel="glui.h" index="8">
+<position info="not_deleted" x="51272" y="0"/>
+</item>
+<item historyLabel="main.cpp" index="2">
+<position info="not_deleted" x="103" y="0"/>
+</item>
+<item historyLabel="glew.c" index="9">
+<position info="not_deleted" x="696118" y="0"/>
+</item>
+<item historyLabel="main.Dennis.cpp" index="10">
+<position info="not_deleted" x="2674" y="0"/>
+</item>
+<item historyLabel="main.cpp" index="2">
+<position info="not_deleted" x="103" y="0"/>
+</item>
+<item historyLabel="main.Dennis.cpp" index="10">
+<position info="not_deleted" x="2674" y="0"/>
+</item>
+<item historyLabel="glew.c" index="9">
+<position info="not_deleted" x="696118" y="0"/>
+</item>
+<item historyLabel="main.Kevin.cpp" index="11">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Level.h" index="12">
+<position info="not_deleted" x="532" y="0"/>
+</item>
+<item historyLabel="Level.cpp" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Level.h" index="12">
+<position info="not_deleted" x="570" y="0"/>
+</item>
+<item historyLabel="main.Kevin.cpp" index="11">
+<position info="not_deleted" x="122" y="12"/>
+</item>
+<item historyLabel="main.Kevin.cpp" index="11">
+<position info="not_deleted" x="136" y="0"/>
+</item>
+<item historyLabel="Level.h" index="12">
+<position info="not_deleted" x="570" y="0"/>
+</item>
+<item historyLabel="Level.cpp" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="Level.h" index="14">
+<position info="not_deleted" x="570" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -509,14 +503,23 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Level.cpp" tooltip="InfiniteJumpEngine/Level.cpp">
+<persistable path="/InfiniteJumpEngine/Level.cpp"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Level.h" tooltip="InfiniteJumpEngine/Level.h">
+<persistable path="/InfiniteJumpEngine/Level.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="glew.c" tooltip="InfiniteJumpEngine/glew.c">
+<persistable path="/InfiniteJumpEngine/glew.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="glui.h" tooltip="InfiniteJumpEngine/include/GL/glui.h">
+<persistable path="/InfiniteJumpEngine/include/GL/glui.h"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="glew.h" tooltip="InfiniteJumpEngine/include/GL/glew.h">
 <persistable path="/InfiniteJumpEngine/include/GL/glew.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.make.editor" name="makefile" tooltip="InfiniteJumpEngine/Default/makefile">
 <persistable path="/InfiniteJumpEngine/Default/makefile"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="glew.c" tooltip="InfiniteJumpEngine/glew.c">
-<persistable path="/InfiniteJumpEngine/glew.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Entity.cpp" tooltip="InfiniteJumpEngine/Entity.cpp">
 <persistable path="/InfiniteJumpEngine/Entity.cpp"/>
@@ -538,9 +541,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.cpp" tooltip="InfiniteJumpEngine/main.cpp">
 <persistable path="/InfiniteJumpEngine/main.cpp"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.Kevin.cpp" tooltip="InfiniteJumpEngine/main.Kevin.cpp">
-<persistable path="/InfiniteJumpEngine/main.Kevin.cpp"/>
 </file>
 </mruList>
 </workbench>

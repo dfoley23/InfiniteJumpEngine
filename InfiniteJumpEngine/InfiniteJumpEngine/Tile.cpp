@@ -1,32 +1,33 @@
 #include "Tile.h"
 #include "Mesh.h"
 
-Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges ) {
+Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges, glm::vec3 color ) {
 	id = nId;
-	mesh = NULL;
-	for (int v = 0; v < nVerts.size(); v++){
-		verts[v] = nVerts[v];
+	this->color = color;
+	for (unsigned int v = 0; v < nVerts.size(); v++){
+		verts.push_back( nVerts[v] );
 		if (v < nEdges.size()){
-			neighbors[v] = nEdges[v];
+			neighbors.push_back ( nEdges[v] );
 		} else {
-			neighbors[v] = NO_NEIGHBOR;
+			neighbors.push_back( NO_NEIGHBOR );
 		}
 	}
+	mesh = generateMesh( );
 }
 
 Tile::~Tile ( ) {
 	deleteMesh();
 }
 
-int Tile::findNeighbor(int nid){
-	for (int e = 0; e < neighbors.size(); e++){
+int Tile::findNeighbor(unsigned int nid){
+	for (unsigned int e = 0; e < neighbors.size(); e++){
 		if (neighbors[e] == nid)
 			return e;
 	}
 	return NO_NEIGHBOR;
 }
 
-int Tile::getNeighbor(int e){
+int Tile::getNeighbor(unsigned int e){
 	if (e > 0 && e < neighbors.size())
 		return neighbors[e];
 	return NO_NEIGHBOR;
@@ -44,11 +45,30 @@ Mesh* Tile::getMesh(){
 }
 
 Mesh* Tile::generateMesh(){
-	Mesh *out = new Mesh();
-	glm::vec3 vert;
-	for (int v = 0; v < verts.size(); v++){
-		vert = verts[v];
-		//out.addVert(vert.x, vert.y, vert.z);
+	Mesh * out = new Mesh( );
+	glm::vec3 vert0;
+	glm::vec3 vert1;
+	glm::vec3 vert2;
+	glm::vec3 norm;
+	glm::vec3 tangent;
+	glm::vec3 bitangent;
+	for (int v = 0; v < verts.size()-1; v++){
+		if ( v < 2 ) {
+			vert0 = verts[v];
+			vert1 = verts[v+1];
+			vert2 = verts[v+2];
+			v++;
+		} else {
+			vert1 = verts[v];
+			vert2 = verts[v+1];
+		}
+		tangent = vert1 - vert0;
+		bitangent = vert2 - vert0;
+		norm = glm::cross( tangent, bitangent );
+		out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
+		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
+		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
 	}
+	out->setShader( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
 	return out;
 }
