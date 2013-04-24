@@ -50,8 +50,7 @@ void Game::display(){
 	glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	level->cupMeshToMove->rotate( rotX, glm::vec3( 1, 0, 0 ) );
-	level->cupMeshToMove->rotate( rotY, glm::vec3( 0, 1, 0 ) );
+	level->cupMeshToMove->rotate( rotX, rotY, 0 );
 	level->cupMeshToMove->translate( transX, transY, transZ );
 	if (level){
 		level->update(0.0f);
