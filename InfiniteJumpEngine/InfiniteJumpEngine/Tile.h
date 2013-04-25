@@ -27,7 +27,7 @@ public:
 	Mesh *getMesh();
 	Mesh *generateMesh();
 	void deleteMesh();
-	void draw(Camera *camera){mesh->draw(camera);};
+	void draw(Camera *camera){getMesh()->draw(camera);};
 	Mesh * mesh;
 private:
 	void buildMesh( );
@@ -36,6 +36,7 @@ protected:
 	vector<glm::vec3>verts;
 	vector<int> neighbors;
 	glm::vec3 color;
+	glm::vec3 wall_color;
 };
 
 #endif // TILE_H

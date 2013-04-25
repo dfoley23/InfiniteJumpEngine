@@ -49,6 +49,7 @@ void Game::reshape(int w, int h){
 void Game::display(){
 	glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	level->cupMeshToMove->rotate( rotX, rotY, 0 );
 	level->cupMeshToMove->translate( transX, transY, transZ );
@@ -137,18 +138,16 @@ Level * Game::buildTestLevel( ) {
 
 	//initiallize vertex and normal arrays
 	//this is where you might want to read in your model
-	Entity * entity = new Entity( );
-	Mesh * mesh = new Mesh( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
-	mesh->addVert(-1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,-1, 0,1,0, 0,1,0);
+	vector<glm::vec3> groundVerts;
+	groundVerts.push_back(glm::vec3(-1,0,1));
+	groundVerts.push_back(glm::vec3(1,0,1));
+	groundVerts.push_back(glm::vec3(1,0,-1));
+	groundVerts.push_back(glm::vec3(-1,0,-1));
 
-	mesh->addVert(-1,0,1, 0,1,0, 0,1,0);
-	mesh->addVert(1,0,-1, 0,1,0, 0,1,0);
-	mesh->addVert(-1,0,-1, 0,1,0, 0,1,0);
-
-	entity->addComponent(mesh);
-
+	vector<int> noNeighbors;
+	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75, 0));
+	Entity * entity = new Entity();
+	entity->addComponent(groundTile);
 	level->addEntity(entity);
 
 	Entity * cupEntity = new Entity( );
