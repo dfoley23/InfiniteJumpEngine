@@ -145,8 +145,11 @@ Level * Game::buildTestLevel( ) {
 	groundVerts.push_back(glm::vec3(-1,0,-1));
 
 	vector<int> noNeighbors;
-	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75, 0));
 	Entity * entity = new Entity();
+	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75, 0));
+	TileSet * tileSet = new TileSet();
+	tileSet->addTile(groundTile);
+	//entity->addComponent(tileSet);
 	entity->addComponent(groundTile);
 	level->addEntity(entity);
 
