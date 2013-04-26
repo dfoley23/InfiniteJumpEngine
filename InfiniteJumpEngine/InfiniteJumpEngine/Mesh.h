@@ -76,21 +76,6 @@ public:
 		glDrawArrays(GL_TRIANGLES, 0, numVerts);
 	}
 
-	void bindBuffers( ) {
-		//Create buffers for the vertex and normal attribute arrays
-
-		glBindBuffer(GL_ARRAY_BUFFER, shader->vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_DYNAMIC_DRAW );
-
-		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
-		glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_DYNAMIC_DRAW );
-
-		glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
-		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_DYNAMIC_DRAW );
-
-		numVerts = verts.size() / 3;
-	}
-
 	/**
 	* @param  x
 	* @param  y
@@ -131,10 +116,7 @@ public:
 	{
 		scaling = glm::scale( glm::mat4( ), glm::vec3( x, y, z ) );
 	}
-private:
-	glm::mat4 translations;
-	glm::mat4 rotations;
-	glm::mat4 scaling;
+
 public:
 	static const int VERT_SIZE;
 	static const int UV_SIZE;
@@ -144,7 +126,7 @@ public:
 	vector<float> norms;
 	vector<float> colors;
 	vector<GLuint> textureNames;
-	
+
 	size_t numVerts;
 	glm::mat4 modelView; //matrices for shaders
 	//vector<GLDataObject *> uniforms;
@@ -277,6 +259,69 @@ public:
 		colors.push_back(b);
 	}
 
+	void createCube( float width, float height, float depth, float x, float y, float z, float r, float g, float b ) {
+		//top face
+		createXZPlane( width, -depth, x, y+height, z, r, g, b );
+		//front face
+		createXYPlane( width, height, x, y, z, r, g, b );
+		//back face
+		createXYPlane( -width, height, x+width, y, z-depth, r, g, b );
+		//left face
+		createZYPlane( height, depth, x, y, z-depth, r, g, b );
+		//right face
+		createZYPlane( height, -depth, x+width, y, z, r, g, b );
+		//bottom face
+		createXZPlane( width, depth, x, y, z-depth, r, g, b );
+	}
+
+	void createXYPlane( float width, float height, float x, float y, float z, float r, float g, float b ) {
+		glm::vec3 vert0 = glm::vec3( x, y, z );
+		glm::vec3 vert1 = glm::vec3( x + width, y, z );
+		glm::vec3 vert2 = glm::vec3( x + width, y + height, z);
+		glm::vec3 tangent = vert1 - vert0;
+		glm::vec3 bitangent = vert2 - vert0;
+		glm::vec3 norm = glm::cross( tangent, bitangent );
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( x, y + height, z, norm.x, norm.y, norm.z, r, g, b ); 
+	}
+
+	void createZYPlane( float height, float depth, float x, float y, float z, float r, float g, float b ) {
+		glm::vec3 vert0 = glm::vec3( x, y, z );
+		glm::vec3 vert1 = glm::vec3( x, y, z + depth );
+		glm::vec3 vert2 = glm::vec3( x, y + height, z + depth );
+		glm::vec3 tangent = vert1 - vert0;
+		glm::vec3 bitangent = vert2 - vert0;
+		glm::vec3 norm = glm::cross( tangent, bitangent );
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( x, y + height, z , norm.x, norm.y, norm.z, r, g, b ); 
+	}
+
+	void createXZPlane( float width, float depth, float x, float y, float z, float r, float g, float b ) {
+		glm::vec3 vert0 = glm::vec3( x, y, z );
+		glm::vec3 vert1 = glm::vec3( x + width, y, z );
+		glm::vec3 vert2 = glm::vec3( x + width, y, z + depth );
+		glm::vec3 tangent = vert1 - vert0;
+		glm::vec3 bitangent = vert2 - vert0;
+		glm::vec3 norm = glm::cross( tangent, bitangent );
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+
+		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( x, y, z + depth, norm.x, norm.y, norm.z, r, g, b ); 
+	}
+
 	/**
 	* Set the value of uniforms
 	* @param new_var the new value of uniforms
@@ -292,9 +337,26 @@ public:
 	/*vector<GLDataObject *> getUniforms ( )     {
 	return uniforms;
 	}*/
+
 private:
+	glm::mat4 translations;
+	glm::mat4 rotations;
+	glm::mat4 scaling;
 
+	void bindBuffers( ) {
+		//Create buffers for the vertex and normal attribute arrays
 
+		glBindBuffer(GL_ARRAY_BUFFER, shader->vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_DYNAMIC_DRAW );
+
+		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
+		glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_DYNAMIC_DRAW );
+
+		glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
+		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_DYNAMIC_DRAW );
+
+		numVerts = verts.size() / 3;
+	}
 	void initAttributes ( ) ;
 
 };

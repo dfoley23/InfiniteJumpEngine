@@ -7,7 +7,7 @@ Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges, glm::vec3 co
 	wall_color.r = 0.5f;
 	wall_color.g = 0.25f;
 	wall_color.b = 0.0f;
-	for (unsigned int v = 0; v < nVerts.size(); v++){
+	for (unsigned int v = 0; v < static_cast<int>(nVerts.size()); v++){
 		verts.push_back( nVerts[v] );
 		if (v < nEdges.size()){
 			neighbors.push_back ( nEdges[v] );
@@ -57,7 +57,7 @@ Mesh* Tile::generateMesh(){
 	glm::vec3 tangent;
 	glm::vec3 bitangent;
 	float edgeHeight = 0.1f;
-	for (int v = 0; v < verts.size()-1; v++){
+	for (int v = 0; v < static_cast<int>(verts.size())-1; v++){
 		if ( v < 2 ) {
 			vert0 = verts[v];
 			vert1 = verts[v+1];
@@ -74,7 +74,7 @@ Mesh* Tile::generateMesh(){
 		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
 		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
 	}
-	for (int e = 0; e < neighbors.size(); e++){
+	for (int e = 0; e < static_cast<int>(neighbors.size()); e++){
 		if (neighbors.at(e) == Tile::NO_NEIGHBOR){
 			vert0 = verts[e];
 			if (e < neighbors.size()-1){

@@ -67,13 +67,8 @@ Level* ResManager::getTriangleLevel(string filename){
 				float y = atof( str_y.c_str( ) );
 				float z = atof( str_z.c_str( ) );
 				//tee mesh
-				tee->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
-				tee->addVert( x+0.1, y, z, 0, 1, 0, 0, 0, 1 ); 
-				tee->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
+				tee->createCube( 0.1, 0.005, 0.1, x, y, z, 1, 1, 1 );
 
-				tee->addVert( x, y, z, 0, 1, 0, 0, 0, 1 ); 
-				tee->addVert( x+0.1, y, z-0.1, 0, 1, 0, 0, 0, 1 );
-				tee->addVert( x, y, z-0.1, 0, 1, 0, 0, 0, 1 ); 
 				teeEntity->addComponent( tee );
 				level->addEntity( teeEntity );
 			} else if ( !type.compare( "cup" ) ) {
@@ -90,13 +85,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				float y = atof( str_y.c_str( ) );
 				float z = atof( str_z.c_str( ) );
 				//cup mesh
-				cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-				cup->addVert( x+0.5, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-				cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
-
-				cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-				cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
-				cup->addVert( x, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );  
+				cup->createCube( 0.25, 0.002, 0.25, x, y, z, 0.0, 0.0, 0.0 );
 				cupEntity->addComponent( cup );
 				level->addEntity( cupEntity );
 				level->cupMeshToMove = cup;
