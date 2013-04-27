@@ -26,7 +26,9 @@ void main() {
 	vec3 diff = vec3( 0.0, 0.0, 0.0 );
 	if ( LDotN > 0.0 ) {
         diff = color * LDotN;
-	} 
+	} else { 
+		diff = color * -LDotN;
+	}
 	
     vec4 newColor = vec4(diff, 1.0);
     frag_color = clamp(newColor, 0.0, 1.0);

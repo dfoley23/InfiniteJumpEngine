@@ -259,67 +259,45 @@ public:
 		colors.push_back(b);
 	}
 
-	void createCube( float width, float height, float depth, float x, float y, float z, float r, float g, float b ) {
-		//top face
-		createXZPlane( width, -depth, x, y+height, z, r, g, b );
-		//front face
-		createXYPlane( width, height, x, y, z, r, g, b );
-		//back face
-		createXYPlane( -width, height, x+width, y, z-depth, r, g, b );
-		//left face
-		createZYPlane( height, depth, x, y, z-depth, r, g, b );
-		//right face
-		createZYPlane( height, -depth, x+width, y, z, r, g, b );
-		//bottom face
-		createXZPlane( width, depth, x, y, z-depth, r, g, b );
+	void createYCube( float depth, float height, 
+		glm::vec3 vert0, glm::vec3 vert1, 
+		glm::vec3 color ) {
+			glm::vec3 vert2 = glm::vec3( vert1.x, vert1.y + height, vert1.z );
+			glm::vec3 tangent = vert1 - vert0;
+			glm::vec3 bitangent = vert2 - vert0;
+			glm::vec3 norm = glm::normalize( glm::cross( tangent, bitangent ) );
+
+			glm::vec3 perpDepth = glm::vec3 ( -norm.x * depth, -norm.y, -norm.z * depth );
+			glm::vec3 zeroDepth = glm::vec3 ( 0, 0, 0 );
+			//top face
+			createPlane( perpDepth, 0, vert0.x, vert0.y+height, vert0.z, vert2.x, vert2.y, vert2.z, color );
+			//front face
+			createPlane( zeroDepth, height, vert0.x, vert0.y, vert0.z, vert1.x, vert1.y, vert1.z, color );
+			//back face
+			createPlane( zeroDepth, height, vert1.x+perpDepth.x, vert1.y, vert1.z+perpDepth.z, 
+				vert0.x+perpDepth.x, vert0.y, vert0.z+perpDepth.z, color );
+			//left face
+			createPlane( zeroDepth, height, vert0.x+perpDepth.x, vert0.y, vert0.z+perpDepth.z, vert0.x, vert0.y, vert0.z, color );
+			//right face
+			createPlane( zeroDepth, height, vert1.x, vert1.y, vert1.z, vert1.x+perpDepth.x, vert1.y, vert1.z+perpDepth.z, color );
+			//bottom face
+			createPlane( perpDepth, 0, vert1.x, vert1.y, vert1.z, vert0.x, vert0.y, vert0.z, color );
 	}
 
-	void createXYPlane( float width, float height, float x, float y, float z, float r, float g, float b ) {
-		glm::vec3 vert0 = glm::vec3( x, y, z );
-		glm::vec3 vert1 = glm::vec3( x + width, y, z );
-		glm::vec3 vert2 = glm::vec3( x + width, y + height, z);
+	void createPlane( glm::vec3 perpDepth, float height, float x1, float y1, float z1, float x2, float y2, float z2, glm::vec3 color ) {
+		glm::vec3 vert0 = glm::vec3( x1, y1, z1 );
+		glm::vec3 vert1 = glm::vec3( x2, y2, z2 );
+		glm::vec3 vert2 = glm::vec3( x2 + perpDepth.x, y2+height, z2 + perpDepth.z );
 		glm::vec3 tangent = vert1 - vert0;
 		glm::vec3 bitangent = vert2 - vert0;
 		glm::vec3 norm = glm::cross( tangent, bitangent );
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
+		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
 
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( x, y + height, z, norm.x, norm.y, norm.z, r, g, b ); 
-	}
-
-	void createZYPlane( float height, float depth, float x, float y, float z, float r, float g, float b ) {
-		glm::vec3 vert0 = glm::vec3( x, y, z );
-		glm::vec3 vert1 = glm::vec3( x, y, z + depth );
-		glm::vec3 vert2 = glm::vec3( x, y + height, z + depth );
-		glm::vec3 tangent = vert1 - vert0;
-		glm::vec3 bitangent = vert2 - vert0;
-		glm::vec3 norm = glm::cross( tangent, bitangent );
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
-
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( x, y + height, z , norm.x, norm.y, norm.z, r, g, b ); 
-	}
-
-	void createXZPlane( float width, float depth, float x, float y, float z, float r, float g, float b ) {
-		glm::vec3 vert0 = glm::vec3( x, y, z );
-		glm::vec3 vert1 = glm::vec3( x + width, y, z );
-		glm::vec3 vert2 = glm::vec3( x + width, y, z + depth );
-		glm::vec3 tangent = vert1 - vert0;
-		glm::vec3 bitangent = vert2 - vert0;
-		glm::vec3 norm = glm::cross( tangent, bitangent );
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
-
-		addVert( x, y, z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, r, g, b ); 
-		addVert( x, y, z + depth, norm.x, norm.y, norm.z, r, g, b ); 
+		addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
+		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
+		addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z ); 
 	}
 
 	/**

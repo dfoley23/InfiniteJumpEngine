@@ -78,25 +78,26 @@ void Game::setupInterface(){
 	glui->set_main_gfx_window( main_window );
 
 	GLUI_Panel *main_panel = glui->add_panel("Golf Cup Interface");
-	
+
+	float speed = 0.1f;
 	GLUI_Translation *translation_x = glui->add_translation_to_panel( main_panel, "Cup Translation X", GLUI_TRANSLATION_X, &transX );
-	translation_x->set_speed( 0.1 );
+	translation_x->set_speed( speed );
 	GLUI_Translation *translation_y = glui->add_translation_to_panel( main_panel, "Cup Translation Y", GLUI_TRANSLATION_Y, &transY );
-	translation_y->set_speed( 0.1 );
+	translation_y->set_speed( speed );
 	GLUI_Translation *translation_z = glui->add_translation_to_panel( main_panel, "Cup Translation Z", GLUI_TRANSLATION_Z, &transZ );
-	translation_z->set_speed( 0.1 );
+	translation_z->set_speed( speed );
 
 	/*
 	GLUI_Spinner *trans1_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on x-axis:", GLUI_SPINNER_FLOAT, &transX );
+	glui->add_spinner_to_panel( main_panel, "Cup position on x-axis:", GLUI_SPINNER_FLOAT, &transX );
 	trans1_spinner->set_float_limits(-5, 5);
-	
+
 	GLUI_Spinner *trans2_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on y-axis:", GLUI_SPINNER_FLOAT, &transY );
+	glui->add_spinner_to_panel( main_panel, "Cup position on y-axis:", GLUI_SPINNER_FLOAT, &transY );
 	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on z-axis:", GLUI_SPINNER_FLOAT, &transZ );
+	glui->add_spinner_to_panel( main_panel, "Cup position on z-axis:", GLUI_SPINNER_FLOAT, &transZ );
 	trans3_spinner->set_float_limits(-5, 5);
 	*/
 
@@ -123,7 +124,7 @@ int Game::run(int argc, char** argv){
 	level->camera->proj = glm::perspective(
 		glm::float_t(45),
 		glm::float_t(getGame()->getWinWidth()) / glm::float_t(getGame()->getWinHeight()),
-		glm::float_t(0.1),
+		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
 	level->camera->lightPos = glm::vec3( 0.0, 10.0f, 0.0 );
@@ -146,7 +147,7 @@ Level * Game::buildTestLevel( ) {
 
 	vector<int> noNeighbors;
 	Entity * entity = new Entity();
-	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75, 0));
+	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75f, 0));
 	TileSet * tileSet = new TileSet();
 	tileSet->addTile(groundTile);
 	//entity->addComponent(tileSet);
@@ -154,18 +155,17 @@ Level * Game::buildTestLevel( ) {
 	level->addEntity(entity);
 
 	Entity * cupEntity = new Entity( );
-	Mesh * cup = new Mesh( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
-	float x = 0.5;
-	float y = 0;
-	float z = 0.5;
+	Mesh * cup = new Mesh( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+	float x = 0.5f;
+	float y = 0.0f;
+	float z = 0.5f;
 	//cup mesh
-	cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-	cup->addVert( x+0.5, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-	cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
 
-	cup->addVert( x, y, z, 0, 1, 0, 0.5, 0.5, 0.5 ); 
-	cup->addVert( x+0.5, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );
-	cup->addVert( x, y, z-0.5, 0, 1, 0, 0.5, 0.5, 0.5 );  
+	glm::vec3 vert0 = glm::vec3( x, y, z );
+	glm::vec3 vert1 = glm::vec3( x, y, z+0.25f );
+	glm::vec3 color = glm::vec3( 0, 0, 0 );
+	cup->createYCube( 0.25f, 0.002f, vert0, vert1, color );
+
 	cupEntity->addComponent( cup );
 	level->addEntity( cupEntity );
 	level->cupMeshToMove = cup;

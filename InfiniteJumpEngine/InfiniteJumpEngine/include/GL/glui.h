@@ -876,7 +876,7 @@ public:
     void         restore_window( int orig );
     void         translate_and_draw_front( void );
     void         translate_to_origin( void ) 
-    {glTranslatef((float)x_abs+.5,(float)y_abs+.5,0.0);}
+    {glTranslatef(static_cast<float>(x_abs+.5),static_cast<float>(y_abs+.5),static_cast<float>(0.0));}
     virtual void draw( int x, int y )=0;
     void         set_font( void *new_font );
     void        *get_font( void );

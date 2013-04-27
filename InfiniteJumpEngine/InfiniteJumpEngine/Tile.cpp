@@ -77,7 +77,7 @@ Mesh* Tile::generateMesh(){
 	for (int e = 0; e < static_cast<int>(neighbors.size()); e++){
 		if (neighbors.at(e) == Tile::NO_NEIGHBOR){
 			vert0 = verts[e];
-			if (e < neighbors.size()-1){
+			if (e < static_cast<int>(neighbors.size())-1){
 				vert1 = verts[e+1];
 			} else {
 				vert1 = verts[0];
@@ -94,17 +94,21 @@ Mesh* Tile::generateMesh(){
 			bitangent = vert3 - vert1;
 			norm = glm::cross( tangent, bitangent );
 
+			out->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
+
+			/*
+			// facing the tile
 			//Face 1: 0 -> 1 -> 2
 			out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
 			out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
 			out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-
 			//Face 2: 1 -> 2 -> 3
 			out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
 			out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			out->addVert(vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
+			out->addVert(vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );*/
+
 		}
 	}
-	out->setShader( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
+	out->setShader( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
 	return out;
 }
