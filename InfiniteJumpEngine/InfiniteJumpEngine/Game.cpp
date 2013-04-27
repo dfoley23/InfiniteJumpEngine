@@ -51,7 +51,7 @@ void Game::display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	level->cupMeshToMove->rotate( rotX, rotY, 0 );
+	level->cupMeshToMove->rotate( rotX, rotY, 0);
 	level->cupMeshToMove->translate( transX, transY, transZ );
 	if (level){
 		level->update(0.0f);
