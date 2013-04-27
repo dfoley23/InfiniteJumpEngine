@@ -89,10 +89,10 @@ Level* ResManager::getTriangleLevel(string filename){
 				float y = static_cast<float>(atof( str_y.c_str( ) ));
 				float z = static_cast<float>(atof( str_z.c_str( ) ));
 				//cup mesh
-				glm::vec3 vert0 = glm::vec3( x, y, z );
-				glm::vec3 vert1 = glm::vec3( x, y, z+0.25f );
+				glm::vec3 vert0 = glm::vec3( x+0.15f, y, z+0.15f );
+				glm::vec3 vert1 = glm::vec3( x+0.15f, y, z-0.15f );
 				glm::vec3 color = glm::vec3( 0, 0, 0 );
-				cup->createYCube( 0.25f, 0.002f, vert0, vert1, color );
+				cup->createYCube( 0.3f, 0.002f, vert0, vert1, color );
 
 				cupEntity->addComponent( cup );
 				level->addEntity( cupEntity );
