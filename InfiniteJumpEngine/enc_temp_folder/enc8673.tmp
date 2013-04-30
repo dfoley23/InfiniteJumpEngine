@@ -104,8 +104,8 @@ public:
 	*/
 	void rotate( float x, float y, float z ) {
 		glm::mat4 rotateX = glm::rotate( glm::mat4( ), x, glm::vec3( 1, 0, 0 ) );
-		glm::mat4 rotateY = glm::rotate( glm::mat4( ), y, glm::vec3( 0, 1, 0 ) );
-		glm::mat4 rotateZ = glm::rotate( glm::mat4( ), z, glm::vec3( 0, 0, 1 ) );
+		glm::mat4 rotateY = glm::rotate( rotateX, y, glm::vec3( 0, 1, 0 ) );
+		glm::mat4 rotateZ = glm::rotate( rotate, z, glm::vec3( 0, 0, 1 ) );
 		rotations = glm::mat4( );
 		rotations = rotateX * rotateY * rotateZ;
 	}

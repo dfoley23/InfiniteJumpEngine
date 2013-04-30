@@ -42,7 +42,7 @@ int main(int argc, char** argv){
 	glutInit(&argc, argv);
 
 	setupGLUT();
-
+	
 	setupInterface( );
 
 	/* We register the idle callback with GLUI, *not* with GLUT */

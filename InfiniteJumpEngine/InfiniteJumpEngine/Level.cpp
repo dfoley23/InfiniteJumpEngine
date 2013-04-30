@@ -15,6 +15,7 @@ Level::~Level ( ) {
 // Methods
 //  
 void Level::update(float dT){
+	camera->update( dT );
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
 		(*it)->update( dT );
 	}

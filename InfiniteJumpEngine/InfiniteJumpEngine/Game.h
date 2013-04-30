@@ -62,6 +62,12 @@ protected:
 	float   transZ;
 	float   rotX;
 	float   rotY;
+	float   camEyeX;
+	float   camEyeY;
+	float   camEyeZ;
+	float   camLookAtX;
+	float   camLookAtY;
+	float   camLookAtZ;
 };
 
 #endif

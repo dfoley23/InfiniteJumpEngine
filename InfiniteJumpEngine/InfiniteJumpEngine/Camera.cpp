@@ -5,7 +5,7 @@
 //  
 
 Camera::Camera ( ) {
-initAttributes();
+	initAttributes();
 }
 
 Camera::~Camera ( ) { 
@@ -16,7 +16,6 @@ Camera::~Camera ( ) {
 // Methods
 //  
 void Camera::update (float dT){
-
 }
 
 
@@ -28,4 +27,5 @@ void Camera::update (float dT){
 //  
 
 void Camera::initAttributes ( ) {
+
 }
