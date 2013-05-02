@@ -4,8 +4,6 @@
 #include "Drawable.h"
 #include <vector>
 
-class Game;
-
 class Component: public Drawable
 {
 public:

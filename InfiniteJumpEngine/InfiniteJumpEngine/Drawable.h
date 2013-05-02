@@ -4,6 +4,8 @@
 #include "Updatable.h"
 #include "Camera.h"
 
+class Camera;
+
 class Drawable : public Updatable
 {
 public:

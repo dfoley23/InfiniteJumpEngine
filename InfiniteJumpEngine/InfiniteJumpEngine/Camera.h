@@ -2,11 +2,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#define GLM_SWIZZLE
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/matrix_access.hpp>
+#include "Component.h"
+#include "glIncludes.h"
 
 class Camera
 {
