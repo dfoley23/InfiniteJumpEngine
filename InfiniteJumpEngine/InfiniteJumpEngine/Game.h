@@ -2,12 +2,12 @@
 #define GAME_H
 
 #include <vector>
+#include "Component.h"
 #include "glIncludes.h"
 #include "ResManager.h"
 #include "Level.h"
-#include "Component.h"
 
-class Component; class ResManager;
+class ResManager;
 
 class Game: public Component
 {

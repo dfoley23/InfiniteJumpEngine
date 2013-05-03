@@ -88,9 +88,11 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glew.c" />
+    <ClCompile Include="KinematicComponent.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshBatch.cpp" />
     <ClCompile Include="ResManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -103,6 +105,9 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="glIncludes.h" />
+    <ClInclude Include="KinematicComponent.h" />
+    <ClInclude Include="MeshBatch.h" />
+    <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Updatable.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Mesh.h" />
