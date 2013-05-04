@@ -109,6 +109,5 @@ Mesh* Tile::generateMesh(){
 
 		}
 	}
-	out->setShader( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
 	return out;
 }

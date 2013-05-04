@@ -57,11 +57,6 @@ void Game::display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);	
 
-	level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
-		glm::vec3( camLookAtX, camLookAtY, camLookAtZ ), glm::vec3( 0, 1, 0 ) );
-
-	level->cupMeshToMove->rotate( rotX, rotY, 0);
-	level->cupMeshToMove->translate( transX, transY, transZ );
 	if (level){
 		level->update(0.0f);
 		level->draw();
@@ -82,7 +77,30 @@ void Game::keyboard(unsigned char key, int x, int y){
 	}
 }
 
-void Game::setupInterface(){
+void Game::glui_callBack( int id ) {
+	switch(id) {
+	case 0:
+		level->cupMeshToMove->translateX( transX );
+		break;
+	case 1:
+		level->cupMeshToMove->translateY( transY );
+		break;
+	case 2:
+		level->cupMeshToMove->translateZ( transZ );
+		break;
+	case 3:
+		level->cupMeshToMove->rotate( rotX, rotY, 0);
+		break;
+	case 4:
+		level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
+			glm::vec3( camLookAtX, camLookAtY, camLookAtZ ), glm::vec3( 0, 1, 0 ) );
+		break;
+	default:
+		break;
+	}
+}
+
+void Game::setupInterface( void(*cb)(int i) ){
 	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
 	glui->set_main_gfx_window( main_window );
 
@@ -90,48 +108,48 @@ void Game::setupInterface(){
 	GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
 
 	GLUI_Spinner *trans1_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on x-axis:", GLUI_SPINNER_FLOAT, &transX );
+		glui->add_spinner_to_panel( main_panel, "Cup position on x-axis:", GLUI_SPINNER_FLOAT, &transX, 0, cb );
 	trans1_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans2_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on y-axis:", GLUI_SPINNER_FLOAT, &transY );
+		glui->add_spinner_to_panel( main_panel, "Cup position on y-axis:", GLUI_SPINNER_FLOAT, &transY, 1, cb );
 	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup position on z-axis:", GLUI_SPINNER_FLOAT, &transZ );
+		glui->add_spinner_to_panel( main_panel, "Cup position on z-axis:", GLUI_SPINNER_FLOAT, &transZ, 2, cb );
 	trans3_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *angleX_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup Angle on x-axis:", GLUI_SPINNER_FLOAT, &rotX);
+		glui->add_spinner_to_panel( main_panel, "Cup Angle on x-axis:", GLUI_SPINNER_FLOAT, &rotX, 3, cb);
 	angleX_spinner->set_float_limits(-360, 360);
 
 	GLUI_Spinner *angleY_spinner =
-		glui->add_spinner_to_panel( main_panel, "Cup Angle on y-axis:", GLUI_SPINNER_FLOAT, &rotY);
+		glui->add_spinner_to_panel( main_panel, "Cup Angle on y-axis:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
 	angleY_spinner->set_float_limits(-360, 360);
 
 	//camera controls
 	GLUI_Spinner *transCam1_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam X pos:", GLUI_SPINNER_FLOAT, &camEyeX );
+		glui->add_spinner_to_panel( cam_panel, "Cam X pos:", GLUI_SPINNER_FLOAT, &camEyeX, 4, cb );
 	transCam1_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *transCam2_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam Y pos:", GLUI_SPINNER_FLOAT, &camEyeY );
+		glui->add_spinner_to_panel( cam_panel, "Cam Y pos:", GLUI_SPINNER_FLOAT, &camEyeY, 4, cb );
 	transCam2_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *transCam3_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam Z pos:", GLUI_SPINNER_FLOAT, &camEyeZ );
+		glui->add_spinner_to_panel( cam_panel, "Cam Z pos:", GLUI_SPINNER_FLOAT, &camEyeZ, 4, cb );
 	transCam3_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamX_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam X angle:", GLUI_SPINNER_FLOAT, &camLookAtX);
+		glui->add_spinner_to_panel( cam_panel, "Cam X angle:", GLUI_SPINNER_FLOAT, &camLookAtX, 4, cb);
 	angleCamX_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamY_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam Y angle:", GLUI_SPINNER_FLOAT, &camLookAtY);
+		glui->add_spinner_to_panel( cam_panel, "Cam Y angle:", GLUI_SPINNER_FLOAT, &camLookAtY, 4, cb);
 	angleCamY_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamZ_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam Z angle:", GLUI_SPINNER_FLOAT, &camLookAtZ);
+		glui->add_spinner_to_panel( cam_panel, "Cam Z angle:", GLUI_SPINNER_FLOAT, &camLookAtZ, 4, cb);
 	angleCamZ_spinner->set_float_limits(-10, 10);
 }
 
@@ -179,7 +197,7 @@ Level * Game::buildTestLevel( ) {
 	level->addEntity(entity);
 
 	Entity * cupEntity = new Entity( );
-	Mesh * cup = new Mesh( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+	Mesh * cup = new Mesh( );
 	float x = 0.5f;
 	float y = 0.0f;
 	float z = 0.5f;

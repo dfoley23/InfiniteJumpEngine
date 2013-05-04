@@ -37,7 +37,8 @@ public:
 	void display();
 	void idle();
 	void keyboard(unsigned char, int, int);
-	void setupInterface();
+	void setupInterface(void(*cb)(int i));
+	void glui_callBack( int id );
 	Game * getGame( ){ return this;	};
 	Level * buildTestLevel( );
 
@@ -62,12 +63,14 @@ protected:
 	float   transZ;
 	float   rotX;
 	float   rotY;
+	bool    cupInput;
 	float   camEyeX;
 	float   camEyeY;
 	float   camEyeZ;
 	float   camLookAtX;
 	float   camLookAtY;
 	float   camLookAtZ;
+	bool    camInput;
 };
 
 #endif

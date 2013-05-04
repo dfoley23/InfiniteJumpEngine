@@ -12,7 +12,6 @@ MeshBatch::~MeshBatch ( ) { }
 // Methods
 //  
 
-
 // Accessor methods
 //  
 

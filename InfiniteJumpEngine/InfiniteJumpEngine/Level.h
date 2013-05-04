@@ -8,6 +8,7 @@
 
 #include "Entity.h"
 #include "Camera.h"
+#include "MeshBatch.h"
 using namespace std;
 /**
 * class Level
@@ -45,6 +46,8 @@ public:
 	void addEntity( Entity * entity );
 
 	Mesh * cupMeshToMove;
+
+	MeshBatch * meshBatch;
 
 private:
 	

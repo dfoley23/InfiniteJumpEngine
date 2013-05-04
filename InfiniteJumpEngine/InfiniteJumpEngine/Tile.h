@@ -27,7 +27,7 @@ public:
 	Mesh *getMesh();
 	Mesh *generateMesh();
 	void deleteMesh();
-	void draw(Camera *camera){getMesh()->draw(camera);};
+	void draw(MeshBatch * batch){getMesh()->draw(batch);};
 	Mesh * mesh;
 private:
 	void buildMesh( );

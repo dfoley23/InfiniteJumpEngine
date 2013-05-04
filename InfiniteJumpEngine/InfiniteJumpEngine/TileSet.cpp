@@ -16,9 +16,9 @@ void TileSet::update(float dT){
 	}
 }
 
-void TileSet::draw( Camera * camera ){
+void TileSet::draw( MeshBatch * batch ){
 	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
-		(*t)->draw(camera);
+		(*t)->draw(batch);
 	}
 }
 

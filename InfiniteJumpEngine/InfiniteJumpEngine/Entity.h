@@ -9,7 +9,7 @@
 
 #include "Component.h"
 #include "Mesh.h"
-#include "Camera.h"
+#include "MeshBatch.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ public:
     virtual ~Entity ( );
 
 	void update( float dT );
-	void draw( Camera * camera );
+	void draw( MeshBatch * batch );
 	void remove( );
 
     /**

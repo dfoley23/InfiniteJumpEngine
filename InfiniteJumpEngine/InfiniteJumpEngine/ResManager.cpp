@@ -56,7 +56,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				tiles->addTile( new Tile( id, verts, neighbors, glm::vec3( 0, 0.7f, 0 ) ) );
 			} else if ( !type.compare( "tee" ) ) {
 				Entity * teeEntity = new Entity( );
-				Mesh * tee = new Mesh( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+				Mesh * tee = new Mesh( );
 				string str_id;
 				string str_x, str_y, str_z;
 				iss >> str_id;
@@ -77,7 +77,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				level->addEntity( teeEntity );
 			} else if ( !type.compare( "cup" ) ) {
 				Entity * cupEntity = new Entity( );
-				Mesh * cup = new Mesh( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+				Mesh * cup = new Mesh( );
 				string str_id;
 				string str_x, str_y, str_z;
 				iss >> str_id;

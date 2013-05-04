@@ -2,14 +2,14 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 #include "Updatable.h"
-#include "Camera.h"
+#include "MeshBatch.h"
 
-class Camera;
+class MeshBatch;
 
 class Drawable : public Updatable
 {
 public:
-	virtual void draw(Camera *){};
+	virtual void draw(MeshBatch *){};
 	virtual long drawOrder(){ return 0; };
 	virtual bool compareDrawOrder(){ return false; };
 };

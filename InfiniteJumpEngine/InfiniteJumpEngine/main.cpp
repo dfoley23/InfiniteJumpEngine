@@ -34,8 +34,12 @@ void setupGLUT() {
 	glutIdleFunc(idle);
 }
 
-void setupInterface( ) {
-	Game::game()->setupInterface();
+void setupInterface( void(*cb)(int i) ) {
+	Game::game()->setupInterface( cb );
+}
+
+void glui_callBack( int i ) {
+	Game::game()->glui_callBack(i);
 }
 
 int main(int argc, char** argv){
@@ -43,7 +47,7 @@ int main(int argc, char** argv){
 
 	setupGLUT();
 	
-	setupInterface( );
+	setupInterface( &glui_callBack );
 
 	/* We register the idle callback with GLUI, *not* with GLUT */
     GLUI_Master.set_glutIdleFunc( idle );

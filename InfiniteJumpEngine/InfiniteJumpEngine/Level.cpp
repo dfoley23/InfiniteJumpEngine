@@ -5,6 +5,7 @@
 
 Level::Level ( ) {
 	camera = new Camera( ); 
+	meshBatch = new MeshBatch( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
 }
 
 Level::~Level ( ) { 
@@ -24,8 +25,12 @@ void Level::update(float dT){
 
 void Level::draw( ){
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
-		(*it)->draw( camera );
+		(*it)->draw( meshBatch );
 	}
+	meshBatch->cam = camera->cam;
+	meshBatch->proj = camera->proj;
+	meshBatch->lightPos = camera->lightPos;
+	meshBatch->draw( );
 }
 
 void Level::clear( ){

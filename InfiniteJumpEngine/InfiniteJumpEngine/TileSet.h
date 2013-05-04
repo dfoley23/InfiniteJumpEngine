@@ -3,7 +3,7 @@
 #include "glIncludes.h"
 #include "Tile.h"
 #include "Component.h"
-#include "Camera.h"
+#include "MeshBatch.h"
 using std::vector;
 
 class Tile;
@@ -18,7 +18,7 @@ public:
 	virtual ~TileSet(void);
 
 	void update(float);
-	void draw( Camera * );
+	void draw( MeshBatch * );
 	void addTile(unsigned int, vector<glm::vec3>, vector<unsigned int>);
 	void addTile( Tile * );
 protected:

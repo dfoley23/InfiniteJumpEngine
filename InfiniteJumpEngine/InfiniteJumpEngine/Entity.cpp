@@ -21,9 +21,9 @@ void Entity::update (float dT){
 	}
 }
 
-void Entity::draw ( Camera * camera ){
+void Entity::draw ( MeshBatch * batch ){
 	for (componentIter c = components.begin(); c != components.end(); c++){
-		(*c)->draw(camera);
+		(*c)->draw(batch);
 	}
 }
 
