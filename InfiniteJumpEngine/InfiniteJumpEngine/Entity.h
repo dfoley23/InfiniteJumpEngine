@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Component.h"
+#include "TransformComponent.h"
 #include "Mesh.h"
 #include "MeshBatch.h"
 
@@ -61,6 +62,8 @@ public:
     glm::vec3 getCenter ( )     {
         return center;
     }
+
+	glm::mat4 transform(glm::mat4);
 protected:
 
 	
@@ -74,6 +77,7 @@ protected:
     // Protected attributes
     //  
 	componentVector components;
+	TransformComponent* tform;
     glm::vec3 center;
 
 };

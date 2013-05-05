@@ -1,11 +1,16 @@
 #include "KinematicComponent.h"
 
 
-KinematicComponent::KinematicComponent(void): position(0.f,0.f,0.f)
+KinematicComponent::KinematicComponent(void)
 {
 	
 }
 
 glm::mat4 KinematicComponent::getTransform(){
-	return glm::translate(glm::mat4(), position);
+	return loc.getTransform();
+}
+
+void KinematicComponent::update(float dT){
+	vel = vel + (acc * dT);
+	loc = loc + (vel * dT);
 }

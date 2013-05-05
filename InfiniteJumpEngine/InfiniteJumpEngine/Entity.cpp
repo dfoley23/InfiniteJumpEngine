@@ -27,6 +27,17 @@ void Entity::draw ( MeshBatch * batch ){
 	}
 }
 
+glm::mat4 Entity::transform(glm::mat4 in){
+	if (parent){
+		in = parent->transform(in);
+	}
+	if (tform){
+		in = tform->transform(in);
+	}
+	return in;
+}
+
+
 // Accessor methods
 //  
 
@@ -35,5 +46,6 @@ void Entity::draw ( MeshBatch * batch ){
 //  
 
 void Entity::initAttributes ( ) {
+	tform = NULL;
 }
 
