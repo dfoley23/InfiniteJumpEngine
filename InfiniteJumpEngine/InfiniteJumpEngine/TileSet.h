@@ -19,6 +19,7 @@ public:
 
 	void update(float);
 	void draw( MeshBatch * );
+	void drawForPick( MeshBatch *, glm::vec3 pickColors );
 	void addTile(unsigned int, vector<glm::vec3>, vector<unsigned int>);
 	void addTile( Tile * );
 protected:

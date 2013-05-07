@@ -22,6 +22,20 @@ Tile::~Tile ( ) {
 	deleteMesh();
 }
 
+void Tile::draw( MeshBatch * batch ) {
+	getMesh()->draw(batch);
+	for ( int i=0; i<static_cast<int>(edges.size()); i++ ) {
+		edges.at(i)->draw( batch );
+	}
+}
+
+void Tile::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
+	getMesh()->drawForPick(batch, pickColors);
+	for ( int i=0; i<static_cast<int>(edges.size()); i++ ) {
+		edges.at(i)->drawForPick( batch, pickColors );
+	}
+}
+
 int Tile::findNeighbor(unsigned int nid){
 	for (unsigned int e = 0; e < neighbors.size(); e++){
 		if (neighbors[e] == nid)
@@ -76,6 +90,7 @@ Mesh* Tile::generateMesh(){
 	}
 	for (int e = 0; e < static_cast<int>(neighbors.size()); e++){
 		if (neighbors.at(e) == Tile::NO_NEIGHBOR){
+			Mesh * edge = new Mesh( );
 			vert0 = verts[e];
 			if (e < static_cast<int>(neighbors.size())-1){
 				vert1 = verts[e+1];
@@ -94,8 +109,8 @@ Mesh* Tile::generateMesh(){
 			bitangent = vert3 - vert1;
 			norm = glm::cross( tangent, bitangent );
 
-			out->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
-
+			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
+			edges.push_back( edge );
 			/*
 			// facing the tile
 			//Face 1: 0 -> 1 -> 2

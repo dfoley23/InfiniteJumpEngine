@@ -27,8 +27,10 @@ public:
 	Mesh *getMesh();
 	Mesh *generateMesh();
 	void deleteMesh();
-	void draw(MeshBatch * batch){getMesh()->draw(batch);};
+	void draw(MeshBatch * batch);
+	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	Mesh * mesh;
+	vector<Mesh *> edges;
 private:
 	void buildMesh( );
 protected:

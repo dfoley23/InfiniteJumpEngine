@@ -60,6 +60,21 @@ public:
 		}
 	}
 
+	void drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
+		pickId.x = pickColors.x;
+		pickId.y = pickColors.y;
+		pickId.z = pickColors.z;
+		for(int i=0; i < static_cast<int>(verts.size()); i++) {
+			batch->verts.push_back( verts.at(i) );
+			batch->norms.push_back( norms.at(i) );
+			if ( i % 3 == 0 ) {
+				batch->colors.push_back( pickColors.x / 255.0f );
+				batch->colors.push_back( pickColors.y / 255.0f );
+				batch->colors.push_back( pickColors.z / 255.0f );
+			}
+		}
+	}
+
 	void translate (float x, float y, float z )
 	{
 		glm::mat4 t_m = glm::translate( glm::mat4( ), glm::vec3( x, y, z ) );
@@ -71,6 +86,18 @@ public:
 			verts.at(i+2) = transVec.z;
 			i+=2;
 		}
+		//center
+		glm::vec4 oldVec = glm::vec4( center.x, center.y, center.z, 1.0 );
+		glm::vec4 transVec = t_m * oldVec;
+		center = glm::vec3( transVec.x, transVec.y, transVec.z );
+		//max
+		oldVec = glm::vec4( max.x, max.y, max.z, 1.0 );
+		transVec = t_m * oldVec;
+		max = glm::vec3( transVec.x, transVec.y, transVec.z );
+		//min
+		oldVec = glm::vec4( min.x, min.y, min.z, 1.0 );
+		transVec = t_m * oldVec;
+		min = glm::vec3( transVec.x, transVec.y, transVec.z );
 	}
 
 	void translateX (float x )

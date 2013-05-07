@@ -41,13 +41,19 @@ public:
 
 	void draw( );
 
+	void drawForPick( );
+
 	void clear( );
 
 	void addEntity( Entity * entity );
 
-	Mesh * cupMeshToMove;
+	Mesh * pickedMesh;
 
 	MeshBatch * meshBatch;
+
+	MeshBatch * pickBatch;
+
+	vector<Entity *> getEntities( );
 
 private:
 	

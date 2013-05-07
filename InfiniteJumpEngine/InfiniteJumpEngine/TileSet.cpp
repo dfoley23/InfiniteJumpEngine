@@ -22,6 +22,12 @@ void TileSet::draw( MeshBatch * batch ){
 	}
 }
 
+void TileSet::drawForPick( MeshBatch * batch, glm::vec3 pickColors ){
+	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
+		(*t)->drawForPick(batch, pickColors);
+	}
+}
+
 void TileSet::addTile( Tile * tile ) {
 	this->tiles.push_back( tile );
 }

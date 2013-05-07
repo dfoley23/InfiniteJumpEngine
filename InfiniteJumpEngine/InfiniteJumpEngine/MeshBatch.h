@@ -158,10 +158,27 @@ public:
 		return shader;
 	}
 
+	void updatePickColors( ) {
+		pickColors.x++;
+		if ( pickColors.x > 255 ) {
+			pickColors.x = 0; 
+			pickColors.y++;
+			if ( pickColors.y > 255 ) {
+				pickColors.y = 0;
+				pickColors.z++;
+			}
+		}
+	}
+
+	glm::vec3 getPickColors( ) {
+		return pickColors;
+	}
+
 private:
 	glm::mat4 translations;
 	glm::mat4 rotations;
 	glm::mat4 scaling;
+	glm::vec3 pickColors;
 
 	void bindBuffers( ) {
 		//Create buffers for the vertex and normal attribute arrays

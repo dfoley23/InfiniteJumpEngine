@@ -7,7 +7,21 @@
 #include "ResManager.h"
 #include "Level.h"
 
+#define PIXEL(c,x,y,w)	(c[(x)+w*(y)])
+
+#ifdef __BIG_ENDIAN__
+#		define RED(x)		(((x)>>24)&0xFF)
+#		define GREEN(x)	(((x)>>16)&0xFF)
+#		define BLUE(x)	(((x)>> 8)&0xFF)
+#else
+#		define RED(x)		(((x)>> 0)&0xFF)
+#		define GREEN(x)	(((x)>> 8)&0xFF)
+#		define BLUE(x)	(((x)>>16)&0xFF)
+#endif
+
 class ResManager;
+
+typedef unsigned int pixel_t;
 
 class Game: public Component
 {
@@ -35,6 +49,7 @@ public:
 	void setupGLUT();
 	void reshape(int, int);
 	void display();
+	void displayForPick(int, int);
 	void idle();
 	void keyboard(unsigned char, int, int);
 	void setupInterface(void(*cb)(int i));
@@ -62,14 +77,13 @@ protected:
 	float   transZ;
 	float   rotX;
 	float   rotY;
-	bool    cupInput;
 	float   camEyeX;
 	float   camEyeY;
 	float   camEyeZ;
 	float   camLookAtX;
 	float   camLookAtY;
 	float   camLookAtZ;
-	bool    camInput;
+	int    picking;
 };
 
 #endif

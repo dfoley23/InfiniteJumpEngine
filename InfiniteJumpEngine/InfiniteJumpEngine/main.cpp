@@ -21,6 +21,11 @@ void keyboard(unsigned char key, int x, int y) {
 	Game::game()->keyboard(key,x,y);
 }
 
+
+void mouse_click(int button, int state, int x, int y) {
+	Game::game( )->displayForPick(x, y);
+}
+
 //do some GLUT initialization
 void setupGLUT() {
 	Game::game()->setupGLUT();
@@ -30,6 +35,8 @@ void setupGLUT() {
 	glutDisplayFunc(display);
 
 	glutKeyboardFunc(keyboard);
+
+	glutMouseFunc(mouse_click);
 
 	glutIdleFunc(idle);
 }
