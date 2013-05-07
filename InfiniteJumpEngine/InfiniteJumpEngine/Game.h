@@ -39,7 +39,6 @@ public:
 	void keyboard(unsigned char, int, int);
 	void setupInterface(void(*cb)(int i));
 	void glui_callBack( int id );
-	Game * getGame( ){ return this;	};
 	Level * buildTestLevel( );
 
 	static void clear(){

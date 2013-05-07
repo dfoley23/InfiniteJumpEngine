@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glew.c" />
     <ClCompile Include="KinematicComponent.cpp" />
@@ -103,11 +104,12 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="glIncludes.h" />
     <ClInclude Include="KinematicComponent.h" />
     <ClInclude Include="MeshBatch.h" />
-    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Updatable.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Mesh.h" />
