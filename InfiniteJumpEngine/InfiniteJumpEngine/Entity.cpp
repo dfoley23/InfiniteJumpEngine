@@ -27,6 +27,16 @@ void Entity::draw ( MeshBatch * batch ){
 	}
 }
 
+void Entity::drawForPick ( MeshBatch * batch, glm::vec3 pickColors ){
+	for (componentIter c = components.begin(); c != components.end(); c++){
+		(*c)->drawForPick(batch,pickColors);
+	}
+}
+
+componentVector Entity::getComponents( ) {
+	return components;
+}
+
 glm::mat4 Entity::transform(glm::mat4 in){
 	if (parent){
 		in = parent->transform(in);

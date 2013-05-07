@@ -36,6 +36,7 @@ public:
 
 	void update( float dT );
 	void draw( MeshBatch * batch );
+	void drawForPick( MeshBatch * batch, glm::vec3 pickColors );
 	void remove( );
 
     /**
@@ -64,6 +65,8 @@ public:
     }
 
 	glm::mat4 transform(glm::mat4);
+
+	componentVector getComponents( );
 protected:
 
 	

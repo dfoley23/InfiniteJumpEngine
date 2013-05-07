@@ -17,9 +17,13 @@ public:
 			return parent->transform(in);
 		return in;
 	}
+	virtual glm::vec3 getPickId( ) {
+		return pickId;
+	}
 
 protected:
 	Component *parent;
+	glm::vec3 pickId;
 };
 
 typedef std::vector<Component*> componentVector;

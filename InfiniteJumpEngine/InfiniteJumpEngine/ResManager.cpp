@@ -104,7 +104,7 @@ Level* ResManager::getTriangleLevel(string filename){
 
 				cupEntity->addComponent( cup );
 				level->addEntity( cupEntity );
-				level->cupMeshToMove = cup;
+				level->pickedMesh = cup;
 			} else if ( !type.empty( ) ){
 				cerr << "Found a unknown class type in " << filename << endl;
 				return NULL;
@@ -159,7 +159,7 @@ Mesh * ResManager::readObjFile( string filename ) {
 				while ( read ) { 
 					read = iss >> index_str;
 					if ( read ) {
-						int index = atoi( index_str.c_str( ) );
+						int index = atoi( index_str.c_str( ) ) - 1;
 						if ( index < static_cast<int>(vertVals.size( )) ) {
 							if ( count == 0 ) {
 								origin = index;
