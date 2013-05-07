@@ -19,6 +19,7 @@ public:
 	~ResManager(void);
 	Level *getTriangleLevel(string filename);
 	Level *getGolfLevel();
+	Mesh *readObjFile(string filename);
 };
 
 #endif
