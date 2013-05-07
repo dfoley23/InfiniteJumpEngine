@@ -65,10 +65,10 @@ public:
 		glm::mat4 t_m = glm::translate( glm::mat4( ), glm::vec3( x, y, z ) );
 		for(int i=0; i < static_cast<int>(verts.size()); i++) {
 			glm::vec4 oldVec = glm::vec4( verts.at(i), verts.at(i+1), verts.at(i+2), 1.0 );
-			glm::vec4 rotVec = t_m * oldVec;
-			verts.at(i) = rotVec.x;
-			verts.at(i+1) = rotVec.y;
-			verts.at(i+2) = rotVec.z;
+			glm::vec4 transVec = t_m * oldVec;
+			verts.at(i) = transVec.x;
+			verts.at(i+1) = transVec.y;
+			verts.at(i+2) = transVec.z;
 			i+=2;
 		}
 	}
@@ -210,6 +210,10 @@ public:
 		addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
 		addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
 		addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z ); 
+	}
+
+	glm::vec3 getCenter( ) {
+		return center;
 	}
 
 	/**

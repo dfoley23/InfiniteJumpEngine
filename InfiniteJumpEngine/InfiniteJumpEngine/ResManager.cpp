@@ -75,6 +75,14 @@ Level* ResManager::getTriangleLevel(string filename){
 
 				teeEntity->addComponent( tee );
 				level->addEntity( teeEntity );
+
+				//build ball on tee
+				Entity * ballEntity = new Entity( );
+				Mesh * ball = readObjFile( "ballobj.obj" );
+				ball->translate( x+0.05f, y+0.05f, z+0.05f );
+				ballEntity->addComponent( ball );
+				level->addEntity( ballEntity );
+
 			} else if ( !type.compare( "cup" ) ) {
 				Entity * cupEntity = new Entity( );
 				Mesh * cup = new Mesh( );
@@ -107,4 +115,104 @@ Level* ResManager::getTriangleLevel(string filename){
 	} 
 
 	return NULL;
+}
+
+Mesh * ResManager::readObjFile( string filename ) {
+	Mesh * out = new Mesh( );
+
+	string line;
+	ifstream input;
+	string filePath = "Assets/Mesh/";
+	input.open(filePath + filename.c_str( ));
+
+	if ( input.fail( ) ) {
+		cerr << "Unable to open object file " << filename << endl;
+	} else {
+		vector<glm::vec3> vertVals;
+		vector<glm::vec3> colorVals;
+		for( int lineNum=0; !input.eof( ); lineNum++ ) {
+			getline( input, line );
+			istringstream iss(line);
+			string type, str_x, str_y, str_z;
+			iss >> type;
+			if ( !type.compare( "v" ) ) {
+				iss >> str_x;
+				iss >> str_y;
+				iss >> str_z;
+				vertVals.push_back( glm::vec3( static_cast<float>(atof(str_x.c_str( ))), 
+					static_cast<float>(atof(str_y.c_str( ))),
+					static_cast<float>(atof(str_z.c_str( )))) );
+			} else if ( !type.compare( "c" ) ) {
+				iss >> str_x;
+				iss >> str_y;
+				iss >> str_z;
+				colorVals.push_back( glm::vec3( static_cast<float>(atof(str_x.c_str( ))), 
+					static_cast<float>(atof(str_y.c_str( ))),
+					static_cast<float>(atof(str_z.c_str( )))) );
+			} else if ( !type.compare( "f" ) ) {
+				bool read = true;
+				string index_str;
+				int count = 0;
+				int origin;
+				int point1;
+				int point2;
+				while ( read ) { 
+					read = iss >> index_str;
+					if ( read ) {
+						int index = atoi( index_str.c_str( ) );
+						if ( index < static_cast<int>(vertVals.size( )) ) {
+							if ( count == 0 ) {
+								origin = index;
+								count++;
+							} else if ( count == 1 ) {
+								point1 = index;
+								count++;
+							} else {
+								point2 = index;
+								glm::vec3 vert0 = glm::vec3( vertVals.at( origin ).x, vertVals.at( origin ).y, vertVals.at( origin ).z );
+								glm::vec3 vert1 = glm::vec3( vertVals.at( point1 ).x, vertVals.at( point1 ).y, vertVals.at( point1 ).z );
+								glm::vec3 vert2 = glm::vec3( vertVals.at( point2 ).x, vertVals.at( point2 ).y, vertVals.at( point2 ).z );
+								glm::vec3 tangent = vert1 - vert0;
+								glm::vec3 bitangent = vert2 - vert0;
+								glm::vec3 norm = glm::cross( tangent, bitangent );
+								//vert0
+								if ( origin < static_cast<int>(colorVals.size( )) ) {
+									out->addVert( vertVals.at( origin ).x, vertVals.at( origin ).y, vertVals.at( origin ).z, 
+										norm.x, norm.y, norm.z, 
+										colorVals.at( origin ).x, colorVals.at( origin ).y, colorVals.at( origin ).z );
+								} else {
+									out->addVert( vertVals.at( origin ).x, vertVals.at( origin ).y, vertVals.at( origin ).z, 
+										norm.x, norm.y, norm.z, 
+										1, 1, 1 );
+								}
+								//vert1
+								if ( point1 < static_cast<int>(colorVals.size( )) ) {
+									out->addVert( vertVals.at( point1 ).x, vertVals.at( point1 ).y, vertVals.at( point1 ).z, 
+										norm.x, norm.y, norm.z, 
+										colorVals.at( point1 ).x, colorVals.at( point1 ).y, colorVals.at( point1 ).z );
+								} else {
+									out->addVert( vertVals.at( point1 ).x, vertVals.at( point1 ).y, vertVals.at( point1 ).z, 
+										norm.x, norm.y, norm.z, 
+										1, 1, 1 );
+								}
+								//vert2
+								if ( point2 < static_cast<int>(colorVals.size( )) ) {
+									out->addVert( vertVals.at( point2 ).x, vertVals.at( point2 ).y, vertVals.at( point2 ).z, 
+										norm.x, norm.y, norm.z, 
+										colorVals.at( point2 ).x, colorVals.at( point2 ).y, colorVals.at( point2 ).z );
+								} else {
+									out->addVert( vertVals.at( point2 ).x, vertVals.at( point2 ).y, vertVals.at( point2 ).z, 
+										norm.x, norm.y, norm.z, 
+										1, 1, 1 );
+								}
+								point1 = point2;
+								count++;
+							}
+						}
+					}
+				}
+			} 
+		}
+	}
+	return out;
 }
