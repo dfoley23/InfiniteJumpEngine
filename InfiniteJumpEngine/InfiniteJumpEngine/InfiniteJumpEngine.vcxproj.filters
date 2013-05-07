@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{41c3629c-4ed9-462b-900e-eb1afff37d9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TransformComponents">
+      <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="PositionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -101,17 +107,20 @@
     <ClInclude Include="glIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KinematicComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MeshBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="KinematicComponent.h">
+      <Filter>Header Files\TransformComponents</Filter>
+    </ClInclude>
     <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TransformComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixComponent.h">
+      <Filter>Header Files\TransformComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
