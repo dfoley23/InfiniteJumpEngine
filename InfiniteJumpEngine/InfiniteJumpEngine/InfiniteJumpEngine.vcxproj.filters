@@ -12,54 +12,25 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{41c3629c-4ed9-462b-900e-eb1afff37d9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Header Files\TransformComponents">
+      <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glew.c">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TileSet.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResManager.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KinematicComponent.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshBatch.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PositionComponent.cpp">
-      <Filter>Resource Files\Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="glew.c" />
+    <ClCompile Include="KinematicComponent.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshBatch.cpp" />
+    <ClCompile Include="ResManager.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -101,17 +72,17 @@
     <ClInclude Include="glIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KinematicComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MeshBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="KinematicComponent.h">
+      <Filter>Header Files\TransformComponents</Filter>
+    </ClInclude>
     <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TransformComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

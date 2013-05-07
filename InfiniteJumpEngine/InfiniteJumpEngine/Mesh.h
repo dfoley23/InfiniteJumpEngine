@@ -17,6 +17,13 @@ using namespace std;
 * 
 */
 
+/*
+	Note from Kevin: I'm noticing there's a lot of vertex calculation being done on the CPU,
+	when it could be done in the shader instead by just passing in a unique transformation matrix
+	for each mesh. Since we're moving away from hardcoded positions anyway, I figure this could be
+	something to work on.
+*/
+
 class Mesh: public Component {
 public:
 
@@ -43,6 +50,9 @@ public:
 
 
 	void draw( MeshBatch * batch ) {
+		glm::vec3 vert;
+		glm::vec3 norm;
+		glm::vec3 color;
 		for(int i=0; i < static_cast<int>(verts.size()); i++) {
 			batch->verts.push_back( verts.at(i) );
 			batch->norms.push_back( norms.at(i) );

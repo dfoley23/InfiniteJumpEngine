@@ -79,9 +79,9 @@ void Game::displayForPick( int x, int y ) {
 		glReadPixels(0,0,getWinWidth(),getWinHeight(),GL_RGBA,GL_UNSIGNED_BYTE,(void *)pixels);
 
 		pixel_t p = PIXEL(pixels, x, getWinHeight()-y, getWinWidth() );
-		float r = RED(p);
-		float g = GREEN(p);
-		float b = BLUE(p);
+		float r = (float)RED(p);
+		float g = (float)GREEN(p);
+		float b = (float)BLUE(p);
 		if ( r != 0 || g != 0 || b != 0 ) {
 			for(int i = 0; i < static_cast<int>(level->getEntities().size()); i++) {
 				for (int j=0; j< static_cast<int>(level->getEntities().at(i)->getComponents().size()); j++){
@@ -93,7 +93,6 @@ void Game::displayForPick( int x, int y ) {
 				}
 			}
 		}
-		cout << r << " : " << g << " : " << b << endl;
 		free(pixels);
 	}
 }
