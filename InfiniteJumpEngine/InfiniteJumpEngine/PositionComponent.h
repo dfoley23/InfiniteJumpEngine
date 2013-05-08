@@ -6,7 +6,9 @@ class PositionComponent :
 	public TransformComponent
 {
 public:
-	PositionComponent(void);
+	PositionComponent(glm::vec3 n_pos = glm::vec3(0.0f,0.0f,0.0f), 
+					  glm::vec3 n_rot = glm::vec3(0.0f,0.0f,0.0f), 
+					  glm::vec3 n_sca = glm::vec3(1.0f,1.0f,1.0f));
 	~PositionComponent(void);
 	//Translation
 	glm::vec3 getPosition();

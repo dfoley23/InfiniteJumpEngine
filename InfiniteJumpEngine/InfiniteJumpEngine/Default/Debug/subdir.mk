@@ -7,7 +7,9 @@ OBJ_SRCS += \
 ../Debug/Camera.obj \
 ../Debug/Entity.obj \
 ../Debug/Game.obj \
+../Debug/KinematicComponent.obj \
 ../Debug/Level.obj \
+../Debug/LuaBaseComponent.obj \
 ../Debug/Mesh.obj \
 ../Debug/ResManager.obj \
 ../Debug/Shader.obj \

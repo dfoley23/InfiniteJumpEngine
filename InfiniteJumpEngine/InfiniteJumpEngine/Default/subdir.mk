@@ -6,13 +6,17 @@
 CPP_SRCS += \
 ../Camera.cpp \
 ../Entity.cpp \
+../GLDataObject.cpp \
 ../Game.cpp \
+../KinematicComponent.cpp \
 ../Level.cpp \
 ../Mesh.cpp \
 ../ResManager.cpp \
 ../Shader.cpp \
 ../Tile.cpp \
 ../TileSet.cpp \
+../main.Dennis.cpp \
+../main.Kevin.cpp \
 ../main.cpp 
 
 C_SRCS += \
@@ -21,7 +25,9 @@ C_SRCS += \
 OBJS += \
 ./Camera.o \
 ./Entity.o \
+./GLDataObject.o \
 ./Game.o \
+./KinematicComponent.o \
 ./Level.o \
 ./Mesh.o \
 ./ResManager.o \
@@ -29,6 +35,8 @@ OBJS += \
 ./Tile.o \
 ./TileSet.o \
 ./glew.o \
+./main.Dennis.o \
+./main.Kevin.o \
 ./main.o 
 
 C_DEPS += \
@@ -37,13 +45,17 @@ C_DEPS += \
 CPP_DEPS += \
 ./Camera.d \
 ./Entity.d \
+./GLDataObject.d \
 ./Game.d \
+./KinematicComponent.d \
 ./Level.d \
 ./Mesh.d \
 ./ResManager.d \
 ./Shader.d \
 ./Tile.d \
 ./TileSet.d \
+./main.Dennis.d \
+./main.Kevin.d \
 ./main.d 
 
 
@@ -51,14 +63,14 @@ CPP_DEPS += \
 %.o: ../%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -I"/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include" -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -I"C:\Users\Kevin Cameron\workspace\InfiniteJumpEngine\InfiniteJumpEngine\InfiniteJumpEngine\include" -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 %.o: ../%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
-	gcc -I"/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/include" -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	gcc -I"C:\Users\Kevin Cameron\workspace\InfiniteJumpEngine\InfiniteJumpEngine\InfiniteJumpEngine\include" -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

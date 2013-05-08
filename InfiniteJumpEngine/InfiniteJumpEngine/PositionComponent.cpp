@@ -1,11 +1,11 @@
 #include "PositionComponent.h"
 
 
-PositionComponent::PositionComponent(void): 
-	position(0,0,0), 
-	rotation(0,0,0), 
-	scale(1,1,1)
+PositionComponent::PositionComponent(glm::vec3 n_pos, glm::vec3 n_rot, glm::vec3 n_sca)
 {
+	setPosition(n_pos);
+	setRotation(n_rot);
+	setScale(n_sca);
 }
 
 

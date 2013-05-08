@@ -12,7 +12,10 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{41c3629c-4ed9-462b-900e-eb1afff37d9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\TransformComponents">
+    <Filter Include="Header Files\Collision Components">
+      <UniqueIdentifier>{0c553b49-924a-44e0-bfea-51396e799535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Transform Components">
       <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -31,6 +34,11 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="MatrixComponent.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="MeshCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -49,9 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
@@ -75,14 +80,32 @@
     <ClInclude Include="MeshBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="KinematicComponent.h">
-      <Filter>Header Files\TransformComponents</Filter>
+      <Filter>Header Files\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files\TransformComponents</Filter>
+      <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixComponent.h">
+      <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Transform Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
