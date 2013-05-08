@@ -4,7 +4,7 @@
 
 -include ../makefile.init
 
-RM := rm
+RM := del
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -44,7 +44,7 @@ all: InfiniteJumpEngine
 InfiniteJumpEngine: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L"/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/lib" -L"/home/dennis/Desktop/CrossPlatformEngine/InfiniteJumpEngine/InfiniteJumpEngine/InfiniteJumpEngine/lib/x64" -o "InfiniteJumpEngine" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"C:\Users\Kevin Cameron\workspace\InfiniteJumpEngine\InfiniteJumpEngine\InfiniteJumpEngine\lib" -L"C:\Users\Kevin Cameron\workspace\InfiniteJumpEngine\InfiniteJumpEngine\InfiniteJumpEngine\lib\x64" -o "InfiniteJumpEngine" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
