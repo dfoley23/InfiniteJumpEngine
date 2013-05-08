@@ -80,9 +80,6 @@
     <ClInclude Include="MeshBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="KinematicComponent.h">
       <Filter>Header Files\Transform Components</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="MeshCollider.h">
       <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Transform Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
