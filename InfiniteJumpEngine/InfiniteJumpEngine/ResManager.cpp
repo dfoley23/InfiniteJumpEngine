@@ -79,6 +79,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				//build ball on tee
 				Entity * ballEntity = new Entity( );
 				Mesh * ball = readObjFile( "ballobj.obj" );
+				ball->setDynamic( true );
 				ball->translate( x+0.05f, y+0.05f, z+0.05f );
 				ballEntity->addComponent( ball );
 				level->addEntity( ballEntity );
