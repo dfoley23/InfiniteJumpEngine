@@ -48,6 +48,7 @@ public:
 	vector<float> norms;
 	vector<float> colors;
 	vector<float> texCoords;
+	vector<float> pickColors;
 	vector<GLuint> textureNames;
 	glm::mat4 modelView;
 	glm::mat4 translations;
@@ -56,6 +57,7 @@ public:
 	glm::vec3 min;
 	glm::vec3 max;
 	glm::vec3 center;
+	size_t numVerts;
 	bool dynamic;
 
 	/**
@@ -67,6 +69,8 @@ public:
 
 	void drawForPick( MeshBatch * batch, glm::vec3 pickColors );
 
+	void render( MeshBatch * batch, int picking );
+
 	void translate (float x, float y, float z );
 
 	void rotate (float angle, glm::vec3 axis);
@@ -76,6 +80,8 @@ public:
 	void scale (float x, float y, float z );
 
 	void remove ( );
+
+	void bindBuffers( MeshBatch * batch, int picking );
 
 	void setDynamic( bool setting );
 

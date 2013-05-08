@@ -28,6 +28,7 @@ void Mesh::draw( MeshBatch * batch ) {
 	glm::vec3 color;
 	int index = 0;
 	if ( dynamic ) {
+		//render( batch, 1 );
 		batch->verts.resize( batch->verts.size( ) + 1 );
 		batch->norms.resize( batch->norms.size( ) + 1 );
 		batch->colors.resize( batch->colors.size( ) + 1 );
@@ -35,20 +36,23 @@ void Mesh::draw( MeshBatch * batch ) {
 		modelView = glm::mat4( );
 		modelView = translations * rotations * scaling; 
 		batch->modelViews.push_back( modelView );
-	}
-	for(int i=0; i < static_cast<int>(verts.size()); i++) {
-		batch->verts.at(index).push_back( verts.at(i) );
-		batch->norms.at(index).push_back( norms.at(i) );
-		batch->colors.at(index).push_back( colors.at(i) );
+		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
+		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
+		batch->colors.at(index).insert( batch->colors.at(index).end(), colors.begin(), colors.end() );
+	} else {
+		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
+		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
+		batch->colors.at(index).insert( batch->colors.at(index).end(), colors.begin(), colors.end() );
 	}
 }
 
-void Mesh::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
-	pickId.x = pickColors.x;
-	pickId.y = pickColors.y;
-	pickId.z = pickColors.z;
+void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
+	pickId.x = id.x;
+	pickId.y = id.y;
+	pickId.z = id.z;
 	int index = 0;
-	if ( dynamic ) {
+	if ( dynamic ) {	
+		//render( batch, 0 );
 		batch->verts.resize( batch->verts.size( ) + 1 );
 		batch->norms.resize( batch->norms.size( ) + 1 );
 		batch->colors.resize( batch->colors.size( ) + 1 );
@@ -56,16 +60,58 @@ void Mesh::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
 		modelView = glm::mat4( );
 		modelView = translations * rotations * scaling; 
 		batch->modelViews.push_back( modelView );
-	}
-	for(int i=0; i < static_cast<int>(verts.size()); i++) {
-		batch->verts.at(index).push_back( verts.at(i) );
-		batch->norms.at(index).push_back( norms.at(i) );
-		if ( i % 3 == 0 ) {
-			batch->colors.at(index).push_back( pickColors.x / 255.0f );
-			batch->colors.at(index).push_back( pickColors.y / 255.0f );
-			batch->colors.at(index).push_back( pickColors.z / 255.0f );
+		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
+		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
+		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
+			batch->colors.at(index).push_back( id.x / 255.0f );
+			batch->colors.at(index).push_back( id.y / 255.0f );
+			batch->colors.at(index).push_back( id.z / 255.0f );
+		}
+		/*for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
+			pickColors.push_back( id.x / 255.0f );
+			pickColors.push_back( id.y / 255.0f );
+			pickColors.push_back( id.z / 255.0f );
+		}
+		pickColors.clear();*/
+	} else {
+		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
+		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
+		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
+			batch->colors.at(index).push_back( id.x / 255.0f );
+			batch->colors.at(index).push_back( id.y / 255.0f );
+			batch->colors.at(index).push_back( id.z / 255.0f );
 		}
 	}
+}
+
+void Mesh::render( MeshBatch * batch, int picking ) {
+	glUseProgram(batch->shader->program);
+
+	bindBuffers( batch, picking );
+	glm::mat4 modelCam = batch->cam * modelView;
+
+	glm::mat3 normalMatrix(modelCam);
+	normalMatrix = glm::inverse(normalMatrix);
+	normalMatrix = glm::transpose(normalMatrix);
+
+	glUniformMatrix4fv(batch->shader->modelViewLoc, 1, GL_FALSE, glm::value_ptr(modelCam));
+	glUniformMatrix4fv(batch->shader->projectionLoc, 1, GL_FALSE, glm::value_ptr(batch->proj));
+	glUniformMatrix3fv(batch->shader->normalMatLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+	glUniform3fv( batch->shader->lightPosLoc, 1, glm::value_ptr(batch->lightPos));
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->vertexBuffer); 
+	glEnableVertexAttribArray(batch->shader->vertexLoc); 
+	glVertexAttribPointer(batch->shader->vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->normalBuffer);
+	glEnableVertexAttribArray(batch->shader->normalLoc);
+	glVertexAttribPointer(batch->shader->normalLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->colorBuffer);
+	glEnableVertexAttribArray(batch->shader->colorLoc);
+	glVertexAttribPointer(batch->shader->colorLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glDrawArrays(GL_TRIANGLES, 0, numVerts);
 }
 
 /**
@@ -218,6 +264,24 @@ uniforms = new_var;
 return uniforms;
 }*/
 
+void Mesh::bindBuffers( MeshBatch * batch, int picking ) {
+	//Create buffers for the vertex and normal attribute arrays
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_DYNAMIC_DRAW );
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->normalBuffer);
+	glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_DYNAMIC_DRAW );
+
+	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->colorBuffer);
+	if ( picking ) {
+		glBufferData( GL_ARRAY_BUFFER,pickColors.size() * sizeof(float), pickColors.data(),GL_DYNAMIC_DRAW );
+	} else {
+		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_DYNAMIC_DRAW );
+	}
+
+	numVerts = verts.size() / 3;
+}
 
 void Mesh::initAttributes ( ) {
 	dynamic = false;
