@@ -83,7 +83,8 @@ protected:
 	float   camLookAtX;
 	float   camLookAtY;
 	float   camLookAtZ;
-	int    picking;
+	int     cameraProfile;
+	int     picking;
 };
 
 #endif

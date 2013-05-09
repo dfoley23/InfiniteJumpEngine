@@ -124,6 +124,9 @@ void Mesh::translate (float x, float y, float z )
 	dynamic = true;
 	translations = glm::mat4();
 	translations = glm::translate( glm::mat4( ), glm::vec3( x, y, z ) );
+	center.x = x;
+	center.y = y;
+	center.z = z;
 }
 
 

@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "glIncludes.h"
 #include "Tile.h"
+#include "KinematicComponent.h"
 
 class ResManager: public Component
 {

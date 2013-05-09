@@ -82,7 +82,9 @@ Level* ResManager::getTriangleLevel(string filename){
 				ball->setDynamic( true );
 				ball->translate( x+0.05f, y+0.05f, z+0.05f );
 				ballEntity->addComponent( ball );
+				ballEntity->addComponent( new KinematicComponent( ) );
 				level->addEntity( ballEntity );
+				level->pickedMesh = ball;
 
 			} else if ( !type.compare( "cup" ) ) {
 				Entity * cupEntity = new Entity( );
@@ -105,7 +107,6 @@ Level* ResManager::getTriangleLevel(string filename){
 
 				cupEntity->addComponent( cup );
 				level->addEntity( cupEntity );
-				level->pickedMesh = cup;
 			} else if ( !type.empty( ) ){
 				cerr << "Found a unknown class type in " << filename << endl;
 				return NULL;

@@ -23,6 +23,7 @@ Game::Game(void)
 	camLookAtY = 0.0f;
 	camLookAtZ = 0.0f;
 	picking = 0;
+	cameraProfile = 4;
 }
 
 
@@ -49,7 +50,7 @@ void Game::reshape(int w, int h){
 			glm::float_t(WIN_WIDTH) / glm::float_t(WIN_HEIGHT),
 			glm::float_t(0.1),
 			glm::float_t(1000.0)
-			);
+			);	
 	}
 }
 
@@ -57,6 +58,32 @@ void Game::display(){
 	glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);	
+
+	//update camera 
+	switch( cameraProfile ) {
+	case 0:
+		level->camera->cam = glm::lookAt( glm::vec3( level->pickedMesh->getCenter().x, 
+			level->pickedMesh->getCenter().y + 0.25f,
+			level->pickedMesh->getCenter().z + 0.25f ),
+			level->pickedMesh->getCenter(), glm::vec3( 0, 1, 0 ) );
+		break;
+	case 1:
+		level->camera->cam = glm::lookAt( glm::vec3( level->pickedMesh->getCenter().x, 
+			level->pickedMesh->getCenter().y,
+			level->pickedMesh->getCenter().z-0.05f ),
+			glm::vec3( level->pickedMesh->getCenter().x, 
+			level->pickedMesh->getCenter().y,
+			level->pickedMesh->getCenter().z-1.0f ), glm::vec3( 0, 1, 0 ) );
+		break;
+	case 2:
+		level->camera->cam = glm::lookAt( glm::vec3( level->pickedMesh->getCenter().x, 
+			level->pickedMesh->getCenter().y+6.0f,
+			level->pickedMesh->getCenter().z ),
+			level->pickedMesh->getCenter(), glm::vec3( 0, 0, 1 ) );
+		break;
+	default:
+		break;
+	}
 
 	if (level){
 		level->update(0.0f);
@@ -88,7 +115,7 @@ void Game::displayForPick( int x, int y ) {
 					if ( level->getEntities().at(i)->getComponents().at(j)->getPickId().x == r && 
 						level->getEntities().at(i)->getComponents().at(j)->getPickId().y == g && 
 						level->getEntities().at(i)->getComponents().at(j)->getPickId().z == b ) {
-						level->pickedMesh = (Mesh*)(level->getEntities().at(i)->getComponents().at(j));
+							level->pickedMesh = (Mesh*)(level->getEntities().at(i)->getComponents().at(j));
 					}
 				}
 			}
@@ -114,11 +141,14 @@ void Game::glui_callBack( int id ) {
 	case 0:
 		level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
 			glm::vec3( camLookAtX, camLookAtY, camLookAtZ ), glm::vec3( 0, 1, 0 ) );
+		cameraProfile = 4;
 		break;
 	case 1:
-		level->pickedMesh->translate( transX, transY, transZ );
 		break;
 	case 2:
+		level->pickedMesh->translate( transX, transY, transZ );
+		break;
+	case 3:
 		level->pickedMesh->rotate( rotX, rotY, 0);
 		break;
 	default:
@@ -130,11 +160,17 @@ void Game::glui_callBack( int id ) {
 void Game::setupInterface( void(*cb)(int i) ){
 	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
 	glui->set_main_gfx_window( main_window );
-	
+
 	GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
 	GLUI_Panel *mesh_panel = glui->add_panel("Move Selected Mesh ");
+	GLUI_RadioGroup *camProfiles= glui->add_radiogroup_to_panel( cam_panel, &cameraProfile, 1, cb );
 
 	//camera controls
+	//profiles
+	GLUI_RadioButton *thirdPersonCamera = glui->add_radiobutton_to_group( camProfiles, "Third Person View" );
+	GLUI_RadioButton *firstPersonCamera = glui->add_radiobutton_to_group( camProfiles, "First Person View" );
+	GLUI_RadioButton *topDownCamera = glui->add_radiobutton_to_group( camProfiles, "Top Down View" );
+
 	GLUI_Spinner *transCam1_spinner =
 		glui->add_spinner_to_panel( cam_panel, "Cam eye X:", GLUI_SPINNER_FLOAT, &camEyeX, 0, cb );
 	transCam1_spinner->set_float_limits(-10, 10);
@@ -163,23 +199,23 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_Checkbox *picking_check = glui->add_checkbox_to_panel(  mesh_panel, "pick mode", &picking );
 
 	GLUI_Spinner *trans1_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh x pos:", GLUI_SPINNER_FLOAT, &transX, 1, cb );
+		glui->add_spinner_to_panel( mesh_panel, "mesh x pos:", GLUI_SPINNER_FLOAT, &transX, 2, cb );
 	trans1_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans2_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 1, cb );
+		glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 2, cb );
 	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 1, cb );
+		glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 2, cb );
 	trans3_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *angleX_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 2, cb);
+		glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 3, cb);
 	angleX_spinner->set_float_limits(-360, 360);
 
 	GLUI_Spinner *angleY_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 2, cb);
+		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
 	angleY_spinner->set_float_limits(-360, 360);
 
 }
@@ -201,6 +237,11 @@ int Game::run(int argc, char** argv){
 		glm::float_t(1000.0)
 		);
 	level->camera->lightPos = glm::vec3( 0.0, 100.0f, -3.0 );
+
+
+	transX = level->pickedMesh->getCenter().x;
+	transY = level->pickedMesh->getCenter().y;
+	transZ = level->pickedMesh->getCenter().z;
 
 	glutMainLoop();
 	return 0;
