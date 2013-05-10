@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "Camera.h"
 #include "MeshBatch.h"
+#include "Ball.h"
 using namespace std;
 /**
 * class Level
@@ -52,6 +53,8 @@ public:
 	MeshBatch * meshBatch;
 
 	MeshBatch * pickBatch;
+
+	Ball * ball;
 
 	vector<Entity *> getEntities( );
 

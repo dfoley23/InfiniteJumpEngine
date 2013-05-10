@@ -27,6 +27,7 @@ public:
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	PointCollider * pCollider;
+	void applyImpulse( glm::vec3 impulse );
 	KinematicComponent * kinematics;
 private:
 	Mesh * mesh;

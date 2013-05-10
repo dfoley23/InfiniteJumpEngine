@@ -15,64 +15,13 @@ Ball::~Ball ( ) {
 	deleteMesh();
 }
 
+
+void Ball::applyImpulse( glm::vec3 impulse ) {
+	kinematics->applyImpulse( impulse );
+}
+
 void Ball::update( float dT ) {
-	pCollider->point = getMesh()->center;
-	bool isCollided = false;
-	Tile * checkTile = currentTile;
-	BoxCollider * tileCollider = new BoxCollider();
-	glm::vec3 pos;
-	glm::vec3 dim;
-	//TODO make this only test neighbors in the direction of the ball
-	int recurseNeighbor = 0;
-	while ( !isCollided && recurseNeighbor < currentTile->getNeighborCount() ) {
-		pos = glm::vec3 ( checkTile->getMesh()->min.x, -100, checkTile->getMesh()->min.z );
-		dim = glm::vec3 ( checkTile->getMesh()->max.x, 100, checkTile->getMesh()->max.z );
-		tileCollider->setPos( pos );
-		tileCollider->setDim( dim );
-		isCollided = pCollider->isColliding( tileCollider );
-		if ( !isCollided ) {
-			for ( int i=0; i < checkTile->getNeighborCount(); i++ ) {
-				//TODO make this only test neighbors in the direction of the ball
-				int neighbor = checkTile->getNeighbor( i );
-				if ( neighbor != Tile::NO_NEIGHBOR && neighbor != currentTile->getTileId() ) {
-					pos = glm::vec3 ( tileSet->getTile( neighbor )->getMesh()->min.x, 
-						-100, 
-						tileSet->getTile( neighbor )->getMesh()->min.z );
-					dim = glm::vec3 ( tileSet->getTile( neighbor )->getMesh()->max.x, 
-						100, 
-						tileSet->getTile( neighbor )->getMesh()->max.z );
-					tileCollider->setPos( pos );
-					tileCollider->setDim( dim );
-					isCollided = pCollider->isColliding( tileCollider );
-					if ( isCollided ) {
-						checkTile = tileSet->getTile( neighbor );
-						cout << "the ball switched tiles and is now on tile number: " << neighbor << endl;
-						break;
-					}
-				}
-			}
-		} else {	
-			//cout << "the ball hit the currenttile which is tile number: " << checkTile->getTileId() << endl;
-		}
-		//if no collision on any of the current tiles neighbors
-		//check neighbors of the next tile
-		if ( !isCollided ) {
-			int neighbor = currentTile->getNeighbor( recurseNeighbor );
-			while ( ( neighbor == Tile::NO_NEIGHBOR || neighbor == currentTile->getTileId() ) && recurseNeighbor < currentTile->getNeighborCount() ) {
-				recurseNeighbor++;
-				neighbor = currentTile->getNeighbor( recurseNeighbor );
-			}
-			if ( recurseNeighbor < currentTile->getNeighborCount() ) {
-				checkTile = tileSet->getTile( neighbor );
-				recurseNeighbor++;
-			}
-		}
-	}
-	if ( !isCollided ) {
-		cout << "your ball is not on a tile" << endl;
-	} else {
-		currentTile = checkTile;
-	}
+
 	//kinematics->update( dT );
 }
 
