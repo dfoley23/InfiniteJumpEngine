@@ -79,7 +79,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				//build ball on tee
 				Entity * ballEntity = new Entity( );
 				Mesh * ball = readObjFile( "ballobj.obj" );
-				ball->setDynamic( true );
+				ball->setDynamic( 1 );
 				ball->translate( x+0.05f, y+0.05f, z+0.05f );
 				ballEntity->addComponent( ball );
 				ballEntity->addComponent( new KinematicComponent( ) );
@@ -121,6 +121,7 @@ Level* ResManager::getTriangleLevel(string filename){
 
 Mesh * ResManager::readObjFile( string filename ) {
 	Mesh * out = new Mesh( );
+	//out->setSmooth( true );
 
 	string line;
 	ifstream input;

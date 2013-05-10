@@ -17,8 +17,8 @@ out vec4 frag_color;
 void main() {
 	vec4 posT = M * vec4(pos,1.0);
     
-    vec3 L = normalize(M * vec4(lightPos, 1.0)).xyz;
-    L = normalize(L - posT.xyz); 
+    vec3 L = normalize(vec4(lightPos, 1.0)).xyz;
+    //L = normalize(L - posT.xyz); 
 	
     vec3 N = normalize(M_n * norm);
 	

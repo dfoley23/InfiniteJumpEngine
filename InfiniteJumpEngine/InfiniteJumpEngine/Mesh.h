@@ -58,7 +58,8 @@ public:
 	glm::vec3 max;
 	glm::vec3 center;
 	size_t numVerts;
-	bool dynamic;
+	int dynamic;
+	int smooth;
 
 	/**
 	* @param  meshFile
@@ -83,7 +84,9 @@ public:
 
 	void bindBuffers( MeshBatch * batch, int picking );
 
-	void setDynamic( bool setting );
+	void setDynamic( int setting );
+
+	void setSmooth( int setting );
 
 	void addVert (float x, float y, float z, float r, float g, float b);
 
@@ -96,12 +99,12 @@ public:
 		glm::vec3 color );
 
 	void createPlane( glm::vec3 perpDepth, float height, 
-		float x1, float y1, float z1, 
+		float x1, float y1, float z1,
 		float x2, float y2, float z2, glm::vec3 color );
 
 	glm::vec3 getCenter( );
 
-	void initAttributes ( ) ;
+	void initAttributes( );
 
 };
 

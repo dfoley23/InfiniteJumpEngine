@@ -236,7 +236,7 @@ int Game::run(int argc, char** argv){
 		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
-	level->camera->lightPos = glm::vec3( 0.0, 100.0f, -3.0 );
+	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 
 
 	transX = level->pickedMesh->getCenter().x;

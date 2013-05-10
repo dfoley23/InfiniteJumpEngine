@@ -68,9 +68,9 @@ void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
 			batch->colors.at(index).push_back( id.z / 255.0f );
 		}
 		/*for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-			pickColors.push_back( id.x / 255.0f );
-			pickColors.push_back( id.y / 255.0f );
-			pickColors.push_back( id.z / 255.0f );
+		pickColors.push_back( id.x / 255.0f );
+		pickColors.push_back( id.y / 255.0f );
+		pickColors.push_back( id.z / 255.0f );
 		}
 		pickColors.clear();*/
 	} else {
@@ -164,8 +164,12 @@ void Mesh::scale (float x, float y, float z )
 	scaling = glm::scale( glm::mat4( ), glm::vec3( x, y, z ) );
 }
 
-void Mesh::setDynamic( bool setting ) {
+void Mesh::setDynamic( int setting ) {
 	dynamic = setting;
+}
+
+void Mesh::setSmooth( int setting ) {
+	smooth = setting;
 }
 
 void Mesh::remove ( ) {
@@ -178,7 +182,7 @@ void Mesh::remove ( ) {
 void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	float nx = 0, ny = 0, nz = 0;
 	//Calculate normal from previous verts if possible
-	addVert (x,y,z,nx,ny,nz, r, g, b);
+	addVert (x, y ,z, nx, ny, nz, r, g, b);
 }
 
 void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, float r, float g, float b){
@@ -194,12 +198,35 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 	center.x = (center.x + x) / static_cast<float>(verts.size());
 	center.y = (center.y + y) / static_cast<float>(verts.size());
 	center.z = (center.z + z) / static_cast<float>(verts.size());
+	glm::vec3 vertexNormal = glm::vec3( 0, 0, 0 );
+	if ( smooth ) {
+		vector<int> sharedNorms;
+		for ( int i=0; i<static_cast<int>(norms.size())-2; i++ ) {
+			if ( verts.at( i ) == x && verts.at( i+1 ) == y && verts.at( i+2 ) == z ) {
+				if ( static_cast<int>(sharedNorms.size()) == 0 ) {
+					vertexNormal.x = norms.at( i );
+					vertexNormal.y = norms.at( i+1 );
+					vertexNormal.z = norms.at( i+2 );
+				}
+				sharedNorms.push_back( i );
+			}
+			i+=2;
+		}
+		for( int i=0; i<static_cast<int>(sharedNorms.size()); i++ ) {
+			norms.at( sharedNorms.at( i ) ) = (vertexNormal.x + nx)/2.0f;
+			norms.at( sharedNorms.at( i )+1 ) = (vertexNormal.y + ny)/2.0f;
+			norms.at( sharedNorms.at( i )+2 ) = (vertexNormal.z + nz)/2.0f;
+		}
+	}
+	vertexNormal.x += nx;
+	vertexNormal.y += ny;
+	vertexNormal.z += nz;
 	verts.push_back(x);
 	verts.push_back(y);
 	verts.push_back(z);
-	norms.push_back(nx);
-	norms.push_back(ny);
-	norms.push_back(nz);
+	norms.push_back(vertexNormal.x);
+	norms.push_back(vertexNormal.y);
+	norms.push_back(vertexNormal.z);
 	colors.push_back(r);
 	colors.push_back(g);
 	colors.push_back(b);
@@ -287,6 +314,7 @@ void Mesh::bindBuffers( MeshBatch * batch, int picking ) {
 }
 
 void Mesh::initAttributes ( ) {
-	dynamic = false;
+	dynamic = 0;
+	smooth = 0;
 }
 
