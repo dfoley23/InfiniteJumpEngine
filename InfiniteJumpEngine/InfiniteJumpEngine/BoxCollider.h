@@ -27,6 +27,8 @@ public:
 
 	glm::vec3 getDim( );
 	glm::vec3 getPos();
+	void setDim( glm::vec3 dimension );
+	void setPos( glm::vec3 pos );
 protected:
 	glm::vec3 position;
 	glm::vec3 dim;

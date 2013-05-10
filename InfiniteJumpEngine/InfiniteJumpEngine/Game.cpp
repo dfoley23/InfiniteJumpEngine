@@ -263,7 +263,7 @@ Level * Game::buildTestLevel( ) {
 	Entity * entity = new Entity();
 	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75f, 0));
 	TileSet * tileSet = new TileSet();
-	tileSet->addTile(groundTile);
+	tileSet->addTile( 0, groundTile);
 	//entity->addComponent(tileSet);
 	entity->addComponent(groundTile);
 	level->addEntity(entity);

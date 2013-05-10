@@ -23,12 +23,14 @@ public:
 	inline bool hasNeighbor(unsigned int e){return neighbors[e] != NO_NEIGHBOR;}
 	int findNeighbor(unsigned int id);
 	int getNeighbor(unsigned int e);
+	int getNeighborCount();
 	static const int NO_NEIGHBOR = 0;
 	Mesh *getMesh();
 	Mesh *generateMesh();
 	void deleteMesh();
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
+	int getTileId( );
 	Mesh * mesh;
 	vector<Mesh *> edges;
 private:

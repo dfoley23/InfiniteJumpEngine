@@ -50,6 +50,14 @@ int Tile::getNeighbor(unsigned int e){
 	return NO_NEIGHBOR;
 }
 
+int Tile::getNeighborCount() {
+	return static_cast<int>(neighbors.size());
+}
+
+int Tile::getTileId( ) {
+	return id;
+}
+
 void Tile::deleteMesh(){
 	if (mesh){
 		delete mesh; mesh = NULL;

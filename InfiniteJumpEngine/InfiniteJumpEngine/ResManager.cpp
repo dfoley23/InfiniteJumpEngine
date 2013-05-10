@@ -53,14 +53,14 @@ Level* ResManager::getTriangleLevel(string filename){
 					iss >> n_str;
 					neighbors.push_back( atoi(n_str.c_str( )) );
 				}
-				tiles->addTile( new Tile( id, verts, neighbors, glm::vec3( 0, 0.7f, 0 ) ) );
+				tiles->addTile( id, new Tile( id, verts, neighbors, glm::vec3( 0, 0.7f, 0 ) ) );
 			} else if ( !type.compare( "tee" ) ) {
 				Entity * teeEntity = new Entity( );
 				Mesh * tee = new Mesh( );
 				string str_id;
 				string str_x, str_y, str_z;
 				iss >> str_id;
-				int i = atoi(str_id.c_str( ));
+				int id = atoi(str_id.c_str( ));
 				iss >> str_x;
 				iss >> str_y;
 				iss >> str_z;
@@ -78,10 +78,8 @@ Level* ResManager::getTriangleLevel(string filename){
 
 				//build ball on tee
 				Entity * ballEntity = new Entity();
-				Ball * ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1) );
+				Ball * ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
 				ballEntity->addComponent( ball );
-				ballEntity->addComponent( new PointCollider( ball->getMesh()->center ) );
-				ballEntity->addComponent( new KinematicComponent( ) );
 				level->addEntity( ballEntity );
 				level->pickedMesh = ball->getMesh( );
 

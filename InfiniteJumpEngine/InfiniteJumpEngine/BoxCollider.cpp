@@ -47,3 +47,11 @@ glm::vec3 BoxCollider::getPos() {
 glm::vec3 BoxCollider::getDim(){
 	return dim;
 }
+
+void BoxCollider::setPos( glm::vec3 pos ) {
+	position = pos;
+}
+
+void BoxCollider::setDim( glm::vec3 dimension ) {
+	dim = dimension;
+}

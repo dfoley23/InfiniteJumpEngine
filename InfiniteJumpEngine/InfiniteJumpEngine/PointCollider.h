@@ -23,8 +23,9 @@ public:
 	pair<bool,float> predictCollision(BoxCollider*);
 	pair<bool,float> predictCollision(SphereCollider*);
 	pair<bool,float> predictCollision(MeshCollider*);
-protected:
+	
 	glm::vec3 point;
+protected:
 };
 
 #endif

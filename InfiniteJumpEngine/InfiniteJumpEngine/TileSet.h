@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <map>
 #include "glIncludes.h"
 #include "Tile.h"
 #include "Component.h"
@@ -8,8 +8,8 @@ using std::vector;
 
 class Tile;
 
-typedef vector<Tile*> tileVector;
-typedef tileVector::iterator tileIter;
+typedef map<int, Tile*> tileMap;
+typedef tileMap::iterator tileIter;
 
 class TileSet: public Component
 {
@@ -21,8 +21,9 @@ public:
 	void draw( MeshBatch * );
 	void drawForPick( MeshBatch *, glm::vec3 pickColors );
 	void addTile(unsigned int, vector<glm::vec3>, vector<unsigned int>);
-	void addTile( Tile * );
+	void addTile( int key, Tile * );
+	Tile * getTile( int key );
 protected:
-	vector<Tile*> tiles;
+	map<int, Tile *> tiles;
 }
 ;

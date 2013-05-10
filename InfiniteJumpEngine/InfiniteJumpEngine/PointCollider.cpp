@@ -15,12 +15,15 @@ bool PointCollider::isColliding(BoxCollider* that)
 {
 	glm::vec3 box = that->getPos();
 	glm::vec3 dim = that->getDim();
+	//cout << "point : " << point.x << point.y << point.z << endl;
+	//cout << "min : " << box.x << box.y << box.z << endl;
+	//cout << "max : " << dim.x << dim.y << dim.z << endl;
 	if ( point.x > box.x
 		&& point.y > box.y
 		&& point.z > box.z
-		&& point.x < box.x+dim.x
-		&& point.y < box.y+dim.y
-		&& point.z < box.z+dim.z ) {
+		&& point.x < dim.x
+		&& point.y < dim.y
+		&& point.z < dim.z ) {
 			return true;
 	}
 	return false;

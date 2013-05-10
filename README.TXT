@@ -1,3 +1,8 @@
+Authors:
+Kevin Cameron
+Dennis Foley
+
+
 To run the project the debug/release exe has to be in the same folder as these folders/files 
 
 shaders/pointLight.vert
