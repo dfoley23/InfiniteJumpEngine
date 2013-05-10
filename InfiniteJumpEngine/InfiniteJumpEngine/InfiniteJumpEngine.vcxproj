@@ -88,9 +88,11 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Contact.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="MatrixComponent.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="PointCollider.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -111,11 +113,13 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Contact.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="MatrixComponent.h" />
     <ClInclude Include="MeshCollider.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PointCollider.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Game.h" />
