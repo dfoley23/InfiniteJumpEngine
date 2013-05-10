@@ -25,10 +25,10 @@ void main() {
 	
 	float LDotN = dot( N, L ); 
 	vec3 diff = vec3( 0.0, 0.0, 0.0 );
-	if ( LDotN > 0.0 ) {
+	if ( LDotN > 0.35 ) {
         diff = color * LDotN;
 	} else { 
-		diff = color * -LDotN;
+		diff = color * 0.35;
 	}
 	
     vec4 newColor = vec4(diff, 1.0);

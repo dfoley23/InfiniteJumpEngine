@@ -25,8 +25,10 @@ public:
 	pair<bool,float> predictCollision(SphereCollider*);
 	pair<bool,float> predictCollision(MeshCollider* that);
 
+	glm::vec3 getDim( );
+	glm::vec3 getPos();
 protected:
-	PositionComponent* position;
+	glm::vec3 position;
 	glm::vec3 dim;
 };
 

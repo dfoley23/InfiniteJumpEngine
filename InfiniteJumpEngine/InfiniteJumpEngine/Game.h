@@ -59,12 +59,12 @@ public:
 	static void clear(){
 		delete inst; inst = NULL;
 	}
+	ResManager *resman;
 protected:
 	Game(void);
 	static Game* inst;
 
 	Level *level;
-	ResManager *resman;
 	
 	componentVector components;
 	int WIN_WIDTH, WIN_HEIGHT;

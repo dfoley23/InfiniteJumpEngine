@@ -12,6 +12,8 @@
 #include "glIncludes.h"
 #include "Tile.h"
 #include "KinematicComponent.h"
+#include "PointCollider.h"
+#include "Ball.h"
 
 class ResManager: public Component
 {
@@ -21,6 +23,8 @@ public:
 	Level *getTriangleLevel(string filename);
 	Level *getGolfLevel();
 	Mesh *readObjFile(string filename);
+
+private:
 };
 
 #endif

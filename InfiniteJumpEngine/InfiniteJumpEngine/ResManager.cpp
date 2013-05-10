@@ -77,14 +77,13 @@ Level* ResManager::getTriangleLevel(string filename){
 				level->addEntity( teeEntity );
 
 				//build ball on tee
-				Entity * ballEntity = new Entity( );
-				Mesh * ball = readObjFile( "ballobj.obj" );
-				ball->setDynamic( 1 );
-				ball->translate( x+0.05f, y+0.05f, z+0.05f );
+				Entity * ballEntity = new Entity();
+				Ball * ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1) );
 				ballEntity->addComponent( ball );
+				ballEntity->addComponent( new PointCollider( ball->getMesh()->center ) );
 				ballEntity->addComponent( new KinematicComponent( ) );
 				level->addEntity( ballEntity );
-				level->pickedMesh = ball;
+				level->pickedMesh = ball->getMesh( );
 
 			} else if ( !type.compare( "cup" ) ) {
 				Entity * cupEntity = new Entity( );

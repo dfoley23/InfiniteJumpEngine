@@ -39,3 +39,11 @@ pair<bool,float> BoxCollider::predictCollision(MeshCollider* that)
 {
 	return pair<bool,float>(false, 0.0f);
 }
+
+glm::vec3 BoxCollider::getPos() {
+	return position;
+}
+
+glm::vec3 BoxCollider::getDim(){
+	return dim;
+}

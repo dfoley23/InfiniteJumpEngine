@@ -190,10 +190,22 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 		min = glm::vec3 ( x, y, z );
 		max = glm::vec3 ( x, y, z );
 		center = glm::vec3( 0, 0, 0 );
-	} else if ( x < min.x && y < min.y && z < min.z ) {
-		min = glm::vec3( x, y, z );
-	} else if ( x > max.x && y > max.y && z > max.z ) {
-		max = glm::vec3 ( x, y, z );
+	} else {
+		if ( x < min.x ) {
+			min.x = x;
+		} else if ( x > max.x ) {
+			max.x = x;
+		}
+		if ( y < min.y ) {
+			min.y = y;
+		} else if ( y > max.y ) {
+			max.y = y;
+		}
+		if ( z < min.z ) {
+			min.z = z;
+		} else if ( z > max.z ) {
+			max.z = z;
+		}		
 	}
 	center.x = (center.x + x) / static_cast<float>(verts.size());
 	center.y = (center.y + y) / static_cast<float>(verts.size());

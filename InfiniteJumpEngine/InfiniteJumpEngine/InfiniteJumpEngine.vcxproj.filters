@@ -39,6 +39,8 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="PointCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -106,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
