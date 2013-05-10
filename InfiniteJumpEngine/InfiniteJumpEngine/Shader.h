@@ -157,6 +157,7 @@ public:
 	GLint program;
 	GLint modelViewLoc;
 	GLint projectionLoc;
+	GLint viewLoc;
 	GLint normalMatLoc;
 	GLint lightPosLoc;
 	GLint vertexLoc;

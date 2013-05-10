@@ -21,6 +21,7 @@ MeshBatch::MeshBatch ( Shader * shader ) {
 void MeshBatch::draw( ) {
 	glUseProgram(shader->program);
 	glUniformMatrix4fv(shader->projectionLoc, 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(shader->viewLoc, 1, GL_FALSE, glm::value_ptr(cam));
 	glUniform3fv( shader->lightPosLoc, 1, glm::value_ptr(lightPos));
 	int index = 0;
 	for ( vecIter it = verts.begin(); it != verts.end(); ++it ) {
@@ -42,7 +43,6 @@ void MeshBatch::draw( ) {
 		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
 		glEnableVertexAttribArray(shader->normalLoc);
 		glVertexAttribPointer(shader->normalLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
 
 		glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
 		glEnableVertexAttribArray(shader->colorLoc);
@@ -113,6 +113,7 @@ void MeshBatch::scale (float x, float y, float z )
 void MeshBatch::setShader ( Shader * new_var )     {
 	shader = new_var;
 	shader->modelViewLoc = glGetUniformLocation(shader->program, "M");
+	shader->viewLoc = glGetUniformLocation(shader->program, "V");
 	shader->projectionLoc = glGetUniformLocation(shader->program, "P");
 	shader->normalMatLoc = glGetUniformLocation(shader->program, "M_n");
 	shader->lightPosLoc = glGetUniformLocation(shader->program, "lightPos");

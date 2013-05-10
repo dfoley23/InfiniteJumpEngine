@@ -2,6 +2,7 @@
 
 //These variables are constant for all vertices
 uniform mat4 M; //modelview matrix
+uniform mat4 V;
 uniform mat4 P; //projection matrix
 uniform mat3 M_n; //normal matrix
 uniform vec3 lightPos;
@@ -17,7 +18,7 @@ out vec4 frag_color;
 void main() {
 	vec4 posT = M * vec4(pos,1.0);
     
-    vec3 L = normalize(vec4(lightPos, 1.0)).xyz;
+    vec3 L = normalize(V * vec4(lightPos, 1.0)).xyz;
     //L = normalize(L - posT.xyz); 
 	
     vec3 N = normalize(M_n * norm);
