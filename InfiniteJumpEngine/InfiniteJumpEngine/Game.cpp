@@ -128,19 +128,6 @@ void Game::idle(){
 	glutPostRedisplay();
 }
 
-void Game::keyboard(unsigned char key, int x, int y){
-	switch (key) {
-	case 27:
-		exit(0);
-		break;
-	case 97: //a
-		level->ball->applyImpulse( glm::vec3( 0.1, 0, 0.1 ) );
-		break;
-	default:
-		break;
-	}
-}
-
 void Game::glui_callBack( int id ) {
 	switch(id) {
 	case 0:
@@ -225,13 +212,27 @@ void Game::setupInterface( void(*cb)(int i) ){
 
 }
 
+void Game::keyboard(unsigned char key, int x, int y){
+	switch (key) {
+	case 27:
+		exit(0);
+		break;
+	case 97: //a
+		//level->ball->applyImpulse( glm::vec3( 0.1, 0, 0.1 ) );
+		break;
+	default:
+		break;
+	}
+}
+
 int Game::run(int argc, char** argv){
 	resman = new ResManager();
 	if ( argc > 1 ) {
 		string directory = "Levels/";
 		level = resman->getTriangleLevel(directory + argv[1]);
 	} else {
-		level = buildTestLevel( );
+		string directory = "Levels/hole.01.db";
+		level = resman->getTriangleLevel(directory + argv[1]);
 	}
 
 	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
@@ -243,51 +244,10 @@ int Game::run(int argc, char** argv){
 		);
 	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 
-
 	transX = level->pickedMesh->getCenter().x;
 	transY = level->pickedMesh->getCenter().y;
 	transZ = level->pickedMesh->getCenter().z;
 
 	glutMainLoop();
 	return 0;
-}
-
-
-Level * Game::buildTestLevel( ) {
-	Level *level = new Level();
-
-	//initiallize vertex and normal arrays
-	//this is where you might want to read in your model
-	vector<glm::vec3> groundVerts;
-	groundVerts.push_back(glm::vec3(-1,0,1));
-	groundVerts.push_back(glm::vec3(1,0,1));
-	groundVerts.push_back(glm::vec3(1,0,-1));
-	groundVerts.push_back(glm::vec3(-1,0,-1));
-
-	vector<int> noNeighbors;
-	Entity * entity = new Entity();
-	Tile * groundTile = new Tile( 0 , groundVerts, noNeighbors, glm::vec3(0, 0.75f, 0));
-	TileSet * tileSet = new TileSet();
-	tileSet->addTile( 0, groundTile);
-	//entity->addComponent(tileSet);
-	entity->addComponent(groundTile);
-	level->addEntity(entity);
-
-	Entity * cupEntity = new Entity( );
-	Mesh * cup = new Mesh( );
-	float x = 0.5f;
-	float y = 0.0f;
-	float z = 0.5f;
-	//cup mesh
-
-	glm::vec3 vert0 = glm::vec3( x, y, z );
-	glm::vec3 vert1 = glm::vec3( x, y, z+0.25f );
-	glm::vec3 color = glm::vec3( 0, 0, 0 );
-	cup->createYCube( 0.25f, 0.002f, vert0, vert1, color );
-
-	cupEntity->addComponent( cup );
-	level->addEntity( cupEntity );
-	level->pickedMesh = cup;
-
-	return level;
 }

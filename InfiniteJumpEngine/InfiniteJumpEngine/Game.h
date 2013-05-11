@@ -5,7 +5,6 @@
 #include "Component.h"
 #include "glIncludes.h"
 #include "ResManager.h"
-#include "Level.h"
 
 #define PIXEL(c,x,y,w)	(c[(x)+w*(y)])
 
@@ -20,6 +19,7 @@
 #endif
 
 class ResManager;
+class Level;
 
 typedef unsigned int pixel_t;
 
@@ -54,19 +54,19 @@ public:
 	void keyboard(unsigned char, int, int);
 	void setupInterface(void(*cb)(int i));
 	void glui_callBack( int id );
-	Level * buildTestLevel( );
 
 	static void clear(){
 		delete inst; inst = NULL;
 	}
-	ResManager *resman;
-protected:
+	ResManager * resman;
+private:
 	Game(void);
 	static Game* inst;
 
-	Level *level;
+	Level * level;
 	
 	componentVector components;
+
 	int WIN_WIDTH, WIN_HEIGHT;
 	int main_window;
 	GLUI *glui;

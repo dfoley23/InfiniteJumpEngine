@@ -10,7 +10,6 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "Mesh.h"
-#include "MeshBatch.h"
 
 using namespace std;
 

@@ -3,8 +3,6 @@
 #define MESH_H
 
 #include "glIncludes.h"
-#include <vector>
-#include <string>
 
 #include "Component.h"
 #include "Shader.h"
@@ -15,13 +13,6 @@ using namespace std;
 /**
 * class Mesh
 * 
-*/
-
-/*
-	Note from Kevin: I'm noticing there's a lot of vertex calculation being done on the CPU,
-	when it could be done in the shader instead by just passing in a unique transformation matrix
-	for each mesh. Since we're moving away from hardcoded positions anyway, I figure this could be
-	something to work on.
 */
 
 class Mesh: public Component {

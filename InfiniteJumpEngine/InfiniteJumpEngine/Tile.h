@@ -1,8 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include <string>
-#include <vector>
+#include "Component.h"
 #include "glIncludes.h"
 #include "Mesh.h"
 #include "TileSet.h"

@@ -96,9 +96,6 @@
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\Transform Components</Filter>
-    </ClInclude>
     <ClInclude Include="BoxCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
@@ -122,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="Contact.h">
       <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

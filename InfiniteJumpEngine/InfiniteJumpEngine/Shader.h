@@ -3,13 +3,7 @@
 #define SHADER_H
 
 #define GLEW_STATIC
-#include <GL/glew.h> //must include this before gl.h
-#include <GL/freeglut.h>
-
-#include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
+#include "glIncludes.h"
 
 using namespace std;
 /**

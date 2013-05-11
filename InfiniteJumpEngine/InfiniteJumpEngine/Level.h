@@ -8,13 +8,12 @@
 
 #include "Entity.h"
 #include "Camera.h"
-#include "MeshBatch.h"
-#include "Ball.h"
 using namespace std;
 /**
 * class Level
 * 
 */
+class Ball;
 
 typedef std::vector<Entity*>::iterator entityIter;
 
