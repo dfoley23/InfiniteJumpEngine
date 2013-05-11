@@ -41,6 +41,8 @@
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="PointCollider.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="Contact.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -113,6 +115,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PointCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Contact.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>

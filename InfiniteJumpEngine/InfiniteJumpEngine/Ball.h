@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "ResManager.h"
 #include "Game.h"
+#include "PhysicsComponent.h"
 using namespace std;
 /**
 * class Tile
@@ -26,10 +27,12 @@ public:
 	void update( float dT );
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
-	PointCollider * pCollider;
 	void applyImpulse( glm::vec3 impulse );
-	KinematicComponent * kinematics;
+	void hitTile( Tile * tile );
+	void receiveMessage( string message );
+	void addCollisionObject( Collider * collider );
 private:
+	PhysicsComponent * physComp;
 	Mesh * mesh;
 	TileSet * tileSet;
 	Tile * currentTile;

@@ -8,8 +8,8 @@ using std::vector;
 
 class Tile;
 
-typedef map<int, Tile*> tileMap;
-typedef tileMap::iterator tileIter;
+typedef vector<Tile*> tileVec;
+typedef tileVec::iterator tileIter;
 
 class TileSet: public Component
 {
@@ -23,7 +23,7 @@ public:
 	void addTile(unsigned int, vector<glm::vec3>, vector<unsigned int>);
 	void addTile( int key, Tile * );
 	Tile * getTile( int key );
+	vector<Tile *> tiles;
 protected:
-	map<int, Tile *> tiles;
 }
 ;

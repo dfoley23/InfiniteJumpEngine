@@ -12,24 +12,24 @@ TileSet::~TileSet(void)
 
 void TileSet::update(float dT){
 	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
-		t->second->update(dT);
+		(*t)->update(dT);
 	}
 }
 
 void TileSet::draw( MeshBatch * batch ){
 	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
-		t->second->draw(batch);
+		(*t)->draw(batch);
 	}
 }
 
 void TileSet::drawForPick( MeshBatch * batch, glm::vec3 pickColors ){
 	for (tileIter t = tiles.begin(); t != tiles.end(); t++){
-		t->second->drawForPick(batch, pickColors);
+		(*t)->drawForPick(batch, pickColors);
 	}
 }
 
 void TileSet::addTile( int key, Tile * tile ) {
-	this->tiles[key] = tile;
+	this->tiles.push_back( tile );
 }
 
 Tile * TileSet::getTile( int key ) {

@@ -20,7 +20,16 @@ public:
 	virtual glm::vec3 getPickId( ) {
 		return pickId;
 	}
-
+	virtual void sendMessage( string message ){
+		if (parent){
+			parent->receiveMessage(message);
+		} else {
+			cout << "Message fell out of parent chain:" << message << endl;
+		}
+	}
+	virtual void receiveMessage( string message ){
+		sendMessage(message);
+	}
 protected:
 	Component *parent;
 	glm::vec3 pickId;

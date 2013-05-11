@@ -16,6 +16,7 @@ Level* ResManager::getTriangleLevel(string filename){
 	TileSet* tiles = new TileSet();
 	terrain->addComponent(tiles);
 	level->addEntity(terrain);
+	Ball * ball;
 
 	string line;
 	ifstream input;
@@ -78,7 +79,7 @@ Level* ResManager::getTriangleLevel(string filename){
 
 				//build ball on tee
 				Entity * ballEntity = new Entity();
-				Ball * ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
+				ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
 				ballEntity->addComponent( ball );
 				level->addEntity( ballEntity );
 				level->pickedMesh = ball->getMesh( );
@@ -112,7 +113,9 @@ Level* ResManager::getTriangleLevel(string filename){
 		}
 		return level;
 	} 
-
+	//for ( vector<Tile*>::iterator it = tiles->tiles.begin(); it != tiles->tiles.end(); ++it){
+	//	it
+	//}
 	return NULL;
 }
 

@@ -6,6 +6,9 @@ KinematicComponent::KinematicComponent(void)
 	
 }
 
+KinematicComponent::~KinematicComponent(void){
+}
+
 glm::mat4 KinematicComponent::getTransform(){
 	return loc.getTransform();
 }
