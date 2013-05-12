@@ -18,6 +18,9 @@
     <Filter Include="Header Files\Transform Components">
       <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities and Loadouts">
+      <UniqueIdentifier>{80e5f160-8a86-408d-a6f1-69722931a70b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -43,6 +46,7 @@
     <ClCompile Include="PointCollider.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Contact.cpp" />
+    <ClCompile Include="IJMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -54,13 +58,7 @@
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
@@ -108,9 +106,6 @@
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Transform Components</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PointCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
@@ -120,8 +115,23 @@
     <ClInclude Include="Contact.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\Entities and Loadouts</Filter>
+    </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files\Transform Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities and Loadouts</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Header Files\Entities and Loadouts</Filter>
+    </ClInclude>
+    <ClInclude Include="IJMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

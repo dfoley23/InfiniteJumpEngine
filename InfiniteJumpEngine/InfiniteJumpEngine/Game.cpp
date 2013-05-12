@@ -5,6 +5,7 @@ Game* Game::inst = NULL;
 
 Game::Game(void)
 {
+	parent = NULL;
 	WIN_WIDTH = 1280;
 	WIN_HEIGHT = 720;
 	resman = NULL;
@@ -138,10 +139,10 @@ void Game::glui_callBack( int id ) {
 	case 1:
 		break;
 	case 2:
-		level->pickedMesh->translate( transX, transY, transZ );
+		sendMessage(level->ball->getPhysics()->getKinematics(), "translate", glm::vec3(transX, transY, transZ));
 		break;
 	case 3:
-		level->pickedMesh->rotate( rotX, rotY, 0);
+		sendMessage(level->ball->getPhysics()->getKinematics(), "rotate", glm::vec3(rotX, rotY, 0.f));
 		break;
 	default:
 		break;
@@ -232,7 +233,7 @@ int Game::run(int argc, char** argv){
 		level = resman->getTriangleLevel(directory + argv[1]);
 	} else {
 		string directory = "Levels/hole.01.db";
-		level = resman->getTriangleLevel(directory + argv[1]);
+		level = resman->getTriangleLevel(directory);
 	}
 
 	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));

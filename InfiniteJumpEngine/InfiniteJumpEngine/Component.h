@@ -1,12 +1,15 @@
 #pragma once
-#ifndef COMPONENT_H
-#define COMPONENT_H
+
+#include "IJMessage.h"
 #include "Drawable.h"
 #include <vector>
 
 class Component: public Drawable
 {
 public:
+	Component(){
+		parent = NULL;
+	}
 	virtual Component * getParent(){return parent;};
 	virtual void setParent(Component * p){parent = p;};
 	virtual glm::mat4 transform(void){
@@ -20,15 +23,22 @@ public:
 	virtual glm::vec3 getPickId( ) {
 		return pickId;
 	}
-	virtual void sendMessage( string message ){
-		if (parent){
-			parent->receiveMessage(message);
+
+	virtual void sendMessage(Component* that, char *s, glm::vec3 v){
+		IJMessage *m =  new IJMessage(this, that, s, v);
+		sendMessage(m, that);
+		delete m; m = NULL;
+	}
+
+	virtual void sendMessage( IJMessage *m, Component* that){
+		if (that){
+			that->receiveMessage(m);
 		} else {
-			cout << "Message fell out of parent chain:" << message << endl;
+			cout << "Message fell out of parent chain:" << m->content << endl;
 		}
 	}
-	virtual void receiveMessage( string message ){
-		sendMessage(message);
+	virtual void receiveMessage( IJMessage *m ){
+		sendMessage(m, parent);
 	}
 protected:
 	Component *parent;
@@ -37,5 +47,3 @@ protected:
 
 typedef std::vector<Component*> componentVector;
 typedef componentVector::iterator componentIter;
-
-#endif // ENTITY_H

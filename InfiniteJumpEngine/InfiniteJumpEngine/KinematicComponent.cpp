@@ -21,3 +21,13 @@ void KinematicComponent::update(float dT){
 void KinematicComponent::applyImpulse( glm::vec3 impulse ) {
 	acc = impulse;
 }
+
+void KinematicComponent::receiveMessage( IJMessage *m){
+	if (!m->getContent().compare("translate")
+		|| !m->getContent().compare("rotate")
+		|| !m->getContent().compare("scale")
+		)
+	{
+		sendMessage(m, &loc);
+	}
+}

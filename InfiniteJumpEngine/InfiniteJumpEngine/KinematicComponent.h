@@ -1,4 +1,5 @@
 #pragma once
+#include "IJMessage.h"
 #include "PositionComponent.h"
 
 class KinematicComponent : public TransformComponent
@@ -9,7 +10,8 @@ public:
 	glm::mat4 getTransform();
 	void update(float dT);
 	void applyImpulse( glm::vec3 impulse );
-protected:
+	void receiveMessage( IJMessage *m);
+
 	PositionComponent loc;
 	PositionComponent vel;
 	PositionComponent acc;

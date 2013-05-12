@@ -16,7 +16,7 @@ public:
 	void setPosition(float x, float y, float z){
 		setPosX(x);
 		setPosY(y);
-		setPosY(z);
+		setPosZ(z);
 	}
 	inline void setPosX(float v){position.x = v;}; 
 	inline void setPosY(float v){position.y = v;};
@@ -28,7 +28,7 @@ public:
 	void setRotation(float x, float y, float z){
 		setRotX(x);
 		setRotY(y);
-		setRotY(z);
+		setRotZ(z);
 	}
 	inline void setRotX(float v){rotation.x = v;}; 
 	inline void setRotY(float v){rotation.y = v;};
@@ -40,7 +40,7 @@ public:
 	void setScale(float x, float y, float z){
 		setScaX(x);
 		setScaY(y);
-		setScaY(z);
+		setScaZ(z);
 	}
 	inline void setScaX(float v){scale.x = v;}; 
 	inline void setScaY(float v){scale.y = v;};
@@ -48,6 +48,9 @@ public:
 
 	//Combine transformations
 	glm::mat4 getTransform();
+
+	//Message handling
+	void receiveMessage( IJMessage *m);
 
 	//Operator Overloading
 	const PositionComponent operator+(const PositionComponent&);

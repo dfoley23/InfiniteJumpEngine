@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "ResManager.h"
 #include "Game.h"
+#include "IJMessage.h"
 #include "PhysicsComponent.h"
 using namespace std;
 /**
@@ -29,8 +30,10 @@ public:
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	void applyImpulse( glm::vec3 impulse );
 	void hitTile( Tile * tile );
-	void receiveMessage( string message );
+	void receiveMessage( IJMessage message );
 	void addCollisionObject( Collider * collider );
+
+	PhysicsComponent *getPhysics(){return physComp;}
 private:
 	PhysicsComponent * physComp;
 	Mesh * mesh;

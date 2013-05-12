@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <vector>
+#include "IJMessage.h"
 #include "Component.h"
 #include "glIncludes.h"
 #include "ResManager.h"

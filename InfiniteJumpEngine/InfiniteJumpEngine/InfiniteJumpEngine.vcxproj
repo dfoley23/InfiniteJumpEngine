@@ -90,6 +90,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Contact.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="IJMessage.cpp" />
     <ClCompile Include="MatrixComponent.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="IJMessage.h" />
     <ClInclude Include="MatrixComponent.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="PhysicsComponent.h" />
@@ -135,6 +137,9 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

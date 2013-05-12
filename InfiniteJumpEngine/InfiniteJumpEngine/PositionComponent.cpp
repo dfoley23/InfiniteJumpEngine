@@ -19,7 +19,7 @@ glm::mat4 PositionComponent::getTransform(){
 	glm::mat4 rY = glm::rotate( glm::mat4( ), rotation.y, glm::vec3( 0, 1, 0 ) );
 	glm::mat4 rZ = glm::rotate( glm::mat4( ), rotation.z, glm::vec3( 0, 0, 1 ) );
 	glm::mat4 r = rX * rY * rZ;
-	glm::mat4 s = glm::scale(glm::mat4(), scale);
+	glm::mat4 s = glm::scale(glm::mat4(1.0f), scale);
 	return t * r * s;
 }
 
@@ -37,4 +37,14 @@ const PositionComponent PositionComponent::operator*(const float scalar){
 	out.rotation = rotation * scalar;
 	out.scale = scale * scalar;
 	return out;
+}
+
+void PositionComponent::receiveMessage( IJMessage *m){
+	if (!m->getContent().compare("translate")){
+		position = m->getVector();
+	} else if (!m->getContent().compare("rotate")){
+		rotation = m->getVector();
+	} else if (!m->getContent().compare("scale")){
+		scale = m->getVector();
+	}
 }

@@ -34,7 +34,7 @@ void Mesh::draw( MeshBatch * batch ) {
 		batch->colors.resize( batch->colors.size( ) + 1 );
 		index = static_cast<int>(batch->verts.size( )) - 1;
 		modelView = glm::mat4( );
-		modelView = translations * rotations * scaling; 
+		modelView = translations * rotations * scaling * transform(); 
 		batch->modelViews.push_back( modelView );
 		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
 		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
