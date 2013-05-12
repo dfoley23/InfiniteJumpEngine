@@ -114,9 +114,11 @@ Level* ResManager::getTriangleLevel(string filename){
 		}
 		return level;
 	} 
-	//for ( vector<Tile*>::iterator it = tiles->tiles.begin(); it != tiles->tiles.end(); ++it){
-	//	it
-	//}
+	MeshCollider * tileCollider;
+	for ( vector<Tile*>::iterator it = tiles->tiles.begin(); it != tiles->tiles.end(); ++it){
+		tileCollider = new MeshCollider( (*it)->getMesh() );
+		ball->getPhysics()->addCollider( tileCollider );
+	}
 	return NULL;
 }
 

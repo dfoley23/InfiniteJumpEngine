@@ -47,6 +47,12 @@ public:
 	glm::mat4 scaling;
 	glm::vec3 min;
 	glm::vec3 max;
+	glm::vec3 minXPoint;
+	glm::vec3 minYPoint;
+	glm::vec3 minZPoint;
+	glm::vec3 maxXPoint;
+	glm::vec3 maxYPoint;
+	glm::vec3 maxZPoint;
 	glm::vec3 center;
 	size_t numVerts;
 	int dynamic;
@@ -94,6 +100,39 @@ public:
 		float x2, float y2, float z2, glm::vec3 color );
 
 	glm::vec3 getCenter( );
+
+	glm::vec3 Mesh::getMinXPoint() {
+		return minXPoint;
+	}
+	glm::vec3 getMinPoint(){
+		return min;
+	}
+
+	glm::vec3 getMaxPoint(){
+		return max;
+	}
+
+	glm::vec3 getMaxXPoint() {
+		return maxXPoint;
+	}
+
+	glm::vec3 getMinYPoint() {
+		return minYPoint;
+	}
+
+	glm::vec3 getMaxYPoint() {
+		return maxYPoint;
+	}
+
+	glm::vec3 getMinZPoint() {
+		return minZPoint;
+	}
+
+	glm::vec3 getMaxZPoint() {
+		return maxZPoint;
+	}
+
+	vector<float> getVerts();
 
 	void initAttributes( );
 

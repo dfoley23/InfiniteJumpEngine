@@ -66,14 +66,13 @@ private:
 	static Game* inst;
 
 	Level * level;
-	
-	long double t_init;
-	long double t_delta;
 	componentVector components;
 
 	int WIN_WIDTH, WIN_HEIGHT;
 	int main_window;
 	GLUI *glui;
+	std::string fps_text;
+	GLUI_EditText *fps_gauge;
 
 	//glui interface variables
 	float   transX;

@@ -36,6 +36,15 @@ bool PointCollider::isColliding(SphereCollider* that)
 
 bool PointCollider::isColliding(MeshCollider* that)
 {
+	glm::vec3 minXPoint = that->getMesh()->getMinXPoint();
+	glm::vec3 minYPoint = that->getMesh()->getMinXPoint();
+	glm::vec3 minZPoint = that->getMesh()->getMinXPoint();
+	glm::vec3 maxXPoint = that->getMesh()->getMaxXPoint();
+	glm::vec3 maxYPoint = that->getMesh()->getMaxYPoint();
+	glm::vec3 maxZPoint = that->getMesh()->getMaxZPoint();
+	//if ( point.x > that->getMesh() ) {
+
+	}
 	return false;
 }
 

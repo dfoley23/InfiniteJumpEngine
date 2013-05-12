@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "BoxCollider.h"
 #include "SphereCollider.h"
+#include "PointCollider.h"
 
 class BoxCollider;
 class SphereCollider;
@@ -18,6 +19,7 @@ public:
 	bool isColliding(BoxCollider*);
 	bool isColliding(SphereCollider*);
 	bool isColliding(MeshCollider*);
+	bool isColliding(PointCollider*);
 
 	pair<bool,float> predictCollision(BoxCollider*);
 	pair<bool,float> predictCollision(SphereCollider*);

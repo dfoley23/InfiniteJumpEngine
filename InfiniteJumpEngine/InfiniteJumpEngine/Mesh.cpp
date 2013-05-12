@@ -184,7 +184,28 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 		min = glm::vec3 ( x, y, z );
 		max = glm::vec3 ( x, y, z );
 		center = glm::vec3( 0, 0, 0 );
+		minXPoint = min;
+		minYPoint = min;
+		minZPoint = min;
+		maxXPoint = max;
+		maxYPoint = max;
+		maxZPoint = max;
 	} else {
+		if ( x < minXPoint.x ) {
+			minXPoint = glm::vec3 ( x, y, z );
+		} else if ( x > maxXPoint.x ) {
+			maxXPoint = glm::vec3 ( x, y, z );
+		}
+		if ( y < minYPoint.y ) {
+			minYPoint = glm::vec3 ( x, y, z );
+		} else if ( x > maxYPoint.y ) {
+			maxYPoint = glm::vec3 ( x, y, z );
+		}
+		if ( z < minZPoint.z ) {
+			minZPoint = glm::vec3 ( x, y, z );
+		} else if ( x > maxZPoint.z ) {
+			maxZPoint = glm::vec3 ( x, y, z );
+		}
 		if ( x < min.x ) {
 			min.x = x;
 		} else if ( x > max.x ) {
@@ -284,6 +305,33 @@ glm::vec3 Mesh::getCenter( ) {
 	return center;
 }
 
+vector<float> Mesh::getVerts(){
+	return verts;
+}
+
+glm::vec3 Mesh::getMinXPoint() {
+	return minXPoint;
+}
+
+glm::vec3 Mesh::getMaxXPoint() {
+	return maxXPoint;
+}
+
+glm::vec3 Mesh::getMinYPoint() {
+	return minYPoint;
+}
+
+glm::vec3 Mesh::getMaxYPoint() {
+	return maxYPoint;
+}
+
+glm::vec3 Mesh::getMinZPoint() {
+	return minZPoint;
+}
+
+glm::vec3 Mesh::getMaxZPoint() {
+	return maxZPoint;
+}
 /**
 * Set the value of uniforms
 * @param new_var the new value of uniforms

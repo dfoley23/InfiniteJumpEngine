@@ -26,6 +26,11 @@ bool MeshCollider::isColliding(MeshCollider* that)
 	return false;
 }
 
+bool MeshCollider::isColliding(PointCollider* that)
+{
+	return false;
+}
+
 pair<bool,float> MeshCollider::predictCollision(BoxCollider* that)
 {
 	return pair<bool,float>(false, 0.0f);
