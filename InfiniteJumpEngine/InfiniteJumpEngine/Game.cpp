@@ -219,7 +219,7 @@ void Game::keyboard(unsigned char key, int x, int y){
 		exit(0);
 		break;
 	case 97: //a
-		//level->ball->applyImpulse( glm::vec3( 0.1, 0, 0.1 ) );
+		level->ball->applyImpulse( glm::vec3( 0.1, 0, 0.1 ) );
 		break;
 	default:
 		break;

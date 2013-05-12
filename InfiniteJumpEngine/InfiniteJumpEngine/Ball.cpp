@@ -21,7 +21,7 @@ Ball::~Ball ( ) {
 
 
 void Ball::applyImpulse( glm::vec3 impulse ) {
-	//kinematics->applyImpulse( impulse );
+	physComp->getKinematics()->applyImpulse( impulse );
 }
 
 void Ball::update( float dT ) {
@@ -35,6 +35,10 @@ void Ball::draw( MeshBatch * batch ) {
 
 void Ball::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
 	getMesh()->drawForPick(batch, pickColors);
+}
+
+PhysicsComponent * Ball::getPhysics(){
+	return physComp;
 }
 
 void Ball::addCollisionObject( Collider * collider ){ 

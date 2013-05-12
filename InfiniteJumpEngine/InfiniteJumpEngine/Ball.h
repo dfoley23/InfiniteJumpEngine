@@ -33,7 +33,7 @@ public:
 	void receiveMessage( IJMessage message );
 	void addCollisionObject( Collider * collider );
 
-	PhysicsComponent *getPhysics(){return physComp;}
+	PhysicsComponent *getPhysics();
 private:
 	PhysicsComponent * physComp;
 	Mesh * mesh;
