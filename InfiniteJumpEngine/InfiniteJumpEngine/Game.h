@@ -74,6 +74,8 @@ private:
 	int WIN_WIDTH, WIN_HEIGHT;
 	int main_window;
 	GLUI *glui;
+	std::string fps_text;
+	GLUI_EditText *fps_gauge;
 
 	//glui interface variables
 	float   transX;

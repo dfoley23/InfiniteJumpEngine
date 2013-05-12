@@ -92,6 +92,7 @@ void Game::display(){
 	t_delta = t - t_init;
 	if (level){
 		if ( t_delta > 0.0001 ) {
+			fps_gauge->set_float_val(1.f/t_delta);
 			level->update(t_delta);
 			t_init = time(0);
 			t_delta = 0;
@@ -219,7 +220,8 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_Spinner *angleY_spinner =
 		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
 	angleY_spinner->set_float_limits(-360, 360);
-
+	fps_text = std::string("Hello World!");
+	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text, 4, cb);
 }
 
 void Game::keyboard(unsigned char key, int x, int y){
