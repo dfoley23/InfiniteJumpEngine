@@ -38,7 +38,7 @@ void setupGLUT() {
 
 	glutMouseFunc(mouse_click);
 
-	glutIdleFunc(idle);
+	glutIdleFunc(display);
 }
 
 void setupInterface( void(*cb)(int i) ) {

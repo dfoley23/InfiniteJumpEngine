@@ -14,12 +14,13 @@ public:
 
 	glm::mat4 cam, proj;
 	glm::vec3 lightPos;
-	virtual void update(float dT);
-
+	virtual void update(glm::vec3 pos);
+	void switchProfile( int profile );
 protected:
 
 private:
+	int cameraProfile;
     void initAttributes ( ) ;
 };
 
-#endif //CAMERA_H
+#endif CAMERA_H

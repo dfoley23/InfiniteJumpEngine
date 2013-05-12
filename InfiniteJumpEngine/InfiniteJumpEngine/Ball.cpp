@@ -13,6 +13,7 @@ Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ) {
 	pCollide->setParent( this );
 	physComp->setMainCollider(pCollide);
 	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
+	mesh->center = physComp->getKinematics()->loc.getPosition();
 }
 
 Ball::~Ball ( ) {

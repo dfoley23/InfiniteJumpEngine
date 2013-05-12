@@ -5,7 +5,8 @@ Game* Game::inst = NULL;
 
 Game::Game(void)
 {
-	t_init = time(0);
+	t_init = (long double)time(0);
+	t_delta = 0.0;
 	parent = NULL;
 	WIN_WIDTH = 1280;
 	WIN_HEIGHT = 720;
@@ -15,7 +16,7 @@ Game::Game(void)
 	//glui interface variables
 	transX = 0.0f;
 	transY = 0.0f;
-	transZ = 0.0f; 
+	transZ = 0.0f;
 	rotX = 0.0f;
 	rotY = 0.0f;
 	camEyeX = 0.0f;
@@ -61,41 +62,18 @@ void Game::display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);	
 
-	glm::vec3 pos = level->ball->getMesh()->center;
-	//update camera 
-	switch( cameraProfile ) {
-	case 0: //third person
-		level->camera->cam = glm::lookAt( glm::vec3(  pos.x, 
-			pos.y + 0.25f,
-			pos.z + 0.25f ),
-			pos, glm::vec3( 0, 1, 0 ) );
-		break;
-	case 1: //first person
-		level->camera->cam = glm::lookAt( glm::vec3( pos.x, 
-			pos.y,
-			pos.z-0.05f ),
-			glm::vec3( pos.x, 
-			pos.y,
-			pos.z-1.0f ), glm::vec3( 0, 1, 0 ) );
-		break;
-	case 2: //top down
-		level->camera->cam = glm::lookAt( glm::vec3( pos.x, 
-			pos.y+6.0f,
-			pos.z ),
-			pos, glm::vec3( 0, 0, 1 ) );
-		break;
-	default:
-		break;
-	}
-
-	long double t = time(0);
+	long double t = (long double)time(0);
 	t_delta = t - t_init;
 	if (level){
-		if ( t_delta > 0.0001 ) {
-			level->update(t_delta);
-			t_init = time(0);
+		//if ( t_delta > 1.0/60.0 ) 
+		{
+			level->update(1.0f);
+			t_init = (long double)time(0);
 			t_delta = 0;
 		}
+		glm::vec3 pos = level->ball->getMesh()->getCenter();
+
+		level->camera->update( pos );
 		level->draw();
 	}
 
@@ -138,6 +116,7 @@ void Game::idle(){
 }
 
 void Game::glui_callBack( int id ) {
+	glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
 	switch(id) {
 	case 0:
 		level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
@@ -145,10 +124,12 @@ void Game::glui_callBack( int id ) {
 		cameraProfile = 4;
 		break;
 	case 1:
+		level->camera->switchProfile( cameraProfile );
 		break;
 	case 2:
-		sendMessage(level->ball->getPhysics()->getKinematics(), "translate", glm::vec3(transX, transY, transZ));
-		level->ball->getMesh()->center = level->ball->getPhysics()->getKinematics()->loc.getPosition();
+		level->ball->getPhysics()->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0) );
+		level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 0, 0, 0) );
+		sendMessage(level->ball->getPhysics()->getKinematics(), "translate", glm::vec3(pos.x+transX, pos.y+transY, pos.z+transZ));
 		break;
 	case 3:
 		sendMessage(level->ball->getPhysics()->getKinematics(), "rotate", glm::vec3(rotX, rotY, 0.f));
@@ -229,6 +210,7 @@ void Game::keyboard(unsigned char key, int x, int y){
 		break;
 	case 97: //a
 		level->ball->applyImpulse( glm::vec3( 0.01, 0, 0 ) );
+		//level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 1, 0, 0 ) );
 		break;
 	default:
 		break;
@@ -253,10 +235,6 @@ int Game::run(int argc, char** argv){
 		glm::float_t(1000.0)
 		);
 	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
-
-	transX = level->ball->getMesh()->getCenter().x;
-	transY = level->ball->getMesh()->getCenter().y;
-	transZ = level->ball->getMesh()->getCenter().z;
 
 	glutMainLoop();
 	return 0;
