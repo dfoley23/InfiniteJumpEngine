@@ -108,6 +108,7 @@
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="IJTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="KinematicComponent.h" />
     <ClInclude Include="MeshBatch.h" />
     <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="IJTime.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="Updatable.h" />
     <ClInclude Include="Level.h" />

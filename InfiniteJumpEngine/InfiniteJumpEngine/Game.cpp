@@ -5,7 +5,6 @@ Game* Game::inst = NULL;
 
 Game::Game(void)
 {
-	t_init = time(0);
 	parent = NULL;
 	WIN_WIDTH = 1280;
 	WIN_HEIGHT = 720;
@@ -88,14 +87,12 @@ void Game::display(){
 		break;
 	}
 
-	long double t = time(0);
-	t_delta = t - t_init;
+	t_delta = IJTime() - t_init;
 	if (level){
-		if ( t_delta > 0.0001 ) {
-			fps_gauge->set_float_val(1.f/t_delta);
-			level->update(t_delta);
-			t_init = time(0);
-			t_delta = 0;
+		if ( t_delta.getSeconds() > MIN_DT ) {
+			fps_gauge->set_float_val(1.0/t_delta.getSeconds());
+			level->update(t_delta.getSeconds());
+			t_init.reset();
 		}
 		level->draw();
 	}
@@ -220,6 +217,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_Spinner *angleY_spinner =
 		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
 	angleY_spinner->set_float_limits(-360, 360);
+
 	fps_text = std::string("Hello World!");
 	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text, 4, cb);
 }
@@ -230,7 +228,7 @@ void Game::keyboard(unsigned char key, int x, int y){
 		exit(0);
 		break;
 	case 97: //a
-		level->ball->applyImpulse( glm::vec3( 0.01, 0, 0 ) );
+		level->ball->applyImpulse( glm::vec3( 0.1, 0, 0 ) );
 		break;
 	default:
 		break;
