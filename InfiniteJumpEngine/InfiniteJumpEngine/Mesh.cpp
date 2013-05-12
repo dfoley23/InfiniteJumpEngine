@@ -67,12 +67,6 @@ void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
 			batch->colors.at(index).push_back( id.y / 255.0f );
 			batch->colors.at(index).push_back( id.z / 255.0f );
 		}
-		/*for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-		pickColors.push_back( id.x / 255.0f );
-		pickColors.push_back( id.y / 255.0f );
-		pickColors.push_back( id.z / 255.0f );
-		}
-		pickColors.clear();*/
 	} else {
 		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
 		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );

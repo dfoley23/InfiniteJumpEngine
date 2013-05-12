@@ -3,6 +3,7 @@
 
 PhysicsComponent::PhysicsComponent(void)
 {
+	kinematics.setParent( this );
 }
 
 
@@ -11,7 +12,6 @@ PhysicsComponent::~PhysicsComponent(void)
 }
 
 void PhysicsComponent::update( float dT ) {
-	
 	kinematics.update(dT);
 }
 

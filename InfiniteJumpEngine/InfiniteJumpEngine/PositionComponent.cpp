@@ -23,6 +23,14 @@ glm::mat4 PositionComponent::getTransform(){
 	return t * r * s;
 }
 
+glm::vec3 PositionComponent::getPosition() {
+	return position;
+}
+
+glm::vec3  PositionComponent::getRotation() {
+	return rotation;
+}
+
 const PositionComponent PositionComponent::operator+(const PositionComponent &that){
 	PositionComponent out;
 	out.position = position + that.position;

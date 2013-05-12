@@ -3,7 +3,8 @@
 
 KinematicComponent::KinematicComponent(void)
 {
-	
+	acc = acc * 0;
+	vel = vel * 0;
 }
 
 KinematicComponent::~KinematicComponent(void){
@@ -19,7 +20,7 @@ void KinematicComponent::update(float dT){
 }
 
 void KinematicComponent::applyImpulse( glm::vec3 impulse ) {
-	acc = impulse;
+	acc.setPosition( impulse );
 }
 
 void KinematicComponent::receiveMessage( IJMessage *m){

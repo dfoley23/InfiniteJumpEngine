@@ -83,6 +83,7 @@ Level* ResManager::getTriangleLevel(string filename){
 				ballEntity->addComponent( ball );
 				level->addEntity( ballEntity );
 				level->pickedMesh = ball->getMesh( );
+				level->ball = ball;
 
 			} else if ( !type.compare( "cup" ) ) {
 				Entity * cupEntity = new Entity( );

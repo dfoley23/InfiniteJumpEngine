@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <vector>
+#include <ctime>
 #include "IJMessage.h"
 #include "Component.h"
 #include "glIncludes.h"
@@ -66,6 +67,8 @@ private:
 
 	Level * level;
 	
+	long double t_init;
+	long double t_delta;
 	componentVector components;
 
 	int WIN_WIDTH, WIN_HEIGHT;
