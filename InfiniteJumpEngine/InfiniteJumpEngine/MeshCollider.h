@@ -8,6 +8,7 @@
 
 class BoxCollider;
 class SphereCollider;
+class PointCollider;
 
 class MeshCollider :
 	public Collider
@@ -19,7 +20,6 @@ public:
 	bool isColliding(BoxCollider*);
 	bool isColliding(SphereCollider*);
 	bool isColliding(MeshCollider*);
-	bool isColliding(PointCollider*);
 
 	pair<bool,float> predictCollision(BoxCollider*);
 	pair<bool,float> predictCollision(SphereCollider*);

@@ -100,37 +100,22 @@ public:
 		float x2, float y2, float z2, glm::vec3 color );
 
 	glm::vec3 getCenter( );
+	
+	glm::vec3 getMinPoint();
 
-	glm::vec3 Mesh::getMinXPoint() {
-		return minXPoint;
-	}
-	glm::vec3 getMinPoint(){
-		return min;
-	}
+	glm::vec3 getMaxPoint();
 
-	glm::vec3 getMaxPoint(){
-		return max;
-	}
+	glm::vec3 getMinXPoint();
 
-	glm::vec3 getMaxXPoint() {
-		return maxXPoint;
-	}
+	glm::vec3 getMaxXPoint();
 
-	glm::vec3 getMinYPoint() {
-		return minYPoint;
-	}
+	glm::vec3 getMinYPoint();
 
-	glm::vec3 getMaxYPoint() {
-		return maxYPoint;
-	}
+	glm::vec3 getMaxYPoint();
 
-	glm::vec3 getMinZPoint() {
-		return minZPoint;
-	}
+	glm::vec3 getMinZPoint();
 
-	glm::vec3 getMaxZPoint() {
-		return maxZPoint;
-	}
+	glm::vec3 getMaxZPoint();
 
 	vector<float> getVerts();
 

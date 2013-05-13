@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <vector>
-#include <ctime>
+#include "IJTime.h"
 #include "IJMessage.h"
 #include "Component.h"
 #include "glIncludes.h"
@@ -24,6 +24,8 @@ class ResManager;
 class Level;
 
 typedef unsigned int pixel_t;
+
+const long double MIN_DT = 1.0/120.0;
 
 class Game: public Component
 {
@@ -66,6 +68,9 @@ private:
 	static Game* inst;
 
 	Level * level;
+
+	IJTime t_init;
+	IJTime t_delta;
 	componentVector components;
 
 	int WIN_WIDTH, WIN_HEIGHT;

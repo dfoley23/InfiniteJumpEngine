@@ -59,9 +59,14 @@ void Game::display(){
 	glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	this->fps_gauge->set_float_val( ((float)clock())/CLOCKS_PER_SEC );
+
+	t_delta = IJTime() - t_init;
 	if (level){
-		level->update(1.0f);
+		if ( t_delta.getSeconds() > MIN_DT ) {
+			fps_gauge->set_float_val(1.0/t_delta.getSeconds());
+			level->update(t_delta.getSeconds());
+			t_init.reset();
+		}
 		glm::vec3 pos = level->ball->getMesh()->getCenter();
 
 		level->camera->update( pos );
@@ -193,6 +198,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_Spinner *angleY_spinner =
 		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
 	angleY_spinner->set_float_limits(-360, 360);
+
 	fps_text = std::string("Hello World!");
 	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
 }
@@ -202,9 +208,19 @@ void Game::keyboard(unsigned char key, int x, int y){
 	case 27:
 		exit(0);
 		break;
+	case 119: //w
+		sendMessage(level->ball, "forward");
+		break;
 	case 97: //a
-		level->ball->applyImpulse( glm::vec3( 0.03, 0, 0 ) );
+		//level->ball->applyImpulse( glm::vec3( 0.03, 0, 0 ) );
 		//level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 1, 0, 0 ) );
+		sendMessage(level->ball, "left");
+		break;
+	case 115: //s
+		sendMessage(level->ball, "back");
+		break;
+	case 100: //d
+		sendMessage(level->ball, "right");
 		break;
 	default:
 		break;

@@ -8,6 +8,7 @@
 
 class BoxCollider;
 class SphereCollider;
+class MeshCollider;
 
 class PointCollider :
 	public Collider
@@ -20,10 +21,13 @@ public:
 	bool isColliding(SphereCollider*);
 	bool isColliding(MeshCollider*);
 
+	void setPointPos( glm::vec3 pos );
 	pair<bool,float> predictCollision(BoxCollider*);
 	pair<bool,float> predictCollision(SphereCollider*);
 	pair<bool,float> predictCollision(MeshCollider*);
 	
+	void recieveMessage( IJMessage *m );
+
 	glm::vec3 point;
 protected:
 };

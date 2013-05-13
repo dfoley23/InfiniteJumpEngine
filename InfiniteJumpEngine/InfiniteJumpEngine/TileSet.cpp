@@ -8,6 +8,9 @@ TileSet::TileSet(void)
 
 TileSet::~TileSet(void)
 {
+	for( tileIter i = tiles.begin(); i != tiles.end(); i++){
+		delete (*i); (*i) = NULL;
+	}
 }
 
 void TileSet::update(float dT){

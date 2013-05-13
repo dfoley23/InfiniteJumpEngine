@@ -1,6 +1,11 @@
 #include "Ball.h"
 
-Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ) {
+Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
+	forward(glm::vec3(0,0,-5), 0.1f, true)
+	,back(glm::vec3(0,0,5), 0.1f, true)
+	,left(glm::vec3(-5,0,0), 0.1f, true)
+	,right(glm::vec3(5,0,0), 0.1f, true)
+{
 	tileSet = tiles;
 	currentTile = tileSet->getTile( tileId );
 	mesh = generateMesh( );
@@ -9,11 +14,15 @@ Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ) {
 	physComp = new PhysicsComponent();
 	physComp->setParent(this);
 	mesh->setParent(physComp);
-	PointCollider * pCollide = new PointCollider( getMesh()->center );
+	pCollide = new PointCollider( getMesh()->center );
 	pCollide->setParent( this );
 	physComp->setMainCollider(pCollide);
 	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
+	physComp->addForce(&forward);
+	physComp->addForce(&back);
+	physComp->addForce(&left);
+	physComp->addForce(&right);
 }
 
 Ball::~Ball ( ) {
@@ -26,6 +35,7 @@ void Ball::applyImpulse( glm::vec3 impulse ) {
 }
 
 void Ball::update( float dT ) {
+	pCollide->setPointPos( getMesh()->center );
 	physComp->update( dT );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 }
@@ -61,6 +71,23 @@ Mesh* Ball::generateMesh(){
 	return Game::game()->resman->readObjFile( "ballobj.obj" );
 }
 
-void Ball::receiveMessage( IJMessage message ){
-	
+void Ball::receiveMessage( IJMessage* message ){
+	if (!message->getContent().compare("forward")){
+		cout<< "ball moving forward" << endl;
+		forward.start();
+	} else if (!message->getContent().compare("back")){
+		cout<< "ball moving back" << endl;
+		back.start();
+	} else if (!message->getContent().compare("left")){
+		cout<< "ball moving left" << endl;
+		left.start();
+	} else if (!message->getContent().compare("right")){
+		cout<< "ball moving right" << endl;
+		right.start();
+	} else if (!message->getContent().compare("tileCollision")){
+		this->currentTile = (Tile*)message->getReceiver()->getParent();
+		cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
+	} else if (parent) {
+		sendMessage(message, parent);
+	}
 }

@@ -309,6 +309,14 @@ vector<float> Mesh::getVerts(){
 	return verts;
 }
 
+glm::vec3 Mesh::getMinPoint() {
+	return min;
+}
+
+glm::vec3 Mesh::getMaxPoint() {
+	return max;
+}
+
 glm::vec3 Mesh::getMinXPoint() {
 	return minXPoint;
 }

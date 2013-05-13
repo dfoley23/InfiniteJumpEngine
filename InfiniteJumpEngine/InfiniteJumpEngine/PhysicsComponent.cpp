@@ -16,19 +16,25 @@ PhysicsComponent::~PhysicsComponent(void)
 }
 
 void PhysicsComponent::update( float dT ) {
-	game_time = ((double)clock())/CLOCKS_PER_SEC;
-	physics_lag_time += game_time - prev_game_time;
-	if ( physics_lag_time > delta_t ) 
+	//game_time = ((double)clock())/CLOCKS_PER_SEC;
+	//physics_lag_time += game_time - prev_game_time;
+	//if ( physics_lag_time > delta_t ) 
 	{
-		for (colliderIter cIter = collisionData.begin(); cIter != collisionData.end(); ++cIter ) {
-			if ( mainCollider->isColliding(*cIter) ){
+		for (int i=0; i< static_cast<int>(collisionData.size()); i++ ) {
+			if ( mainCollider->isColliding(collisionData.at(i)) ){
 				break;
 			}
 		}
-		kinematics.update( delta_t );
-		physics_lag_time -= delta_t;
+		glm::vec3 sumOfForces = glm::vec3(0,0,0);
+		for (forceIter i = forces.begin(); i != forces.end(); i++){
+			(*i)->update(dT);
+			sumOfForces += (*i)->getValue();
+		}
+		kinematics.applyImpulse( sumOfForces );
+		kinematics.update(dT);
+		//physics_lag_time -= delta_t;
 	}
-	prev_game_time = game_time;
+	//prev_game_time = game_time;
 }
 
 void PhysicsComponent::applyImpulse( glm::vec3 impulse ){

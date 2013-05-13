@@ -14,6 +14,7 @@ public:
 	friend class Component;
 	std::string getContent(){return content;}
 	glm::vec3 getVector(){return vecContent;}
+	Component* getReceiver(){return receiver;}
 protected:
 	Component* sender;
 	Component* receiver;
