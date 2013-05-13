@@ -228,16 +228,16 @@ void Game::keyboard(unsigned char key, int x, int y){
 		exit(0);
 		break;
 	case 119: //w
-		level->ball->applyImpulse( glm::vec3( 0, 0, -0.5 ) );
+		sendMessage(level->ball, "forward");
 		break;
 	case 97: //a
-		level->ball->applyImpulse( glm::vec3( -0.5, 0, 0 ) );
+		sendMessage(level->ball, "left");
 		break;
 	case 115: //s
-		level->ball->applyImpulse( glm::vec3( 0, 0, 0.5 ) );
+		sendMessage(level->ball, "back");
 		break;
 	case 100: //d
-		level->ball->applyImpulse( glm::vec3( 0.5, 0, 0 ) );
+		sendMessage(level->ball, "right");
 		break;
 	default:
 		break;

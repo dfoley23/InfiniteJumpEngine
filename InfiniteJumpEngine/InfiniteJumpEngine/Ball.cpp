@@ -1,6 +1,11 @@
 #include "Ball.h"
 
-Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ) {
+Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
+	forward(glm::vec3(0,0,-1), 0.1f, true)
+	,back(glm::vec3(0,0,1), 0.1f, true)
+	,left(glm::vec3(-1,0,0), 0.1f, true)
+	,right(glm::vec3(1,0,0), 0.1f, true)
+{
 	tileSet = tiles;
 	currentTile = tileSet->getTile( tileId );
 	mesh = generateMesh( );
@@ -13,6 +18,11 @@ Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ) {
 	pCollide->setParent( this );
 	physComp->setMainCollider(pCollide);
 	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
+	physComp->addForce(&forward);
+	physComp->addForce(&back);
+	physComp->addForce(&left);
+	physComp->addForce(&right);
+
 }
 
 Ball::~Ball ( ) {
@@ -60,6 +70,20 @@ Mesh* Ball::generateMesh(){
 	return Game::game()->resman->readObjFile( "ballobj.obj" );
 }
 
-void Ball::receiveMessage( IJMessage message ){
-	
+void Ball::receiveMessage( IJMessage* message ){
+	if (!message->getContent().compare("forward")){
+		cout<< "ball moving forward" << endl;
+		forward.start();
+	} else if (!message->getContent().compare("back")){
+		cout<< "ball moving back" << endl;
+		back.start();
+	} else if (!message->getContent().compare("left")){
+		cout<< "ball moving left" << endl;
+		left.start();
+	} else if (!message->getContent().compare("right")){
+		cout<< "ball moving right" << endl;
+		right.start();
+	} else if (parent) {
+		sendMessage(message, parent);
+	}
 }
