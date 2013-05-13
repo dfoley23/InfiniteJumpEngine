@@ -21,15 +21,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Colliders">
+      <UniqueIdentifier>{fd82e851-e2af-4f2d-9b7e-08085aa473ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TileSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -71,13 +71,7 @@
     <ClCompile Include="MeshBatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MeshCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PointCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PositionComponent.cpp">
@@ -89,17 +83,33 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IJTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Force.cpp" />
-    <ClCompile Include="EnvelopeASDR.cpp" />
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="PointCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSetCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="EnvelopeASDR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Force.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -191,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="EnvelopeASDR.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSetCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
