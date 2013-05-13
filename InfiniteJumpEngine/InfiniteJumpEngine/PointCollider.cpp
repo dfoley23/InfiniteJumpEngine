@@ -15,9 +15,6 @@ bool PointCollider::isColliding(BoxCollider* that)
 {
 	glm::vec3 box = that->getPos();
 	glm::vec3 dim = that->getDim();
-	//cout << "point : " << point.x << point.y << point.z << endl;
-	//cout << "min : " << box.x << box.y << box.z << endl;
-	//cout << "max : " << dim.x << dim.y << dim.z << endl;
 	if ( point.x > box.x
 		&& point.y > box.y
 		&& point.z > box.z
@@ -38,23 +35,28 @@ bool PointCollider::isColliding(MeshCollider* that)
 {
 	glm::vec3 minPoint = that->getMesh()->getMinPoint();
 	glm::vec3 maxPoint = that->getMesh()->getMaxPoint();
-	if ( point.x > minPoint.x && point.z > minPoint.z 
-		&& point.x < maxPoint.x && point.z < maxPoint.z 
-		&& point.y > minPoint.y - 3.0f && point.y < maxPoint.y + 3 )   
-	{
-		cout << "hit a tile" << endl;
-		sendMessage( that, "tileCollision", glm::vec3( 0, 0, 0) );
-		return true;
+	vector<float> verts = that->getMesh()->getVerts();
+	glm::vec3 vert0;
+	glm::vec3 vert1;
+	glm::vec3 vert2;
+	int i = 0;
+	while( i < static_cast<int>(verts.size())-9 ) {
+		vert0 = glm::vec3( verts.at(i), 0, verts.at(i+2) );
+		vert1 = glm::vec3( verts.at(i+3), 0, verts.at(i+5) );
+		vert2 = glm::vec3( verts.at(i+6), 0, verts.at(i+8) );
+		if ( sameSideOfLine( point, vert0, vert1, vert2 )
+			&& sameSideOfLine( point, vert1, vert0, vert2) 
+			&& sameSideOfLine( point, vert2, vert0, vert2) ) {
+				sendMessage( this->getParent(), that, "tileCollision", glm::vec3( 0, 0, 0) );
+				return true;
+		}
+		i+=9;
 	}
 	return false;
 }
 
 void PointCollider::setPointPos( glm::vec3 pos ){
 	point = pos;
-}
-
-void PointCollider::recieveMessage( IJMessage *m ){
-	point = m->getVector();
 }
 
 pair<bool,float> PointCollider::predictCollision(BoxCollider* that)

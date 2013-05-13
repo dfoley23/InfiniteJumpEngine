@@ -16,12 +16,12 @@ PhysicsComponent::~PhysicsComponent(void)
 }
 
 void PhysicsComponent::update( float dT ) {
-	//game_time = ((double)clock())/CLOCKS_PER_SEC;
-	//physics_lag_time += game_time - prev_game_time;
-	//if ( physics_lag_time > delta_t ) 
+	game_time = ((double)clock())/CLOCKS_PER_SEC;
+	physics_lag_time += game_time - prev_game_time;
+	if ( physics_lag_time > delta_t ) 
 	{
-		for (int i=0; i< static_cast<int>(collisionData.size()); i++ ) {
-			if ( mainCollider->isColliding(collisionData.at(i)) ){
+		for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
+			if ( mainCollider->isColliding((*cIter)) ){
 				break;
 			}
 		}
@@ -32,20 +32,20 @@ void PhysicsComponent::update( float dT ) {
 		}
 		kinematics.applyImpulse( sumOfForces );
 		kinematics.update(dT);
-		//physics_lag_time -= delta_t;
+		physics_lag_time -= delta_t;
 	}
-	//prev_game_time = game_time;
+	prev_game_time = game_time;
 }
 
 void PhysicsComponent::applyImpulse( glm::vec3 impulse ){
 	kinematics.applyImpulse( impulse );
 }
 
-void PhysicsComponent::setMainCollider( Collider * collider){ 
+void PhysicsComponent::setMainCollider( PointCollider * collider){ 
 	mainCollider = collider;
 }
 
-void PhysicsComponent::addCollider(Collider* collider){ 
+void PhysicsComponent::addCollider(MeshCollider* collider){ 
 	this->collisionData.push_back( collider );
 }
 

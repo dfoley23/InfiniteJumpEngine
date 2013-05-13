@@ -25,8 +25,6 @@ public:
 	pair<bool,float> predictCollision(BoxCollider*);
 	pair<bool,float> predictCollision(SphereCollider*);
 	pair<bool,float> predictCollision(MeshCollider*);
-	
-	void recieveMessage( IJMessage *m );
 
 	glm::vec3 point;
 protected:

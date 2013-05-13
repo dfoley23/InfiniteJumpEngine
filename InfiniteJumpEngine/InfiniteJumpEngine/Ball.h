@@ -31,7 +31,6 @@ public:
 	void applyImpulse( glm::vec3 impulse );
 	void hitTile( Tile * tile );
 	void receiveMessage( IJMessage* message );
-	void addCollisionObject( Collider * collider );
 
 	PhysicsComponent *getPhysics();
 private:

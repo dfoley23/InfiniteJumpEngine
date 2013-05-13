@@ -36,6 +36,7 @@ public:
 	virtual bool isColliding(Collider*){return false;};
 	bool isCollidingRecursive(Collider*);
 
+	bool sameSideOfLine(glm::vec3, glm::vec3, glm::vec3, glm::vec3); 
 	/*
 		Checks if and when two colliders will ever collide in the near future.
 		bool - Will these two ever collide?

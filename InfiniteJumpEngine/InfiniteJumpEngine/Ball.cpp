@@ -35,7 +35,9 @@ void Ball::applyImpulse( glm::vec3 impulse ) {
 }
 
 void Ball::update( float dT ) {
-	pCollide->setPointPos( getMesh()->center );
+	glm::vec3 point = getMesh()->center;
+	point.y = 0;
+	pCollide->setPointPos( point );
 	physComp->update( dT );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 }
@@ -50,10 +52,6 @@ void Ball::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
 
 PhysicsComponent * Ball::getPhysics(){
 	return physComp;
-}
-
-void Ball::addCollisionObject( Collider * collider ){ 
-	physComp->addCollider( collider );
 }
 
 void Ball::deleteMesh(){
@@ -85,7 +83,7 @@ void Ball::receiveMessage( IJMessage* message ){
 		cout<< "ball moving right" << endl;
 		right.start();
 	} else if (!message->getContent().compare("tileCollision")){
-		this->currentTile = (Tile*)message->getReceiver()->getParent();
+		this->currentTile = (Tile*)message->getOther()->getParent();
 		cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 	} else if (parent) {
 		sendMessage(message, parent);

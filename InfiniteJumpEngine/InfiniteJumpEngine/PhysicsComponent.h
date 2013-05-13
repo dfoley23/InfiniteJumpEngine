@@ -11,7 +11,7 @@
 #include "Contact.h"
 #include "PointCollider.h"
 
-typedef vector<Collider*>::iterator colliderIter;
+typedef vector<MeshCollider*>::iterator colliderIter;
 
 typedef vector<Force*> forceVector;
 typedef forceVector::iterator forceIter;
@@ -22,8 +22,8 @@ public:
 	PhysicsComponent(void);
 	~PhysicsComponent(void);
 
-	void addCollider(Collider*);
-	void setMainCollider( Collider * );
+	void addCollider(MeshCollider*);
+	void setMainCollider( PointCollider * );
 	void applyImpulse( glm::vec3 impulse );
 	void addForce(Force *f){forces.push_back(f);}
 	void update(float dT);
@@ -40,8 +40,8 @@ protected:
 	double physics_lag_time;
 
 	KinematicComponent kinematics;
-	Collider * mainCollider;
-	vector<Collider*> collisionData;
+	PointCollider * mainCollider;
+	vector<MeshCollider*> collisionData;
 	forceVector forces;
 };
 

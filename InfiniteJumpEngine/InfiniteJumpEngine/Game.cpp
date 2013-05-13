@@ -62,7 +62,8 @@ void Game::display(){
 
 	t_delta = IJTime() - t_init;
 	if (level){
-		if ( t_delta.getSeconds() > MIN_DT ) {
+		//if ( t_delta.getSeconds() > MIN_DT ) 
+		{
 			fps_gauge->set_float_val(1.0/t_delta.getSeconds());
 			level->update(t_delta.getSeconds());
 			t_init.reset();
@@ -127,10 +128,16 @@ void Game::glui_callBack( int id ) {
 	case 2:
 		level->ball->getPhysics()->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0) );
 		level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 0, 0, 0) );
-		sendMessage(level->ball->getPhysics()->getKinematics(), "translate", glm::vec3(pos.x+transX, pos.y+transY, pos.z+transZ));
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x+transX, pos.y, pos.z));
 		break;
 	case 3:
-		sendMessage(level->ball->getPhysics()->getKinematics(), "rotate", glm::vec3(rotX, rotY, 0.f));
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x, pos.y+transY, pos.z));
+		break;
+	case 4:
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x, pos.y, pos.z+transZ));
+		break;
+	case 5:
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "rotate", glm::vec3(rotX, rotY, 0.f));
 		break;
 	default:
 		break;
@@ -184,19 +191,19 @@ void Game::setupInterface( void(*cb)(int i) ){
 	trans1_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans2_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 2, cb );
+		glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 3, cb );
 	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 2, cb );
+		glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 4, cb );
 	trans3_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *angleX_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 3, cb);
+		glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 5, cb);
 	angleX_spinner->set_float_limits(-360, 360);
 
 	GLUI_Spinner *angleY_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 3, cb);
+		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
 	angleY_spinner->set_float_limits(-360, 360);
 
 	fps_text = std::string("Hello World!");
@@ -209,18 +216,18 @@ void Game::keyboard(unsigned char key, int x, int y){
 		exit(0);
 		break;
 	case 119: //w
-		sendMessage(level->ball, "forward");
+		sendMessage(level->ball, NULL, "forward");
 		break;
 	case 97: //a
 		//level->ball->applyImpulse( glm::vec3( 0.03, 0, 0 ) );
 		//level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 1, 0, 0 ) );
-		sendMessage(level->ball, "left");
+		sendMessage(level->ball, NULL, "left");
 		break;
 	case 115: //s
-		sendMessage(level->ball, "back");
+		sendMessage(level->ball, NULL, "back");
 		break;
 	case 100: //d
-		sendMessage(level->ball, "right");
+		sendMessage(level->ball, NULL, "right");
 		break;
 	default:
 		break;
