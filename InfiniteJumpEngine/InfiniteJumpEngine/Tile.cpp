@@ -80,7 +80,7 @@ Mesh* Tile::generateMesh(){
 	glm::vec3 bitangent;
 	float edgeHeight = 0.1f;
 	for (int v = 0; v < static_cast<int>(verts.size())-1; v++){
-		if ( v < 2 ) {
+		if ( v == 0 ) {
 			vert0 = verts[v];
 			vert1 = verts[v+1];
 			vert2 = verts[v+2];

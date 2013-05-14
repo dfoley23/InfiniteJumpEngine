@@ -14,11 +14,11 @@ Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
 	physComp = new PhysicsComponent();
 	physComp->setParent(this);
 	mesh->setParent(physComp);
-	pCollide = new PointCollider( getMesh()->center );
-	pCollide->setParent( this );
-	physComp->setMainCollider(pCollide);
 	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
+	InterSectionCollider * intersect = new InterSectionCollider( );
+	intersect->setParent(physComp);
+	physComp->setMainCollider( intersect );
 	physComp->addForce(&forward);
 	physComp->addForce(&back);
 	physComp->addForce(&left);
@@ -35,9 +35,9 @@ void Ball::applyImpulse( glm::vec3 impulse ) {
 }
 
 void Ball::update( float dT ) {
-	glm::vec3 point = getMesh()->center;
-	point.y = 0;
-	pCollide->setPointPos( point );
+	InterSectionCollider* ballRay = (InterSectionCollider*)physComp->getMainCollider();
+	ballRay->setRayStart( mesh->getCenter() );
+	ballRay->setDirection( physComp->getKinematics()->vel.getPosition() );
 	physComp->update( dT );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 }

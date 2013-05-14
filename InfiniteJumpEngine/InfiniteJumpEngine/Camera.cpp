@@ -34,7 +34,7 @@ void Camera::update (glm::vec3 pos){
 			cam = glm::lookAt( glm::vec3( pos.x, 
 				pos.y+6.0f,
 				pos.z ),
-				pos, glm::vec3( 0, 0, 1 ) );
+				pos, glm::vec3( 0, 0, -1 ) );
 			break;
 		default:
 			break;

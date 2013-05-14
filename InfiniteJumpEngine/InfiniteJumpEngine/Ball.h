@@ -35,7 +35,6 @@ public:
 	PhysicsComponent *getPhysics();
 private:
 	PhysicsComponent * physComp;
-	PointCollider * pCollide;
 	Mesh * mesh;
 	TileSet * tileSet;
 	Tile * currentTile;

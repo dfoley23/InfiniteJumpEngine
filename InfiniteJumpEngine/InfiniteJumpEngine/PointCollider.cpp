@@ -33,8 +33,6 @@ bool PointCollider::isColliding(SphereCollider* that)
 
 bool PointCollider::isColliding(MeshCollider* that)
 {
-	glm::vec3 minPoint = that->getMesh()->getMinPoint();
-	glm::vec3 maxPoint = that->getMesh()->getMaxPoint();
 	vector<float> verts = that->getMesh()->getVerts();
 	glm::vec3 vert0;
 	glm::vec3 vert1;
@@ -44,11 +42,13 @@ bool PointCollider::isColliding(MeshCollider* that)
 		vert0 = glm::vec3( verts.at(i), 0, verts.at(i+2) );
 		vert1 = glm::vec3( verts.at(i+3), 0, verts.at(i+5) );
 		vert2 = glm::vec3( verts.at(i+6), 0, verts.at(i+8) );
-		if ( sameSideOfLine( point, vert0, vert1, vert2 )
-			&& sameSideOfLine( point, vert1, vert0, vert2) 
-			&& sameSideOfLine( point, vert2, vert0, vert2) ) {
+		if ( sameSideOfLine( point, vert0, vert1, vert2 ) ) {
+			if ( sameSideOfLine( point, vert1, vert0, vert2) ) {
+			if ( sameSideOfLine( point, vert2, vert0, vert1) ) {
 				sendMessage( this->getParent(), that, "tileCollision", glm::vec3( 0, 0, 0) );
 				return true;
+		}
+			}
 		}
 		i+=9;
 	}

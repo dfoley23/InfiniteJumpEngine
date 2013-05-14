@@ -9,9 +9,9 @@
 #include "TransformComponent.h"
 #include "KinematicComponent.h"
 #include "Contact.h"
-#include "PointCollider.h"
+#include "InterSectionCollider.h"
 
-typedef vector<MeshCollider*>::iterator colliderIter;
+typedef vector<InterSectionCollider*>::iterator colliderIter;
 
 typedef vector<Force*> forceVector;
 typedef forceVector::iterator forceIter;
@@ -22,8 +22,8 @@ public:
 	PhysicsComponent(void);
 	~PhysicsComponent(void);
 
-	void addCollider(MeshCollider*);
-	void setMainCollider( PointCollider * );
+	void addCollider(InterSectionCollider*);
+	void setMainCollider( InterSectionCollider * );
 	void applyImpulse( glm::vec3 impulse );
 	void addForce(Force *f){forces.push_back(f);}
 	void update(float dT);
@@ -40,8 +40,8 @@ protected:
 	double physics_lag_time;
 
 	KinematicComponent kinematics;
-	PointCollider * mainCollider;
-	vector<MeshCollider*> collisionData;
+	InterSectionCollider * mainCollider;
+	vector<InterSectionCollider*> collisionData;
 	forceVector forces;
 };
 

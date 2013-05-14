@@ -110,6 +110,9 @@
     <ClCompile Include="Force.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InterSectionCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -203,6 +206,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileSetCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InterSectionCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>
