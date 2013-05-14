@@ -5,6 +5,7 @@
 #include "glIncludes.h"
 #include "Mesh.h"
 #include "TileSet.h"
+#include "PlaneCollider.h"
 using namespace std;
 /**
 * class Tile
@@ -30,16 +31,18 @@ public:
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	int getTileId( );
-	Mesh * mesh;
+	vector<PlaneCollider*> getEdgeColliders();
 	vector<Mesh *> edges;
 private:
 	void buildMesh( );
 protected:
+	Mesh * mesh;
 	unsigned int id;
 	vector<glm::vec3>verts;
 	vector<int> neighbors;
+	vector<PlaneCollider*> edgeColliders;
 	glm::vec3 color;
 	glm::vec3 wall_color;
 };
 
-#endif // TILE_H
+#endif TILE_H

@@ -110,7 +110,10 @@
     <ClCompile Include="Force.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InterSectionCollider.cpp">
+    <ClCompile Include="RayCollider.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaneCollider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -208,7 +211,10 @@
     <ClInclude Include="TileSetCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
-    <ClInclude Include="InterSectionCollider.h">
+    <ClInclude Include="PlaneCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RayCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>

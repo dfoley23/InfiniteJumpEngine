@@ -17,6 +17,7 @@ Level* ResManager::getTriangleLevel(string filename){
 	terrain->addComponent(tiles);
 	level->addEntity(terrain);
 	Ball * ball;
+	vector<PlaneCollider*> tileColliders;
 
 	string line;
 	ifstream input;
@@ -54,7 +55,7 @@ Level* ResManager::getTriangleLevel(string filename){
 					iss >> n_str;
 					neighbors.push_back( atoi(n_str.c_str( )) );
 				}
-				tiles->addTile( id, new Tile( id-1, verts, neighbors, glm::vec3( (float)id/17.f , (float)id/17.f , (float)id/17.f ) ) );
+				tiles->addTile( id, new Tile( id-1, verts, neighbors, glm::vec3( 0.0f, 0.7f , 0.0f ) ) );
 			} else if ( !type.compare( "tee" ) ) {
 				Entity * teeEntity = new Entity( );
 				Mesh * tee = new Mesh( );
@@ -111,12 +112,6 @@ Level* ResManager::getTriangleLevel(string filename){
 				return NULL;
 			}
 
-		}
-		InterSectionCollider * tileCollider;
-		for ( vector<Tile*>::iterator it = tiles->tiles.begin(); it != tiles->tiles.end(); ++it){
-			tileCollider = new InterSectionCollider( );
-			tileCollider->setParent( (*it) );
-			ball->getPhysics()->addCollider( tileCollider );
 		}
 		return level;
 	} 

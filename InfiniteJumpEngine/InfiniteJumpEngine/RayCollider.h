@@ -1,0 +1,25 @@
+#pragma once
+#ifndef RAY_COLLIDER_H
+#define RAY_COLLIDER_H
+#include "glIncludes.h"
+#include "PlaneCollider.h"
+#include "Collider.h"
+
+class RayCollider : public Collider
+{
+public:
+	RayCollider( );
+	~RayCollider(void);
+
+	pair<bool, double> predictIntersection( PlaneCollider * plane );
+
+	void setDirection( glm::vec3 );
+	void setRayStart( glm::vec3 );
+	double getInterSectTime( );
+private:
+	glm::vec3 direction;
+	glm::vec3 rayStart;
+	double time;
+};
+
+#endif RAY_COLLIDER_H

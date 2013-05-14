@@ -8,6 +8,7 @@ PhysicsComponent::PhysicsComponent(void)
 	physics_lag_time = 0.0;
 	prev_game_time = game_time;
 	kinematics.setParent( this );
+
 }
 
 
@@ -20,9 +21,19 @@ void PhysicsComponent::update( float dT ) {
 	physics_lag_time += game_time - prev_game_time;
 	if ( physics_lag_time > delta_t ) 
 	{
-		for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
-			if ( mainCollider->isColliding((*cIter)) ){
-				break;
+		pair<bool, double> intersect = mainCollider->predictIntersection(closestPlane);
+		double intersectTime = 0.0f;
+		if ( !intersect.first || intersect.second <= 0.0f ) {
+			if ( closestPlane != NULL && intersect.first ) {
+				sendMessage( this->getParent(), closestPlane, "InterSection", closestPlane->getNormal() );
+			}
+			for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
+				intersect = mainCollider->predictIntersection(closestPlane);
+				if ( intersect.first && intersect.second < intersectTime && intersect.second > 0.0f ) {
+					intersectTime = intersect.second;
+				} else if ( (*cIter) != closestPlane ) {
+					sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
+				}
 			}
 		}
 		glm::vec3 sumOfForces = glm::vec3(0,0,0);
@@ -37,15 +48,11 @@ void PhysicsComponent::update( float dT ) {
 	prev_game_time = game_time;
 }
 
-void PhysicsComponent::applyImpulse( glm::vec3 impulse ){
-	kinematics.applyImpulse( impulse );
-}
-
-void PhysicsComponent::setMainCollider( PointCollider * collider){ 
+void PhysicsComponent::setMainCollider( RayCollider * collider){ 
 	mainCollider = collider;
 }
 
-void PhysicsComponent::addCollider(MeshCollider* collider){ 
+void PhysicsComponent::addCollider(PlaneCollider* collider){ 
 	this->collisionData.push_back( collider );
 }
 

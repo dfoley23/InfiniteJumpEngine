@@ -9,9 +9,10 @@
 #include "TransformComponent.h"
 #include "KinematicComponent.h"
 #include "Contact.h"
-#include "InterSectionCollider.h"
+#include "RayCollider.h"
+#include "PlaneCollider.h"
 
-typedef vector<InterSectionCollider*>::iterator colliderIter;
+typedef vector<PlaneCollider*>::iterator colliderIter;
 
 typedef vector<Force*> forceVector;
 typedef forceVector::iterator forceIter;
@@ -22,9 +23,8 @@ public:
 	PhysicsComponent(void);
 	~PhysicsComponent(void);
 
-	void addCollider(InterSectionCollider*);
-	void setMainCollider( InterSectionCollider * );
-	void applyImpulse( glm::vec3 impulse );
+	void addCollider(PlaneCollider*);
+	void setMainCollider( RayCollider * );
 	void addForce(Force *f){forces.push_back(f);}
 	void update(float dT);
 	virtual Collider * getMainCollider(){
@@ -39,9 +39,11 @@ protected:
 	double delta_t;
 	double physics_lag_time;
 
+	PlaneCollider * closestPlane;
+
 	KinematicComponent kinematics;
-	InterSectionCollider * mainCollider;
-	vector<InterSectionCollider*> collisionData;
+	RayCollider * mainCollider;
+	vector<PlaneCollider*> collisionData;
 	forceVector forces;
 };
 

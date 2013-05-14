@@ -28,7 +28,6 @@ public:
 	void update( float dT );
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
-	void applyImpulse( glm::vec3 impulse );
 	void hitTile( Tile * tile );
 	void receiveMessage( IJMessage* message );
 

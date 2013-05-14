@@ -1,5 +1,4 @@
 #include "Tile.h"
-#include "Mesh.h"
 
 Tile::Tile ( int nId, vector<glm::vec3> nVerts, vector<int> nEdges, glm::vec3 color ) {
 	id = nId;
@@ -69,6 +68,10 @@ Mesh* Tile::getMesh(){
 	return mesh;
 }
 
+vector<PlaneCollider*> Tile::getEdgeColliders(){
+	return edgeColliders;
+}
+
 Mesh* Tile::generateMesh(){
 	Mesh * out = new Mesh( );
 	glm::vec3 vert0;
@@ -117,6 +120,9 @@ Mesh* Tile::generateMesh(){
 			bitangent = vert3 - vert1;
 			norm = glm::cross( tangent, bitangent );
 
+			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3 );
+			pCollide->setParent( this );
+			edgeColliders.push_back( pCollide );
 			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
 			edges.push_back( edge );
 			/*
@@ -130,6 +136,21 @@ Mesh* Tile::generateMesh(){
 			out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
 			out->addVert(vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );*/
 
+		} else {
+			vert0 = verts[e];
+			if (e < static_cast<int>(neighbors.size())-1){
+				vert1 = verts[e+1];
+			} else {
+				vert1 = verts[0];
+			}
+			
+			vert3.x = vert1.x;
+			vert3.y = vert1.y + edgeHeight;
+			vert3.z = vert1.z;
+
+			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3 );
+			pCollide->setParent( this );
+			edgeColliders.push_back( pCollide );
 		}
 	}
 	return out;

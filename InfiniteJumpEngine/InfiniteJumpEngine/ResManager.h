@@ -5,7 +5,6 @@
 
 #include "Tile.h"
 #include "KinematicComponent.h"
-#include "InterSectionCollider.h"
 #include "Ball.h"
 #include "Entity.h"
 #include "Level.h"

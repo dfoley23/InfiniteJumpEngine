@@ -16,26 +16,27 @@ Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
 	mesh->setParent(physComp);
 	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
-	InterSectionCollider * intersect = new InterSectionCollider( );
+	RayCollider * intersect = new RayCollider( );
 	intersect->setParent(physComp);
 	physComp->setMainCollider( intersect );
 	physComp->addForce(&forward);
 	physComp->addForce(&back);
 	physComp->addForce(&left);
 	physComp->addForce(&right);
+	for ( int i=0; i<static_cast<int>(tiles->tiles.size()); i++ ) {
+		vector<PlaneCollider*> edgeColliders = tiles->tiles.at(i)->getEdgeColliders();
+		for ( int j=0; j<static_cast<int>(edgeColliders.size()); j++ ) {
+			physComp->addCollider( edgeColliders.at(j) );
+		}
+	}
 }
 
 Ball::~Ball ( ) {
 	deleteMesh();
 }
 
-
-void Ball::applyImpulse( glm::vec3 impulse ) {
-	physComp->getKinematics()->applyImpulse( impulse );
-}
-
 void Ball::update( float dT ) {
-	InterSectionCollider* ballRay = (InterSectionCollider*)physComp->getMainCollider();
+	RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
 	ballRay->setRayStart( mesh->getCenter() );
 	ballRay->setDirection( physComp->getKinematics()->vel.getPosition() );
 	physComp->update( dT );
@@ -82,7 +83,7 @@ void Ball::receiveMessage( IJMessage* message ){
 	} else if (!message->getContent().compare("right")){
 		cout<< "ball moving right" << endl;
 		right.start();
-	} else if (!message->getContent().compare("tileCollision")){
+	} else if (!message->getContent().compare("InterSection")){
 		this->currentTile = (Tile*)message->getOther()->getParent();
 		cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 	} else if (parent) {
