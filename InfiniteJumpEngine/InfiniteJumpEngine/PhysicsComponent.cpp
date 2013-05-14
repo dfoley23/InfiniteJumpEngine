@@ -8,6 +8,7 @@ PhysicsComponent::PhysicsComponent(void)
 	physics_lag_time = 0.0;
 	prev_game_time = game_time;
 	kinematics.setParent( this );
+	closestPlane = NULL;
 
 }
 
@@ -21,8 +22,10 @@ void PhysicsComponent::update( float dT ) {
 	physics_lag_time += game_time - prev_game_time;
 	if ( physics_lag_time > delta_t ) 
 	{
+		//check to see if the closest object has been hit yet
 		pair<bool, double> intersect = mainCollider->predictIntersection(closestPlane);
 		double intersectTime = 0.0f;
+		//if it has send the collision then check for the next closest object
 		if ( !intersect.first || intersect.second <= 0.0f ) {
 			if ( closestPlane != NULL && intersect.first ) {
 				sendMessage( this->getParent(), closestPlane, "InterSection", closestPlane->getNormal() );
@@ -30,9 +33,10 @@ void PhysicsComponent::update( float dT ) {
 			for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
 				intersect = mainCollider->predictIntersection(closestPlane);
 				if ( intersect.first && intersect.second < intersectTime && intersect.second > 0.0f ) {
+					closestPlane = (*cIter);
 					intersectTime = intersect.second;
-				} else if ( (*cIter) != closestPlane ) {
-					sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
+				} else if ( !intersect.first && (*cIter) != closestPlane ) {
+					//sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
 				}
 			}
 		}

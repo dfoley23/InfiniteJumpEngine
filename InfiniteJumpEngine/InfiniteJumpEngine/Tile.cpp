@@ -120,7 +120,7 @@ Mesh* Tile::generateMesh(){
 			bitangent = vert3 - vert1;
 			norm = glm::cross( tangent, bitangent );
 
-			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3 );
+			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2 );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
 			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
