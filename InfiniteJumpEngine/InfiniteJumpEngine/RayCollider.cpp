@@ -14,12 +14,14 @@ RayCollider::~RayCollider(void)
 }
 
 pair<bool, double> RayCollider::predictIntersection( PlaneCollider * plane ) {
-	if ( plane != NULL ) {
-		glm::vec3 normal = plane->getNormal();
+	if ( plane != NULL && direction != glm::vec3(0,0,0) ){
+		glm::vec3 normal = glm::normalize(plane->getNormal());
 		glm::vec3 Pp = plane->getPointOnPlane();
 		float denom = glm::dot( normal, direction );
+		//t = d - p0 dot n_ / d_ dot n_
 		if (denom != 0.0f){
-			time = (glm::dot( normal, Pp ) - glm::dot( normal, rayStart )) / glm::dot( normal, direction );
+			float d = glm::dot( normal, Pp );
+			time = (d - glm::dot( normal, rayStart )) / denom;
 			return pair<bool,double>(true, time);
 		}
 	}
