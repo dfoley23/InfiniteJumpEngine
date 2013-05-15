@@ -27,6 +27,34 @@ bool Collider::sameSideOfLine( glm::vec3 point, glm::vec3 vert0, glm::vec3 vert1
 	return false;
 }
 
+bool Collider::inVerticalBounds( glm::vec3 point, glm::vec3 bound1, glm::vec3 bound2 ) {
+	if ( bound1.x > bound2.x ) {
+		if ( point.x > bound1.x ) {
+			return false;
+		} else if ( point.x < bound2.x ) {
+			return false;
+		}
+	} else {
+		if ( point.x > bound2.x ) {
+			return false;
+		} else if ( point.x < bound1.x ) {
+			return false;
+		}
+	}
+	if ( bound1.z > bound2.z ) {
+		if ( point.z > bound1.z ) {
+			return false;
+		} else if ( point.z < bound2.z ) {
+			return false;
+		}
+	} else {
+		if ( point.z > bound2.z ) {
+			return false;
+		} else if ( point.z < bound1.z ) {
+			return false;
+		}
+	}
+}
 bool Collider::isCollidingRecursive(Collider* that){
 	if (b_parentCollider && !dynamic_cast<Collider*>(parent)->isCollidingRecursive(that)){
 		return false;
