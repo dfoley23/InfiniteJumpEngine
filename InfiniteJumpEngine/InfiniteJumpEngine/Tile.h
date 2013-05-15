@@ -31,12 +31,14 @@ public:
 	void draw(MeshBatch * batch);
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	int getTileId( );
+	glm::vec3 getNormal();
 	vector<PlaneCollider*> getEdgeColliders();
 	vector<Mesh *> edges;
 private:
 	void buildMesh( );
 protected:
 	Mesh * mesh;
+	glm::vec3 normal;
 	unsigned int id;
 	vector<glm::vec3>verts;
 	vector<int> neighbors;

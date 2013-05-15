@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
-	forward(glm::vec3(0,0,-5), 0.1f, true)
+forward(glm::vec3(0,0,-5), 0.1f, true)
 	,back(glm::vec3(0,0,5), 0.1f, true)
 	,left(glm::vec3(-5,0,0), 0.1f, true)
 	,right(glm::vec3(5,0,0), 0.1f, true)
@@ -87,18 +87,32 @@ void Ball::receiveMessage( IJMessage* message ){
 		this->currentTile = (Tile*)message->getOther()->getParent();
 		//cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
-		glm::vec3 pN = plane->getNormal();
-		glm::vec3 p_xAxis = glm::cross( pN, glm::vec3(0, 1, 0) );
-		//rolling force direction
-		glm::vec3 pR = glm::cross( pN, p_xAxis );
 
 		//balls current direction
 		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
-		glm::vec3 dir_xAxis = glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) );
+		if ( plane->isSolidPlane() ) {
+			glm::vec3 pN = glm::normalize(plane->getNormal());
+			glm::vec3 projDir = pN * glm::dot( pN, xZ_dir );
+			//reflect direction
+			glm::vec3 reflect_dir = 2.f * projDir + xZ_dir;
+			
+			cout << "collided with an edge" << endl;
+			physComp->getKinematics()->vel.setPosition( reflect_dir );
+		} else {
+			Tile * tile = (Tile*)plane->getParent();
+			cout << tile->getTileId() << endl;
+			glm::vec3 tN = glm::normalize(tile->getNormal());
+			glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
+			//rolling force direction
+			glm::vec3 tR = glm::cross( tN, t_xAxis );
+			//xaxis to direction
+			glm::vec3 dir_xAxis = glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) );
 
-		//balls new direction
-		glm::vec3 new_dir = glm::cross( pN, dir_xAxis );
-		physComp->getKinematics()->vel.setPosition( new_dir );
+			//balls new direction
+			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis ));
+			glm::vec3 final_dir = xZ_dir * glm::dot( xZ_dir, new_dir );
+			physComp->getKinematics()->vel.setPosition( new_dir );
+		}
 		cout << "collider address: " << message->getOther() << endl;
 	} else if (parent) {
 		sendMessage(message, parent);

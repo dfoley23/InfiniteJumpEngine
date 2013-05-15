@@ -9,7 +9,7 @@
 class PlaneCollider : public Collider
 {
 public:
-	PlaneCollider( glm::vec3, glm::vec3, glm::vec3 );
+	PlaneCollider( glm::vec3, glm::vec3, glm::vec3, glm::vec3, bool );
 	~PlaneCollider(void);
 
 
@@ -23,11 +23,18 @@ public:
 
 	glm::vec3 getNormal( );
 
+	glm::vec3* getFace();
+
 	glm::vec3 getPointOnPlane();
 
+	bool isSolidPlane();
 
 private:
-	glm::vec3 point;
+	bool isSolid;
+	glm::vec3 p0;
+	glm::vec3 p1;
+	glm::vec3 p2;
+	glm::vec3 p3;
 	glm::vec3 norm;
 };
 

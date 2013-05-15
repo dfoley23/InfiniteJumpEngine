@@ -10,6 +10,11 @@ Collider::~Collider(void)
 {
 }
 
+/**
+* @param
+* point to check
+* three points of a triangle
+**/
 bool Collider::sameSideOfLine( glm::vec3 point, glm::vec3 vert0, glm::vec3 vert1, glm::vec3 vert2 ) {
 	glm::vec3 tangent = vert1 - vert0;
 	glm::vec3 bitangent = vert2 - vert0;

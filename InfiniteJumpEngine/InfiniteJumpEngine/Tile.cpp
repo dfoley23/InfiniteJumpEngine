@@ -43,6 +43,10 @@ int Tile::findNeighbor(unsigned int nid){
 	return NO_NEIGHBOR;
 }
 
+glm::vec3 Tile::getNormal(){
+	return normal;
+}
+
 int Tile::getNeighbor(unsigned int e){
 	if (e > 0 && e < neighbors.size())
 		return neighbors[e];
@@ -95,6 +99,7 @@ Mesh* Tile::generateMesh(){
 		tangent = vert1 - vert0;
 		bitangent = vert2 - vert0;
 		norm = glm::cross( tangent, bitangent );
+		this->normal = norm;
 		out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
 		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
 		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
@@ -120,21 +125,11 @@ Mesh* Tile::generateMesh(){
 			bitangent = vert3 - vert1;
 			norm = glm::cross( tangent, bitangent );
 
-			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2 );
+			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, true );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
 			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
 			edges.push_back( edge );
-			/*
-			// facing the tile
-			//Face 1: 0 -> 1 -> 2
-			out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			//Face 2: 1 -> 2 -> 3
-			out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );
-			out->addVert(vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, wall_color.x, wall_color.y, wall_color.z );*/
 
 		} else {
 			vert0 = verts[e];
@@ -148,7 +143,7 @@ Mesh* Tile::generateMesh(){
 			vert3.y = vert1.y + edgeHeight;
 			vert3.z = vert1.z;
 
-			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3 );
+			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, false );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
 		}
