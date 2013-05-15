@@ -13,8 +13,7 @@ Force::~Force(void)
 
 void Force::start(){
 	envelope.start();
-	if (b_impulse)
-		envelope.stop();
+	envelope.setHold(!b_impulse);
 }
 
 void Force::stop(){

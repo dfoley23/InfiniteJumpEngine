@@ -18,38 +18,28 @@ PhysicsComponent::~PhysicsComponent(void)
 }
 
 void PhysicsComponent::update( float dT ) {
-	game_time = ((double)clock())/CLOCKS_PER_SEC;
-	physics_lag_time += game_time - prev_game_time;
-	if ( physics_lag_time > delta_t ) 
-	{
-
-		pair<bool, double> intersect;
-		double intersectTime = 100000.0f;
-		for (int i=0; i<static_cast<int>(collisionData.size()); i++ ) {
-			intersect = mainCollider->predictIntersection(collisionData.at(i));
-			if ( closestPlane == NULL || ( intersect.first && intersect.second < intersectTime) ) {
-				//Tile * tile = (Tile*)(*cIter)->getParent();
-				//cout << " closest Plane is: " << tile->getTileId();
-				if ( intersect.second > 0.0f ) {
-					closestPlane = collisionData.at(i);
-					intersectTime = intersect.second;
-				} else {
-					sendMessage( this->getParent(), closestPlane, "InterSection", closestPlane->getNormal() );
-				}
-			} else if ( !intersect.first && collisionData.at(i) != closestPlane ) {
-				//sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
+	pair<bool, double> intersect;
+	pair<bool, double> closestIntersect = pair<bool, double>(false,0.0f);
+	PlaneCollider* closest = NULL;
+	for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
+		intersect = mainCollider->predictIntersection((*cIter));
+		if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
+			if ( !closestIntersect.first || intersect.second < closestIntersect.second ){
+				closest = (*cIter);
+				closestIntersect = intersect;
 			}
 		}
-		glm::vec3 sumOfForces = glm::vec3(0,0,0);
-		for (forceIter i = forces.begin(); i != forces.end(); i++){
-			(*i)->update(dT);
-			sumOfForces += (*i)->getValue();
-		}
-		kinematics.applyImpulse( sumOfForces );
-		kinematics.update(dT);
-		physics_lag_time -= delta_t;
 	}
-	prev_game_time = game_time;
+	if ( closestIntersect.first && closestIntersect.second < dT ){
+		sendMessage( getParent(), closest, "InterSection", closest->getNormal() );
+	}
+	glm::vec3 sumOfForces = glm::vec3(0,0,0);
+	for (forceIter i = forces.begin(); i != forces.end(); i++){
+		(*i)->update(dT);
+		sumOfForces += (*i)->getValue();
+	}
+	kinematics.applyImpulse( sumOfForces );
+	kinematics.update(dT);
 }
 
 bool operator<(const InterSection &x1, const InterSection &x2 ){

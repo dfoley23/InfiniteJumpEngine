@@ -86,6 +86,20 @@ void Ball::receiveMessage( IJMessage* message ){
 	} else if (!message->getContent().compare("InterSection")){
 		this->currentTile = (Tile*)message->getOther()->getParent();
 		cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
+		PlaneCollider * plane = (PlaneCollider*)message->getOther();
+		glm::vec3 pN = plane->getNormal();
+		glm::vec3 p_xAxis = glm::cross( pN, glm::vec3(0, 1, 0) );
+		//rolling force direction
+		glm::vec3 pR = glm::cross( pN, p_xAxis );
+
+		//balls current direction
+		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
+		glm::vec3 dir_xAxis = glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) );
+
+		//balls new direction
+		glm::vec3 new_dir = glm::cross( pN, dir_xAxis );
+		physComp->getKinematics()->vel.setPosition( new_dir );
+
 	} else if (parent) {
 		sendMessage(message, parent);
 	}

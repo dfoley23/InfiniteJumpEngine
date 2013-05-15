@@ -56,7 +56,8 @@ Level* ResManager::getTriangleLevel(string filename){
 					neighbors.push_back( atoi(n_str.c_str( )) );
 				}
 				//tiles->addTile( id, new Tile( id-1, verts, neighbors, glm::vec3( 0.0f, 0.7f , 0.0f ) ) );
-				tiles->addTile( id, new Tile( id-1, verts, neighbors, glm::vec3( (float)id/17.f, (float)id/17.f, (float)id/17.f) ) );
+				//tiles->addTile( id, new Tile( id-1, verts, neighbors, glm::vec3( (float)id/17.f, (float)id/17.f, (float)id/17.f) ) );
+				tiles->addTile( id, new Tile( id, verts, neighbors, glm::vec3( 0.5, 0.5, 0.5 + id/34.f ) ) );
 			} else if ( !type.compare( "tee" ) ) {
 				Entity * teeEntity = new Entity( );
 				Mesh * tee = new Mesh( );
