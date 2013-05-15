@@ -116,6 +116,9 @@
     <ClCompile Include="PlaneCollider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="InterSection.cpp">
+      <Filter>Source Files\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -215,6 +218,9 @@
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="RayCollider.h">
+      <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InterSection.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
   </ItemGroup>

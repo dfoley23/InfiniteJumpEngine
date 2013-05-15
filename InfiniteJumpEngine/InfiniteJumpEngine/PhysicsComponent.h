@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <ctime>
+#include <queue>
 #include "IJMessage.h"
 #include "Force.h"
 #include "Collider.h"
@@ -11,6 +12,8 @@
 #include "Contact.h"
 #include "RayCollider.h"
 #include "PlaneCollider.h"
+#include "Tile.h"
+#include "InterSection.h"
 
 typedef vector<PlaneCollider*>::iterator colliderIter;
 

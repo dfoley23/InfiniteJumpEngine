@@ -22,22 +22,22 @@ void PhysicsComponent::update( float dT ) {
 	physics_lag_time += game_time - prev_game_time;
 	if ( physics_lag_time > delta_t ) 
 	{
-		//check to see if the closest object has been hit yet
-		pair<bool, double> intersect = mainCollider->predictIntersection(closestPlane);
-		double intersectTime = 0.0f;
-		//if it has send the collision then check for the next closest object
-		if ( !intersect.first || intersect.second <= 0.0f ) {
-			if ( closestPlane != NULL && intersect.first ) {
-				sendMessage( this->getParent(), closestPlane, "InterSection", closestPlane->getNormal() );
-			}
-			for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
-				intersect = mainCollider->predictIntersection(closestPlane);
-				if ( intersect.first && intersect.second < intersectTime && intersect.second > 0.0f ) {
-					closestPlane = (*cIter);
+
+		pair<bool, double> intersect;
+		double intersectTime = 100000.0f;
+		for (int i=0; i<static_cast<int>(collisionData.size()); i++ ) {
+			intersect = mainCollider->predictIntersection(collisionData.at(i));
+			if ( closestPlane == NULL || ( intersect.first && intersect.second < intersectTime) ) {
+				//Tile * tile = (Tile*)(*cIter)->getParent();
+				//cout << " closest Plane is: " << tile->getTileId();
+				if ( intersect.second > 0.0f ) {
+					closestPlane = collisionData.at(i);
 					intersectTime = intersect.second;
-				} else if ( !intersect.first && (*cIter) != closestPlane ) {
-					//sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
+				} else {
+					sendMessage( this->getParent(), closestPlane, "InterSection", closestPlane->getNormal() );
 				}
+			} else if ( !intersect.first && collisionData.at(i) != closestPlane ) {
+				//sendMessage( this->getParent(), (*cIter), "InterSection", (*cIter)->getNormal() );
 			}
 		}
 		glm::vec3 sumOfForces = glm::vec3(0,0,0);
@@ -50,6 +50,10 @@ void PhysicsComponent::update( float dT ) {
 		physics_lag_time -= delta_t;
 	}
 	prev_game_time = game_time;
+}
+
+bool operator<(const InterSection &x1, const InterSection &x2 ){
+	return (x1.getInterSectTime() < x2.getInterSectTime());
 }
 
 void PhysicsComponent::setMainCollider( RayCollider * collider){ 

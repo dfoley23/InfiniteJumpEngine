@@ -19,7 +19,7 @@ pair<bool, double> RayCollider::predictIntersection( PlaneCollider * plane ) {
 		glm::vec3 Pp = plane->getPointOnPlane();
 		float denom = glm::dot( normal, direction );
 		if (denom != 0.0f){
-			time = (glm::dot( normal, Pp ) - glm::dot( normal, rayStart )) / glm::dot( normal, direction );
+			time = (glm::dot( normal, Pp ) - glm::dot( normal, direction )) / glm::dot( normal, direction );
 			return pair<bool,double>(true, time);
 		}
 	}

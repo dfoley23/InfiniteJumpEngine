@@ -120,7 +120,7 @@ void Game::glui_callBack( int id ) {
 	case 0:
 		level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
 			glm::vec3( camLookAtX, camLookAtY, camLookAtZ ), glm::vec3( 0, 1, 0 ) );
-		cameraProfile = 4;
+		level->camera->switchProfile( 4 );
 		break;
 	case 1:
 		level->camera->switchProfile( cameraProfile );
@@ -158,6 +158,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_RadioButton *thirdPersonCamera = glui->add_radiobutton_to_group( camProfiles, "Third Person View" );
 	GLUI_RadioButton *firstPersonCamera = glui->add_radiobutton_to_group( camProfiles, "First Person View" );
 	GLUI_RadioButton *topDownCamera = glui->add_radiobutton_to_group( camProfiles, "Top Down View" );
+	GLUI_RadioButton *freeLook = glui->add_radiobutton_to_group( camProfiles, "Free Look View" );
 
 	GLUI_Spinner *transCam1_spinner =
 		glui->add_spinner_to_panel( cam_panel, "Cam eye X:", GLUI_SPINNER_FLOAT, &camEyeX, 0, cb );
