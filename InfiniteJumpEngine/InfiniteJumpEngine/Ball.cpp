@@ -85,7 +85,7 @@ void Ball::receiveMessage( IJMessage* message ){
 		right.start();
 	} else if (!message->getContent().compare("InterSection")){
 		this->currentTile = (Tile*)message->getOther()->getParent();
-		cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
+		cout << "collider address: " << message->getOther() << endl;
 	} else if (parent) {
 		sendMessage(message, parent);
 	}

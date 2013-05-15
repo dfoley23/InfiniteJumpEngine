@@ -15,6 +15,7 @@ public:
 
 	void setDirection( glm::vec3 );
 	void setRayStart( glm::vec3 );
+	glm::vec3 getRayStart(){return rayStart;}
 	double getInterSectTime( );
 private:
 	glm::vec3 direction;

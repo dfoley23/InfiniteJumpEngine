@@ -25,6 +25,7 @@ public:
 
 	glm::vec3 getPointOnPlane();
 
+
 private:
 	glm::vec3 point;
 	glm::vec3 norm;

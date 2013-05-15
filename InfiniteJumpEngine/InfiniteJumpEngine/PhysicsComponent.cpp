@@ -61,7 +61,12 @@ void PhysicsComponent::update( float dT ) {
 	for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
 		intersect = mainCollider->predictIntersection((*cIter));
 		if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
-			if ( !closestIntersect.first || intersect.first < closestIntersect.first ){
+			if ( !closestIntersect.first 
+				|| intersect.first < closestIntersect.first 
+				|| (intersect.first == closestIntersect.first 
+					&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
+						< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() )
+				){
 				closest = (*cIter);
 				closestIntersect = intersect;
 			}
