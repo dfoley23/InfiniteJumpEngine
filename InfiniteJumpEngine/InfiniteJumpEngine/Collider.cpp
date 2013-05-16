@@ -27,34 +27,18 @@ bool Collider::sameSideOfLine( glm::vec3 point, glm::vec3 vert0, glm::vec3 vert1
 	return false;
 }
 
-bool Collider::inVerticalBounds( glm::vec3 point, glm::vec3 bound1, glm::vec3 bound2 ) {
-	if ( bound1.x > bound2.x ) {
-		if ( point.x > bound1.x ) {
-			return false;
-		} else if ( point.x < bound2.x ) {
-			return false;
-		}
-	} else {
-		if ( point.x > bound2.x ) {
-			return false;
-		} else if ( point.x < bound1.x ) {
-			return false;
-		}
+bool Collider::inTriangleBounds( glm::vec3 p1, glm::vec3 p2, glm::vec3 p3 ) {
+	p1 = glm::normalize( p1 );
+	p2 = glm::normalize( p2 );
+	p3 = glm::normalize( p3 );
+	double thetaSum = glm::acos( glm::dot( p1, p2 ) ) + 
+		glm::acos( glm::dot( p2, p3 ) + glm::acos( glm::dot( p1, p3 ) ) );
+	if ( glm::abs( thetaSum - (2.f * IJ_PI) ) < 0.1f ) {
+		return true;
 	}
-	if ( bound1.z > bound2.z ) {
-		if ( point.z > bound1.z ) {
-			return false;
-		} else if ( point.z < bound2.z ) {
-			return false;
-		}
-	} else {
-		if ( point.z > bound2.z ) {
-			return false;
-		} else if ( point.z < bound1.z ) {
-			return false;
-		}
-	}
+	return false;
 }
+
 bool Collider::isCollidingRecursive(Collider* that){
 	if (b_parentCollider && !dynamic_cast<Collider*>(parent)->isCollidingRecursive(that)){
 		return false;

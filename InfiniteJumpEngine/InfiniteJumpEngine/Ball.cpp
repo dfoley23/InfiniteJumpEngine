@@ -97,6 +97,7 @@ void Ball::receiveMessage( IJMessage* message ){
 			glm::vec3 reflect_dir = 2.f * projDir + xZ_dir;
 			
 			cout << "collided with an edge" << endl;
+			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( reflect_dir );
 		} else {
 			Tile * tile = (Tile*)plane->getParent();
@@ -111,6 +112,7 @@ void Ball::receiveMessage( IJMessage* message ){
 			//balls new direction
 			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis ));
 			glm::vec3 final_dir = xZ_dir * glm::dot( xZ_dir, new_dir );
+			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
 		}
 		cout << "collider address: " << message->getOther() << endl;

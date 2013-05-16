@@ -5,19 +5,9 @@
 /*
  * References
  * Point-in-triangle formula: http://www.blackpawn.com/texts/pointinpoly/
+*/
+#define IJ_PI        3.14159265358979323846264338327950288
 
- function SameSide(p1,p2, a,b)
-    cp1 = CrossProduct(b-a, p1-a)
-    cp2 = CrossProduct(b-a, p2-a)
-    if DotProduct(cp1, cp2) >= 0 then return true
-    else return false
-
-function PointInTriangle(p, a,b,c)
-    if SameSide(p,a, b,c) and SameSide(p,b, a,c)
-        and SameSide(p,c, a,b) then return true
-    else return false
-
-	*/
 class Collider : public Component
 {
 public:
@@ -37,8 +27,8 @@ public:
 	bool isCollidingRecursive(Collider*);
 
 	bool sameSideOfLine(glm::vec3, glm::vec3, glm::vec3, glm::vec3); 
-	bool inVerticalBounds( glm::vec3, glm::vec3, glm::vec3 );
 
+	bool inTriangleBounds( glm::vec3, glm::vec3, glm::vec3 );
 	/*
 		Checks if and when two colliders will ever collide in the near future.
 		bool - Will these two ever collide?

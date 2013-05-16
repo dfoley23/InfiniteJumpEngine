@@ -21,14 +21,6 @@ pair<bool, double> RayCollider::predictIntersection( PlaneCollider * plane ) {
 		glm::vec3 p1 = face[1];
 		glm::vec3 p2 = face[2];
 		glm::vec3 p3 = face[3];
-		/*box check
-		sameSideOfLine( cX, p0, p1, p2 )
-				&& sameSideOfLine( cX, p1, p0, p2 )
-				&& sameSideOfLine( cX, p2, p0, p1 ) 
-				&& sameSideOfLine( cX, p0, p2, p3 )
-				&& sameSideOfLine( cX, p2, p0, p3 )
-				&& sameSideOfLine( cX, p3, p0, p2 )
-				*/
 		float denom = glm::dot( normal, direction );
 		//t = d - p0 dot n_ / d_ dot n_
 		if (denom != 0.0f){
@@ -36,7 +28,9 @@ pair<bool, double> RayCollider::predictIntersection( PlaneCollider * plane ) {
 			float d = glm::dot( normal, p0 );
 			time = (d - glm::dot( normal, rayStart )) / denom;
 			glm::vec3 cX = rayStart + (direction * (float)time);
-			if ( inVerticalBounds( cX, p0, p1 ) ) {
+			
+			if ( inTriangleBounds( cX-p0, cX-p1, cX-p2 )
+				&& inTriangleBounds( cX-p0, cX-p2, cX-p3 ) ) {
 				return pair<bool,double>(true, time);
 			} 
 			return pair<bool, double>(false, 0.0f);
