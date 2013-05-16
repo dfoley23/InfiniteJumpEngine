@@ -32,9 +32,8 @@ void PhysicsComponent::update( float dT ) {
 			if ( !closestIntersect.first 
 				|| intersect.second < closestIntersect.second 
 				//|| (intersect.first == closestIntersect.first 
-				//	&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
-				//		< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() )
-				)
+					&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
+						< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() )
 			{
 				closest = (*cIter);
 				closestIntersect = intersect;

@@ -26,6 +26,10 @@ public:
 
 	vector<glm::vec3> getFace();
 
+	glm::vec3 getIntersectionPoint();
+
+	void setInterSectionPoint( glm::vec3 intersect );
+
 	glm::vec3 getPointOnPlane();
 
 	bool isSolidPlane();
@@ -34,7 +38,7 @@ private:
 	bool isSolid;
 	vector<glm::vec3> face;
 	glm::vec3 norm;
-	glm::vec3 p0;
+	glm::vec3 intersect;
 };
 
 #endif PLANE_COLLIDER_H

@@ -11,6 +11,7 @@ forward(glm::vec3(0,0,-5), 0.1f, true)
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
 	radius = (mesh->max.x - mesh->min.x ) /2.0f;
+	rotation = 0.0f;
 	physComp = new PhysicsComponent();
 	physComp->setParent(this);
 	mesh->setParent(physComp);
@@ -23,7 +24,6 @@ forward(glm::vec3(0,0,-5), 0.1f, true)
 	physComp->addForce(&back);
 	physComp->addForce(&left);
 	physComp->addForce(&right);
-	MeshCollider * meshCollide;
 	PointCollider * pCollide = new PointCollider( mesh->center );
 	pCollide->setParent( this );
 	physComp->pointCollider = pCollide;
@@ -43,10 +43,12 @@ Ball::~Ball ( ) {
 }
 
 void Ball::update( float dT ) {
+	glm::vec3 velocity = physComp->getKinematics()->vel.getPosition();
 	RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
 	physComp->pointCollider->point = mesh->getCenter();
 	ballRay->setRayStart( mesh->getCenter() );
-	ballRay->setDirection( physComp->getKinematics()->vel.getPosition() );
+	ballRay->setDirection( velocity );
+	
 	physComp->update( dT );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 }
@@ -95,6 +97,9 @@ void Ball::receiveMessage( IJMessage* message ){
 		//cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
+		glm::vec3 intersect = plane->getIntersectionPoint();
+		intersect.y = radius;
+		physComp->getKinematics()->loc.setPosition( intersect );
 		//balls current direction
 		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
 		if ( plane->isSolidPlane() ) {
@@ -123,7 +128,7 @@ void Ball::receiveMessage( IJMessage* message ){
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
 		}
-		cout << "collider address: " << message->getOther() << endl;
+		//cout << "collider address: " << message->getOther() << endl;
 	} else if ( !message->getContent().compare("MeshCollision") ){
 		Tile * tile = (Tile*)message->getOther()->getParent();
 		this->currentTile = tile;

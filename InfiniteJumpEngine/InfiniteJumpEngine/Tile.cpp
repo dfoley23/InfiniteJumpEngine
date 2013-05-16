@@ -113,22 +113,18 @@ Mesh* Tile::generateMesh(){
 			} else {
 				vert1 = verts[0];
 			}
-			vert2.x = vert0.x;
-			vert2.y = vert0.y + edgeHeight;
-			vert2.z = vert0.z;
+			vert2.x = vert1.x;
+			vert2.y = vert1.y + edgeHeight;
+			vert2.z = vert1.z;
 
-			vert3.x = vert1.x;
-			vert3.y = vert1.y + edgeHeight;
-			vert3.z = vert1.z;
+			vert3.x = vert0.x;
+			vert3.y = vert0.y + edgeHeight;
+			vert3.z = vert0.z;
 
-			tangent = vert2 - vert1;
-			bitangent = vert3 - vert1;
-			norm = glm::cross( tangent, bitangent );
-
-			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, true );
+			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, true );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
-			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert0, vert1, wall_color );
+			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert1, vert0, wall_color );
 			edges.push_back( edge );
 
 		} else {
@@ -138,12 +134,15 @@ Mesh* Tile::generateMesh(){
 			} else {
 				vert1 = verts[0];
 			}
+			vert2.x = vert1.x;
+			vert2.y = vert1.y + edgeHeight;
+			vert2.z = vert1.z;
 			
-			vert3.x = vert1.x;
-			vert3.y = vert1.y + edgeHeight;
-			vert3.z = vert1.z;
+			vert3.x = vert0.x;
+			vert3.y = vert0.y + edgeHeight;
+			vert3.z = vert0.z;
 
-			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, false );
+			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, false );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
 		}

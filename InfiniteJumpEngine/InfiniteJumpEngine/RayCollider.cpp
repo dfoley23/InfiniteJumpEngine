@@ -23,20 +23,19 @@ pair<bool, double> RayCollider::predictIntersection( PlaneCollider * plane ) {
 		glm::vec3 p3 = face[3];
 		float denom = glm::dot( normal, direction );
 		//t = d - p0 dot n_ / d_ dot n_
-		if (denom > 0.0f){
+		if (denom < 0.0f ){
 			//time = (glm::dot( normal, p0 ) - glm::dot( normal, direction )) / glm::dot( normal, direction );
 			float d = glm::dot( normal, p0);
 			time = (d - glm::dot( normal, rayStart )) / denom;
 			glm::vec3 cX = rayStart + (direction * (float)time);
+			plane->setInterSectionPoint( cX );
 
-			//if ( inTriangleBounds( rayStart-p0, rayStart-p1, rayStart-p2 )
-			//	|| inTriangleBounds( rayStart-p0, rayStart-p2, rayStart-p3 ) )
-			if ( sameSideOfLine( cX, p0, p1, p2 )
-				&& sameSideOfLine( cX, p1, p0, p2 )
-				&& sameSideOfLine( cX, p2, p0, p1 )
-				&& sameSideOfLine( cX, p0, p2, p3 )
-				&& sameSideOfLine( cX, p2, p0, p3 )
-				&& sameSideOfLine( cX, p3, p0, p2 ) ) 
+			if ( ( sameSideOfLine( cX, p0, p1, p2 )
+				&& sameSideOfLine( cX, p1, p2, p0 )
+				&& sameSideOfLine( cX, p3, p0, p1 ) )
+				|| ( sameSideOfLine( cX, p0, p2, p3 )
+				&& sameSideOfLine( cX, p2, p3, p0 )
+				&& sameSideOfLine( cX, p3, p0, p2 ) ) )
 			{
 				return pair<bool,double>(true, time);
 			} 

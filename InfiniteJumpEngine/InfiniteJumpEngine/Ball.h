@@ -38,6 +38,7 @@ private:
 	TileSet * tileSet;
 	Tile * currentTile;
 	float radius;
+	float rotation;
 	Force forward;
 	Force back;
 	Force left;
