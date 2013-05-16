@@ -21,15 +21,21 @@ void PhysicsComponent::update( float dT ) {
 	pair<bool, double> intersect;
 	pair<bool, double> closestIntersect = pair<bool, double>(false,0.0f);
 	PlaneCollider* closest = NULL;
+	/*for ( int i=0; i<static_cast<int>(meshCollision.size()); i++ ) {
+		if ( pointCollider->isColliding( meshCollision.at( i ) ) ) {
+			break;
+		}
+	}*/
 	for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
 		intersect = mainCollider->predictIntersection((*cIter));
 		if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
 			if ( !closestIntersect.first 
-				|| intersect.first < closestIntersect.first 
-				|| (intersect.first == closestIntersect.first 
-					&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
-						< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() )
-				){
+				|| intersect.second < closestIntersect.second 
+				//|| (intersect.first == closestIntersect.first 
+				//	&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
+				//		< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() )
+				)
+			{
 				closest = (*cIter);
 				closestIntersect = intersect;
 			}

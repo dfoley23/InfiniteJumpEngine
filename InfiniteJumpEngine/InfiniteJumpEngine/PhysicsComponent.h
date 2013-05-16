@@ -35,6 +35,8 @@ public:
 	}
 	glm::mat4 getTransform(){return kinematics.getTransform();};
 	KinematicComponent* getKinematics(){return &kinematics;}
+	PointCollider * pointCollider;
+	vector<MeshCollider*> meshCollision;
 protected:
 	
 	double game_time;

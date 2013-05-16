@@ -33,7 +33,7 @@ bool Collider::inTriangleBounds( glm::vec3 p1, glm::vec3 p2, glm::vec3 p3 ) {
 	p3 = glm::normalize( p3 );
 	double thetaSum = glm::acos( glm::dot( p1, p2 ) ) + 
 		glm::acos( glm::dot( p2, p3 ) + glm::acos( glm::dot( p1, p3 ) ) );
-	if ( glm::abs( thetaSum - (2.f * IJ_PI) ) < 0.1f ) {
+	if ( glm::abs( thetaSum - (2.f * IJ_PI) ) < 0.5f ) {
 		return true;
 	}
 	return false;

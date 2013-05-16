@@ -37,18 +37,20 @@ bool PointCollider::isColliding(MeshCollider* that)
 	glm::vec3 vert0;
 	glm::vec3 vert1;
 	glm::vec3 vert2;
+	point.y = 0;
 	int i = 0;
 	while( i < static_cast<int>(verts.size())-9 ) {
 		vert0 = glm::vec3( verts.at(i), 0, verts.at(i+2) );
 		vert1 = glm::vec3( verts.at(i+3), 0, verts.at(i+5) );
 		vert2 = glm::vec3( verts.at(i+6), 0, verts.at(i+8) );
-		if ( sameSideOfLine( point, vert0, vert1, vert2 ) ) {
-			if ( sameSideOfLine( point, vert1, vert0, vert2) ) {
-			if ( sameSideOfLine( point, vert2, vert0, vert1) ) {
-				sendMessage( this->getParent(), that, "tileCollision", glm::vec3( 0, 0, 0) );
+		if ( 
+			//inTriangleBounds( point-vert0, point-vert1, point-vert2 )
+			sameSideOfLine( point, vert0, vert1, vert2 ) 
+			&& sameSideOfLine( point, vert1, vert0, vert2)
+			&& sameSideOfLine( point, vert2, vert1, vert0) 
+			) {
+				sendMessage( this->getParent(), that, "MeshCollision", glm::vec3( 0, 0, 0) );
 				return true;
-		}
-			}
 		}
 		i+=9;
 	}

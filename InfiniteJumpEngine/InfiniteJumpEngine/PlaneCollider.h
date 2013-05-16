@@ -1,6 +1,7 @@
 #pragma once
 #ifndef PLANE_COLLIDER_H
 #define PLANE_COLLIDER_H
+#include <vector>
 #include "glIncludes.h"
 #include "Collider.h"
 #include "BoxCollider.h"
@@ -23,7 +24,7 @@ public:
 
 	glm::vec3 getNormal( );
 
-	glm::vec3* getFace();
+	vector<glm::vec3> getFace();
 
 	glm::vec3 getPointOnPlane();
 
@@ -31,11 +32,9 @@ public:
 
 private:
 	bool isSolid;
-	glm::vec3 p0;
-	glm::vec3 p1;
-	glm::vec3 p2;
-	glm::vec3 p3;
+	vector<glm::vec3> face;
 	glm::vec3 norm;
+	glm::vec3 p0;
 };
 
-#endif RAY_COLLIDER_H
+#endif PLANE_COLLIDER_H
