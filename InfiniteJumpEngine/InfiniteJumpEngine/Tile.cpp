@@ -126,9 +126,9 @@ Mesh* Tile::generateMesh(){
 
 			vert0.y = vert0.y - edgeHeight*5;
 			vert1.y = vert0.y - edgeHeight*5;
-			//PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, true );
-			//pCollide->setParent( this );
-			//edgeColliders.push_back( pCollide );
+			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, true );
+			pCollide->setParent( this );
+			edgeColliders.push_back( pCollide );
 
 		} else {
 			vert0 = verts[e];
@@ -147,7 +147,8 @@ Mesh* Tile::generateMesh(){
 
 			vert0.y = vert0.y - edgeHeight*5;
 			vert1.y = vert0.y - edgeHeight*5;
-			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, false );
+			//PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, false );
+			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, false );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
 		}

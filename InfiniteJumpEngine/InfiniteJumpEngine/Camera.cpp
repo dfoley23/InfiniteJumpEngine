@@ -15,12 +15,12 @@ Camera::~Camera ( ) {
 // Methods
 //  
 void Camera::update (glm::vec3 pos, glm::vec3 dir){
-	glm::vec3 camPos = glm::normalize(dir) + glm::vec3( 0, 1, 0 );
+	glm::vec3 camPos = pos;//glm::normalize(dir) + glm::vec3( 0, 1, 0 );
 	switch( cameraProfile ) {
 		case 0: //third person
 			cam = glm::lookAt( glm::vec3( camPos.x, 
-				camPos.y,
-				camPos.z ),
+				camPos.y +0.25f,
+				camPos.z + 0.25f ),
 				pos, glm::vec3( 0, 1, 0 ) );
 			break;
 		case 1: //first person

@@ -48,15 +48,20 @@ void Ball::update( float dT ) {
 	ballRay->setRayStart( mesh->getCenter() );
 	ballRay->setDirection( velocity );
 
+	/*if ( glm::length( velocity ) > 0 ) {
+		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
+		rotation += dT * ( 4 * IJ_PI );
+		getMesh()->rotate( rotation, rotAxis );
+	}*/
 	/*physComp->collisionData.clear();
 	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
-	if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
-	physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
-	} else {
-	Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
-	physComp->collisionData.insert( physComp->collisionData.end(), 
-	neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
-	}
+		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
+			physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
+		} else {
+			Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
+			physComp->collisionData.insert( physComp->collisionData.end(), 
+				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
+		}
 	}*/
 	physComp->update( dT );
 	float minYPos = currentTile->getMesh()->getMinPoint().y+radius;
@@ -117,14 +122,13 @@ void Ball::receiveMessage( IJMessage* message ){
 		//cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
-
 		//balls current direction
 		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
 		if ( plane->isSolidPlane() ) {
 			glm::vec3 pN = glm::normalize(plane->getNormal());
-			glm::vec3 projDir = pN * glm::dot( pN, xZ_dir );
+			glm::vec3 projDir = pN * glm::dot( pN, -xZ_dir );
 			//reflect direction
-			glm::vec3 reflect_dir = 2.f * projDir + xZ_dir;
+			glm::vec3 reflect_dir = projDir + ( projDir + xZ_dir );
 
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( reflect_dir );
