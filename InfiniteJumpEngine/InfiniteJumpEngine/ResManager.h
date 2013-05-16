@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "Tile.h"
-#include "KinematicComponent.h"
 #include "Ball.h"
 #include "Entity.h"
 #include "Level.h"
@@ -20,4 +19,4 @@ public:
 private:
 };
 
-#endif
+#endif RESMANAGER_H

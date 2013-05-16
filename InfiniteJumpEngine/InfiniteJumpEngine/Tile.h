@@ -34,6 +34,7 @@ public:
 	glm::vec3 getNormal();
 	vector<PlaneCollider*> getEdgeColliders();
 	vector<Mesh *> edges;
+	vector<PlaneCollider*> edgeColliders;
 private:
 	void buildMesh( );
 protected:
@@ -42,7 +43,6 @@ protected:
 	unsigned int id;
 	vector<glm::vec3>verts;
 	vector<int> neighbors;
-	vector<PlaneCollider*> edgeColliders;
 	glm::vec3 color;
 	glm::vec3 wall_color;
 };

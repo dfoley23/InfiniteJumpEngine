@@ -1,10 +1,10 @@
 #include "Ball.h"
 
 Ball::Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId ):
-forward(glm::vec3(0,0,-5), 0.1f, true)
-	,back(glm::vec3(0,0,5), 0.1f, true)
-	,left(glm::vec3(-5,0,0), 0.1f, true)
-	,right(glm::vec3(5,0,0), 0.1f, true)
+forward(glm::vec3(0,0,-5), 0.07f, true)
+	,back(glm::vec3(0,0,5), 0.07f, true)
+	,left(glm::vec3(-5,0,0), 0.07f, true)
+	,right(glm::vec3(5,0,0), 0.07f, true)
 {
 	tileSet = tiles;
 	currentTile = tileSet->getTile( tileId );
@@ -45,12 +45,32 @@ Ball::~Ball ( ) {
 void Ball::update( float dT ) {
 	glm::vec3 velocity = physComp->getKinematics()->vel.getPosition();
 	RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
-	physComp->pointCollider->point = mesh->getCenter();
 	ballRay->setRayStart( mesh->getCenter() );
 	ballRay->setDirection( velocity );
-	
+
+	/*physComp->collisionData.clear();
+	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
+	if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
+	physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
+	} else {
+	Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
+	physComp->collisionData.insert( physComp->collisionData.end(), 
+	neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
+	}
+	}*/
 	physComp->update( dT );
+	float minYPos = currentTile->getMesh()->getMinPoint().y+radius;
+	float maxYPos = currentTile->getMesh()->getMaxPoint().y+radius;
+	glm::vec3 curPos = physComp->getKinematics()->loc.getPosition();
+	if ( minYPos > curPos.y ) {
+		glm::vec3 newPos = glm::vec3( curPos.x, minYPos, curPos.z );
+		physComp->getKinematics()->loc.setPosition( newPos );
+	} else if ( maxYPos < curPos.y ) {
+		glm::vec3 newPos = glm::vec3( curPos.x, maxYPos, curPos.z );
+		physComp->getKinematics()->loc.setPosition( newPos );
+	}
 	mesh->center = physComp->getKinematics()->loc.getPosition();
+
 }
 
 void Ball::draw( MeshBatch * batch ) {
@@ -97,9 +117,7 @@ void Ball::receiveMessage( IJMessage* message ){
 		//cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
-		glm::vec3 intersect = plane->getIntersectionPoint();
-		intersect.y = radius;
-		physComp->getKinematics()->loc.setPosition( intersect );
+
 		//balls current direction
 		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
 		if ( plane->isSolidPlane() ) {
@@ -107,7 +125,7 @@ void Ball::receiveMessage( IJMessage* message ){
 			glm::vec3 projDir = pN * glm::dot( pN, xZ_dir );
 			//reflect direction
 			glm::vec3 reflect_dir = 2.f * projDir + xZ_dir;
-			
+
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( reflect_dir );
 			cout << "collided with an edge" << endl;
@@ -127,6 +145,7 @@ void Ball::receiveMessage( IJMessage* message ){
 			glm::vec3 final_dir = xZ_dir * glm::dot( xZ_dir, new_dir );
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
+
 		}
 		//cout << "collider address: " << message->getOther() << endl;
 	} else if ( !message->getContent().compare("MeshCollision") ){

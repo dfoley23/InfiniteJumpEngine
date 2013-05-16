@@ -14,7 +14,7 @@ public:
 
 	glm::mat4 cam, proj;
 	glm::vec3 lightPos;
-	virtual void update(glm::vec3 pos);
+	void update(glm::vec3, glm::vec3);
 	void switchProfile( int profile );
 protected:
 

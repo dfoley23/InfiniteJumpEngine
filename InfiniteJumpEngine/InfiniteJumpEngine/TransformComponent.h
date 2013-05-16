@@ -1,7 +1,9 @@
+#pragma once
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
 #include "Component.h"
+
 class TransformComponent: public Component
 {
 public:
@@ -18,6 +20,4 @@ public:
 	}
 };
 
-#endif
-
-;
+#endif TRANSFORM_H

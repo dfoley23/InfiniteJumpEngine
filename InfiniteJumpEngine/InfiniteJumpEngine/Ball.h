@@ -47,4 +47,4 @@ private:
 protected:
 };
 
-#endif // BALL_H
+#endif BALL_H

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef KINEMATIC_COMPONENT_H
+#define KINEMATIC_COMPONENT_H
 #include "IJMessage.h"
 #include "PositionComponent.h"
 
@@ -16,4 +18,4 @@ public:
 	PositionComponent vel;
 	PositionComponent acc;
 };
-
+#endif KINEMATIC_COMPONENT_H

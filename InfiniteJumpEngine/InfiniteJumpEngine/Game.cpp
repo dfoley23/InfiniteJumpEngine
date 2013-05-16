@@ -68,9 +68,11 @@ void Game::display(){
 			level->update(t_delta.getSeconds());
 			t_init.reset();
 		}
-		glm::vec3 pos = level->ball->getMesh()->getCenter();
 
-		level->camera->update( pos );
+		glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
+		glm::vec3 dir = level->ball->getPhysics()->getKinematics()->vel.getPosition();
+
+		level->camera->update( pos, dir );
 		level->draw();
 
 	}

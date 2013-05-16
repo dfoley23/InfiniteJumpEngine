@@ -37,6 +37,7 @@ public:
 	KinematicComponent* getKinematics(){return &kinematics;}
 	PointCollider * pointCollider;
 	vector<MeshCollider*> meshCollision;
+	vector<PlaneCollider*> collisionData;
 protected:
 	
 	double game_time;
@@ -48,7 +49,6 @@ protected:
 
 	KinematicComponent kinematics;
 	RayCollider * mainCollider;
-	vector<PlaneCollider*> collisionData;
 	forceVector forces;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
-
+#ifndef COMPONENT_H
+#define COMPONENT_H
 #include "IJMessage.h"
 #include "Drawable.h"
 #include <vector>
@@ -47,3 +48,5 @@ protected:
 
 typedef std::vector<Component*> componentVector;
 typedef componentVector::iterator componentIter;
+
+#endif COMPONENT_H

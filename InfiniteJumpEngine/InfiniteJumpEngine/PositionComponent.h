@@ -1,4 +1,6 @@
 #pragma once
+#ifndef POSITION_COMPONENT_H
+#define POSITION_COMPONENT_H
 #include "glIncludes.h"
 #include "TransformComponent.h"
 
@@ -61,3 +63,4 @@ protected:
 	glm::vec3 scale;
 };
 
+#endif POSITION_COMPONENT_H
