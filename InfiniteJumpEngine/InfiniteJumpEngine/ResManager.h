@@ -13,7 +13,7 @@ class ResManager: public Component
 public:
 	ResManager(void);
 	~ResManager(void);
-	Level * getTriangleLevel(string filename);
+	Level * getTriangleLevel(string filename, int holeID);
 	Mesh *readObjFile(string filename);
 
 private:

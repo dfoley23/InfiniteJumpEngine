@@ -35,16 +35,14 @@ public:
 	}
 	glm::mat4 getTransform(){return kinematics.getTransform();};
 	KinematicComponent* getKinematics(){return &kinematics;}
-	PointCollider * pointCollider;
-	vector<MeshCollider*> meshCollision;
-	vector<PlaneCollider*> collisionData;
 protected:
 	
 	double game_time;
 	double prev_game_time;
 	double delta_t;
 	double physics_lag_time;
-
+	
+	vector<PlaneCollider*> collisionData;
 	PlaneCollider * closestPlane;
 
 	KinematicComponent kinematics;

@@ -23,7 +23,11 @@ void keyboard(unsigned char key, int x, int y) {
 
 
 void mouse_click(int button, int state, int x, int y) {
-	Game::game( )->displayForPick(x, y);
+	Game::game( )->mouse_click(button, state, x, y);
+}
+
+void mouse_drag( int x, int y ) {
+	Game::game( )->mouse_drag(x, y);
 }
 
 //do some GLUT initialization

@@ -4,10 +4,12 @@
 //  
 
 MeshBatch::~MeshBatch ( ) { 
-	verts.resize( 1 ); 
-	norms.resize( 1 ); 
-	colors.resize( 1 ); 
-	modelViews.push_back( glm::mat4( ) );
+	vector< vector<float> >().swap(verts);
+	vector< vector<float> >().swap( norms);
+	vector< vector<float> >().swap( colors);
+	vector< vector<float> >().swap( texCoords);
+	vector< glm::mat4 >().swap( modelViews );
+	delete shader;
 }
 
 MeshBatch::MeshBatch ( Shader * shader ) { 

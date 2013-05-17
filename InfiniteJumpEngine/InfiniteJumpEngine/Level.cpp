@@ -11,6 +11,9 @@ Level::Level ( ) {
 
 Level::~Level ( ) { 
 	clear();
+	vector<Entity*>().swap(entities);
+	delete meshBatch;
+	delete pickBatch;
 }
 
 //  
@@ -57,9 +60,10 @@ vector<Entity *> Level::getEntities( ) {
 }
 
 void Level::clear( ){
-	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
-		delete (*it);
-	}
+	//for(entityIter it = entities.begin(); it != entities.end(); ++it) {
+	//	delete (*it);
+	//}
+	entities.clear();
 }
 
 void Level::addEntity( Entity * entity ){

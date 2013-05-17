@@ -25,6 +25,7 @@ Game::Game(void)
 	camLookAtZ = 0.0f;
 	picking = 0;
 	cameraProfile = 4;
+	hasPressed = false;
 }
 
 
@@ -111,9 +112,9 @@ void Game::displayForPick( int x, int y ) {
 }
 
 void Game::idle(){
-    glutSetWindow(main_window);
+	glutSetWindow(main_window);
 	glutPostRedisplay();
-    Sleep (100);
+	Sleep (100);
 }
 
 void Game::glui_callBack( int id ) {
@@ -152,7 +153,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui->set_main_gfx_window( main_window );
 
 	GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
-	GLUI_Panel *mesh_panel = glui->add_panel("Move Selected Mesh ");
+	GLUI_Panel *mesh_panel = glui->add_panel(" ");
 	GLUI_RadioGroup *camProfiles= glui->add_radiogroup_to_panel( cam_panel, &cameraProfile, 1, cb );
 
 	//camera controls
@@ -187,30 +188,51 @@ void Game::setupInterface( void(*cb)(int i) ){
 	angleCamZ_spinner->set_float_limits(-10, 10);
 
 	//picking mesh interface
-	GLUI_Checkbox *picking_check = glui->add_checkbox_to_panel(  mesh_panel, "pick mode", &picking );
+	/*GLUI_Checkbox *picking_check = glui->add_checkbox_to_panel(  mesh_panel, "pick mode", &picking );
 
 	GLUI_Spinner *trans1_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh x pos:", GLUI_SPINNER_FLOAT, &transX, 2, cb );
+	glui->add_spinner_to_panel( mesh_panel, "mesh x pos:", GLUI_SPINNER_FLOAT, &transX, 2, cb );
 	trans1_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans2_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 3, cb );
+	glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 3, cb );
 	trans2_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *trans3_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 4, cb );
+	glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 4, cb );
 	trans3_spinner->set_float_limits(-5, 5);
 
 	GLUI_Spinner *angleX_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 5, cb);
+	glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 5, cb);
 	angleX_spinner->set_float_limits(-360, 360);
 
 	GLUI_Spinner *angleY_spinner =
-		glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
-	angleY_spinner->set_float_limits(-360, 360);
+	glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
+	angleY_spinner->set_float_limits(-360, 360);*/
 
 	fps_text = std::string("Hello World!");
 	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
+}
+
+void Game::mouse_click(int button, int state, int x, int y){ 
+	if ( picking ) {
+		displayForPick( x, y );
+	} else {
+		if(state==GLUT_DOWN && !hasPressed ){
+			clickPoint = glm::vec3( x, 0, y );
+			hasPressed = true;
+		} else if ( state==GLUT_UP && hasPressed ) {
+			glm::vec3 releasePoint = glm::vec3( x, 0, y);
+			glm::vec3 dir = -glm::normalize( releasePoint - clickPoint );
+			//cout << dir.x << " : " << dir.z << endl;
+			sendMessage(level->ball, NULL, "shoot", dir);
+			hasPressed = false;
+		}
+	}
+}
+
+void Game::mouse_drag(int, int ){
+
 }
 
 void Game::keyboard(unsigned char key, int x, int y){
@@ -232,6 +254,19 @@ void Game::keyboard(unsigned char key, int x, int y){
 	case 100: //d
 		sendMessage(level->ball, NULL, "right");
 		break;
+	case 43: // +
+		sub_levelID++;
+		level->clear();
+		delete level;
+		level = resman->getTriangleLevel(levelID, sub_levelID);
+		level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+		level->camera->proj = glm::perspective(
+			glm::float_t(45),
+			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+			glm::float_t(0.1f),
+			glm::float_t(1000.0)
+			);
+		level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 	default:
 		break;
 	}
@@ -241,10 +276,17 @@ int Game::run(int argc, char** argv){
 	resman = new ResManager();
 	if ( argc > 1 ) {
 		string directory = "Levels/";
-		level = resman->getTriangleLevel(directory + argv[1]);
+		levelID = directory + argv[1];
+		sub_levelID = 0;
+		if ( argc > 2 ) {
+			sub_levelID = atoi( argv[2] );
+		}
+		level = resman->getTriangleLevel(directory + argv[1], sub_levelID);
 	} else {
 		string directory = "Levels/hole.01.db";
-		level = resman->getTriangleLevel(directory);
+		levelID = directory;
+		sub_levelID = 0;
+		level = resman->getTriangleLevel(directory, 0);
 	}
 
 	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));

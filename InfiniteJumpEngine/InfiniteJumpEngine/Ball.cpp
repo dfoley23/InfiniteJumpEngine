@@ -7,7 +7,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	,right(glm::vec3(5,0,0), 0.07f, true)
 {
 	tileSet = tiles;
-	currentTile = tileSet->getTile( tileId );
+	currentTile = tileSet->getTile( tileId-1 );
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
 	radius = (mesh->max.x - mesh->min.x ) /2.0f;
@@ -24,13 +24,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	physComp->addForce(&back);
 	physComp->addForce(&left);
 	physComp->addForce(&right);
-	PointCollider * pCollide = new PointCollider( mesh->center );
-	pCollide->setParent( this );
-	physComp->pointCollider = pCollide;
 	for ( int i=0; i<static_cast<int>(tiles->tiles.size()); i++ ) {
-		MeshCollider * meshC = new MeshCollider( tiles->tiles.at(i)->getMesh() );
-		meshC->setParent( tiles->tiles.at( i ) ) ;
-		physComp->meshCollision.push_back( meshC );
 		vector<PlaneCollider*> edgeColliders = tiles->tiles.at(i)->getEdgeColliders();
 		for ( int j=0; j<static_cast<int>(edgeColliders.size()); j++ ) {
 			physComp->addCollider( edgeColliders.at(j) );
@@ -39,6 +33,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 }
 
 Ball::~Ball ( ) {
+	delete physComp;
 	deleteMesh();
 }
 
@@ -118,8 +113,9 @@ void Ball::receiveMessage( IJMessage* message ){
 	} else if (!message->getContent().compare("right")){
 		cout<< "ball moving right" << endl;
 		right.start();
+	} else if (!message->getContent().compare("shoot")){
+		physComp->getKinematics()->vel.setPosition( message->getVector() );
 	} else if (!message->getContent().compare("InterSection")){
-		//cout << "you are rolling on tile number: " << currentTile->getTileId() << endl;
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
 		//balls current direction
@@ -132,11 +128,9 @@ void Ball::receiveMessage( IJMessage* message ){
 
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( reflect_dir );
-			cout << "collided with an edge" << endl;
 		} else {
 			Tile * tile = (Tile*)plane->getParent();
 			this->currentTile = tile;
-			cout << tile->getTileId() << endl;
 			glm::vec3 tN = glm::normalize(tile->getNormal());
 			glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
 			//rolling force direction
@@ -151,7 +145,6 @@ void Ball::receiveMessage( IJMessage* message ){
 			physComp->getKinematics()->vel.setPosition( new_dir );
 
 		}
-		//cout << "collider address: " << message->getOther() << endl;
 	} else if ( !message->getContent().compare("MeshCollision") ){
 		Tile * tile = (Tile*)message->getOther()->getParent();
 		this->currentTile = tile;

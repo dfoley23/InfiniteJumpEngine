@@ -9,7 +9,7 @@ initAttributes();
 }
 
 Entity::~Entity ( ) { 
-
+	vector<Component*>().swap(components);
 }
 
 //  

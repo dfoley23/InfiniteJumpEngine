@@ -15,6 +15,9 @@ PhysicsComponent::PhysicsComponent(void)
 
 PhysicsComponent::~PhysicsComponent(void)
 {
+	vector<PlaneCollider*>().swap(collisionData);
+	delete &kinematics;
+	delete mainCollider;
 }
 
 void PhysicsComponent::update( float dT ) {

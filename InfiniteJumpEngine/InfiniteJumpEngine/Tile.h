@@ -6,6 +6,7 @@
 #include "Mesh.h"
 #include "TileSet.h"
 #include "PlaneCollider.h"
+#include "Collider.h"
 using namespace std;
 /**
 * class Tile

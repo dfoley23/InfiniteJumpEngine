@@ -55,6 +55,8 @@ public:
 	void display();
 	void displayForPick(int, int);
 	void idle();
+	void mouse_click(int, int, int, int);
+	void mouse_drag(int, int );
 	void keyboard(unsigned char, int, int);
 	void setupInterface(void(*cb)(int i));
 	void glui_callBack( int id );
@@ -78,6 +80,12 @@ private:
 	GLUI *glui;
 	std::string fps_text;
 	GLUI_EditText *fps_gauge;
+
+	string  levelID;
+	int     sub_levelID;
+
+	glm::vec3 clickPoint;
+	bool hasPressed;
 
 	//glui interface variables
 	float   transX;

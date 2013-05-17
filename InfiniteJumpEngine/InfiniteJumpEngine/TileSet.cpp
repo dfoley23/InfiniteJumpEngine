@@ -8,9 +8,10 @@ TileSet::TileSet(void)
 
 TileSet::~TileSet(void)
 {
-	for( tileIter i = tiles.begin(); i != tiles.end(); i++){
-		delete (*i); (*i) = NULL;
-	}
+	//for( tileIter i = tiles.begin(); i != tiles.end(); i++){
+	//	delete (*i); (*i) = NULL;
+	//}
+	vector<Tile*>().swap(tiles);
 }
 
 void TileSet::update(float dT){

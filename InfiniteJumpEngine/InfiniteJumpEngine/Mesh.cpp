@@ -12,7 +12,14 @@ Mesh::Mesh ( ) {
 	initAttributes();
 }
 
-Mesh::~Mesh ( ) { }
+Mesh::~Mesh ( ) { 
+	vector<float>().swap(verts);
+	vector<float>().swap(norms);
+	vector<float>().swap(colors);
+	vector<float>().swap(texCoords);
+	vector<float>().swap(pickColors);
+	vector<GLuint>().swap(textureNames);
+}
 
 /**
 * @param  meshFile
@@ -164,13 +171,6 @@ void Mesh::setDynamic( int setting ) {
 
 void Mesh::setSmooth( int setting ) {
 	smooth = setting;
-}
-
-void Mesh::remove ( ) {
-	verts.erase( verts.begin( ), verts.end( ) );
-	norms.erase( norms.begin( ), norms.end( ) );
-	colors.erase( colors.begin( ), colors.end( ) );
-	textureNames.erase( textureNames.begin( ), textureNames.end( ) );
 }
 
 void Mesh::addVert (float x, float y, float z, float r, float g, float b){

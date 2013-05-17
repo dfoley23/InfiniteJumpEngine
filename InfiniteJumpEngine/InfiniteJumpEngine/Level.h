@@ -57,6 +57,8 @@ public:
 
 	vector<Entity *> getEntities( );
 
+	int maxSubLevels;
+
 private:
 	
 	vector<Entity*> entities;
