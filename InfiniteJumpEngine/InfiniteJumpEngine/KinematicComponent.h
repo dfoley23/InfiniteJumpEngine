@@ -17,5 +17,6 @@ public:
 	PositionComponent loc;
 	PositionComponent vel;
 	PositionComponent acc;
+
 };
 #endif KINEMATIC_COMPONENT_H

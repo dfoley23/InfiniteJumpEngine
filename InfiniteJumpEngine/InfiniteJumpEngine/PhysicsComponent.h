@@ -45,6 +45,9 @@ protected:
 	double delta_t;
 	double physics_lag_time;
 
+	float cFriction;
+	Force friction;
+
 	PlaneCollider * closestPlane;
 
 	KinematicComponent kinematics;

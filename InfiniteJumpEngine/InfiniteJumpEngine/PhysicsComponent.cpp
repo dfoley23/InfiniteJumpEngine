@@ -9,7 +9,9 @@ PhysicsComponent::PhysicsComponent(void)
 	prev_game_time = game_time;
 	kinematics.setParent( this );
 	closestPlane = NULL;
-
+	cFriction = 1.0f;
+	friction.start();
+	forces.push_back(&friction);
 }
 
 
@@ -44,6 +46,7 @@ void PhysicsComponent::update( float dT ) {
 	if ( closestIntersect.first && closestIntersect.second < dT ){
 		sendMessage( getParent(), closest, "InterSection", closest->getNormal() );
 	}
+	friction.setForceVector(kinematics.vel.getPosition() * (cFriction * -1.f));
 	glm::vec3 sumOfForces = glm::vec3(0,0,0);
 	for (forceIter i = forces.begin(); i != forces.end(); i++){
 		(*i)->update(dT);
