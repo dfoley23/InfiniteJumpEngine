@@ -116,11 +116,11 @@ Mesh* Tile::generateMesh(){
 				vert1 = verts[0];
 			}
 			vert2.x = vert1.x;
-			vert2.y = vert1.y + edgeHeight*2;
+			vert2.y = vert1.y + edgeHeight;
 			vert2.z = vert1.z;
 
 			vert3.x = vert0.x;
-			vert3.y = vert0.y + edgeHeight*2;
+			vert3.y = vert0.y + edgeHeight;
 			vert3.z = vert0.z;
 			
 			/*tangent = vert1 - vert0;
@@ -143,8 +143,8 @@ Mesh* Tile::generateMesh(){
 			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert1, vert0, wall_color );
 			edges.push_back( edge );
 
-			//vert0.y = vert0.y - edgeHeight*5;
-			//vert1.y = vert0.y - edgeHeight*5;
+			vert0.y = vert0.y - edgeHeight;
+			vert1.y = vert1.y - edgeHeight;
 			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, true );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
@@ -164,8 +164,8 @@ Mesh* Tile::generateMesh(){
 			vert3.y = vert0.y + edgeHeight*2;
 			vert3.z = vert0.z;
 
-			//vert0.y = vert0.y - edgeHeight*5;
-			//vert1.y = vert0.y - edgeHeight*5;
+			vert0.y = vert0.y - edgeHeight;
+			vert1.y = vert1.y - edgeHeight;
 			//PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, false );
 			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, false );
 			pCollide->setParent( this );

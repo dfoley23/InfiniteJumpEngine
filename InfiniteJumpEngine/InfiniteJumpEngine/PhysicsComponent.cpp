@@ -21,6 +21,17 @@ PhysicsComponent::~PhysicsComponent(void)
 }
 
 void PhysicsComponent::update( float dT ) {
+	checkCollisionData( dT );
+	glm::vec3 sumOfForces = glm::vec3(0,0,0);
+	for (forceIter i = forces.begin(); i != forces.end(); i++){
+		(*i)->update(dT);
+		sumOfForces += (*i)->getValue();
+	}
+	kinematics.applyImpulse( sumOfForces );
+	kinematics.update(dT);
+}
+
+void PhysicsComponent::checkCollisionData(float dT) {
 	pair<bool, double> intersect;
 	pair<bool, double> closestIntersect = pair<bool, double>(false,0.0f);
 	PlaneCollider* closest = NULL;
@@ -45,17 +56,9 @@ void PhysicsComponent::update( float dT ) {
 		}
 	}
 	if ( closestIntersect.first && closestIntersect.second < dT ){
-		sendMessage( getParent(), closest, "InterSection", closest->getNormal() );
+		sendMessage( getParent(), closest, "InterSection", glm::vec4(closest->getNormal(), 0.f) );
 	}
-	glm::vec3 sumOfForces = glm::vec3(0,0,0);
-	for (forceIter i = forces.begin(); i != forces.end(); i++){
-		(*i)->update(dT);
-		sumOfForces += (*i)->getValue();
-	}
-	kinematics.applyImpulse( sumOfForces );
-	kinematics.update(dT);
 }
-
 bool operator<(const InterSection &x1, const InterSection &x2 ){
 	return (x1.getInterSectTime() < x2.getInterSectTime());
 }

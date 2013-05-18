@@ -43,11 +43,11 @@ void Ball::update( float dT ) {
 	ballRay->setRayStart( mesh->getCenter() );
 	ballRay->setDirection( velocity );
 
-	/*if ( glm::length( velocity ) > 0 ) {
+	if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
-		rotation += dT * ( 4 * IJ_PI );
-		getMesh()->rotate( rotation, rotAxis );
-	}*/
+		rotation -= dT * ( 8 * IJ_PI );
+		sendMessage(physComp->getKinematics(), NULL, "rotate", glm::vec4(rotAxis.x, rotAxis.y, rotAxis.z, rotation));
+	}
 	/*physComp->collisionData.clear();
 	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
 		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
@@ -58,6 +58,10 @@ void Ball::update( float dT ) {
 				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
 		}
 	}*/
+	//physComp->checkCollisionData( dT );
+	//if ( reflect ) {
+	//	physComp->checkCollisionData( dT );
+	//}
 	physComp->update( dT );
 	float minYPos = currentTile->getMesh()->getMinPoint().y+radius;
 	float maxYPos = currentTile->getMesh()->getMaxPoint().y+radius;
@@ -114,7 +118,7 @@ void Ball::receiveMessage( IJMessage* message ){
 		cout<< "ball moving right" << endl;
 		right.start();
 	} else if (!message->getContent().compare("shoot")){
-		physComp->getKinematics()->vel.setPosition( message->getVector() );
+		physComp->getKinematics()->vel.setPosition( message->getVector().xyz );
 	} else if (!message->getContent().compare("InterSection")){
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
@@ -128,6 +132,8 @@ void Ball::receiveMessage( IJMessage* message ){
 
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( reflect_dir );
+
+			reflect = true;
 		} else {
 			Tile * tile = (Tile*)plane->getParent();
 			this->currentTile = tile;

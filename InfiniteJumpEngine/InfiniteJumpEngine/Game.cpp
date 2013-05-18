@@ -131,16 +131,16 @@ void Game::glui_callBack( int id ) {
 	case 2:
 		level->ball->getPhysics()->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0) );
 		level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 0, 0, 0) );
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x+transX, pos.y, pos.z));
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x+transX, pos.y, pos.z,0.f));
 		break;
 	case 3:
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x, pos.y+transY, pos.z));
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x, pos.y+transY, pos.z,0.f));
 		break;
 	case 4:
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec3(pos.x, pos.y, pos.z+transZ));
+		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x, pos.y, pos.z+transZ,0.f));
 		break;
 	case 5:
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "rotate", glm::vec3(rotX, rotY, 0.f));
+		//sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "rotate", glm::vec4(rotX, rotY, 0.f,0.f));
 		break;
 	default:
 		break;
@@ -223,9 +223,14 @@ void Game::mouse_click(int button, int state, int x, int y){
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
 			glm::vec3 releasePoint = glm::vec3( x, 0, y);
-			glm::vec3 dir = -glm::normalize( releasePoint - clickPoint );
+			glm::vec3 dir = -( releasePoint - clickPoint );
+			if ( glm::length( dir ) > 70 ) {
+				dir = glm::normalize( dir ) * 2.f;
+			} else {
+				dir = glm::normalize( dir );
+			}
 			//cout << dir.x << " : " << dir.z << endl;
-			sendMessage(level->ball, NULL, "shoot", dir);
+			sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
 			hasPressed = false;
 		}
 	}

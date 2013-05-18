@@ -1,7 +1,7 @@
 #include "PositionComponent.h"
 
 
-PositionComponent::PositionComponent(glm::vec3 n_pos, glm::vec3 n_rot, glm::vec3 n_sca)
+PositionComponent::PositionComponent(glm::vec3 n_pos, glm::vec4 n_rot, glm::vec3 n_sca)
 {
 	setPosition(n_pos);
 	setRotation(n_rot);
@@ -15,19 +15,26 @@ PositionComponent::~PositionComponent(void)
 
 glm::mat4 PositionComponent::getTransform(){
 	glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
-	glm::mat4 rX = glm::rotate( glm::mat4( ), rotation.x, glm::vec3( 1, 0, 0 ) );
-	glm::mat4 rY = glm::rotate( glm::mat4( ), rotation.y, glm::vec3( 0, 1, 0 ) );
-	glm::mat4 rZ = glm::rotate( glm::mat4( ), rotation.z, glm::vec3( 0, 0, 1 ) );
-	glm::mat4 r = rX * rY * rZ;
+	glm::mat4 t_minus = glm::translate(glm::mat4(), -position);
+	glm::mat4 r;
+	if ( rotation.x > 0.f || rotation.y > 0.f || rotation.z > 0.f || rotation.w > 0.f ) {
+		r = glm::rotate( glm::mat4(), rotation.w, glm::vec3( rotation.x, rotation.y, rotation.z ) );
+	} else
+	{
+		glm::mat4 rX = glm::rotate( glm::mat4( ), rotation.x, glm::vec3( 1, 0, 0 ) );
+		glm::mat4 rY = glm::rotate( glm::mat4( ), rotation.y, glm::vec3( 0, 1, 0 ) );
+		glm::mat4 rZ = glm::rotate( glm::mat4( ), rotation.z, glm::vec3( 0, 0, 1 ) );
+		r = rX * rY * rZ;
+	}
 	glm::mat4 s = glm::scale(glm::mat4(1.0f), scale);
-	return r * t * s;
+	return t * r * s;
 }
 
 glm::vec3 PositionComponent::getPosition() {
 	return position;
 }
 
-glm::vec3  PositionComponent::getRotation() {
+glm::vec4  PositionComponent::getRotation() {
 	return rotation;
 }
 
@@ -49,10 +56,10 @@ const PositionComponent PositionComponent::operator*(const float scalar){
 
 void PositionComponent::receiveMessage( IJMessage *m){
 	if (!m->getContent().compare("translate")){
-		position = m->getVector();
+		position = m->getVector().xyz;
 	} else if (!m->getContent().compare("rotate")){
 		rotation = m->getVector();
 	} else if (!m->getContent().compare("scale")){
-		scale = m->getVector();
+		scale = m->getVector().xyz;
 	}
 }

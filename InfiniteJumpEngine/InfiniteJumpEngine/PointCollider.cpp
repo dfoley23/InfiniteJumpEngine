@@ -49,7 +49,7 @@ bool PointCollider::isColliding(MeshCollider* that)
 			&& sameSideOfLine( point, vert1, vert0, vert2)
 			&& sameSideOfLine( point, vert2, vert1, vert0) 
 			) {
-				sendMessage( this->getParent(), that, "MeshCollision", glm::vec3( 0, 0, 0) );
+				sendMessage( this->getParent(), that, "MeshCollision", glm::vec4( 0, 0, 0, 0) );
 				return true;
 		}
 		i+=9;

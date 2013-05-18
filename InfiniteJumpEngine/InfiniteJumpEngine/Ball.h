@@ -44,6 +44,7 @@ private:
 	Force left;
 	Force right;
 	void buildMesh( );
+	bool reflect;
 protected:
 };
 

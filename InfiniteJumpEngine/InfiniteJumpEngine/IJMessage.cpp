@@ -1,7 +1,7 @@
 #include "IJMessage.h"
 
 
-IJMessage::IJMessage(Component* s, Component* r, Component* o, char* c, glm::vec3 v):
+IJMessage::IJMessage(Component* s, Component* r, Component* o, char* c, glm::vec4 v):
 	content(c),
 	vecContent(v)
 {

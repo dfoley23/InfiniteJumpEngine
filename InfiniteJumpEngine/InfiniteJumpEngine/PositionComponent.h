@@ -9,7 +9,7 @@ class PositionComponent :
 {
 public:
 	PositionComponent(glm::vec3 n_pos = glm::vec3(0.0f,0.0f,0.0f), 
-					  glm::vec3 n_rot = glm::vec3(0.0f,0.0f,0.0f), 
+					  glm::vec4 n_rot = glm::vec4(0.0f,0.0f,0.0f,0.0f), 
 					  glm::vec3 n_sca = glm::vec3(1.0f,1.0f,1.0f));
 	~PositionComponent(void);
 	//Translation
@@ -25,16 +25,18 @@ public:
 	inline void setPosZ(float v){position.z = v;}; 
 	
 	//Rotation
-	glm::vec3 getRotation();
-	void setRotation(glm::vec3 v){setRotation(v.x,v.y,v.z);};
-	void setRotation(float x, float y, float z){
+	glm::vec4 getRotation();
+	void setRotation(glm::vec4 v){setRotation(v.x,v.y,v.z,v.w);};
+	void setRotation(float x, float y, float z, float w){
 		setRotX(x);
 		setRotY(y);
 		setRotZ(z);
+		setRotW(w);
 	}
 	inline void setRotX(float v){rotation.x = v;}; 
 	inline void setRotY(float v){rotation.y = v;};
 	inline void setRotZ(float v){rotation.z = v;}; 
+	inline void setRotW(float v){rotation.w = v;}; 
 
 	//Scale
 	glm::vec3 getScale();
@@ -59,7 +61,7 @@ public:
 	const PositionComponent operator*(const float);
 protected:
 	glm::vec3 position;
-	glm::vec3 rotation;
+	glm::vec4 rotation;
 	glm::vec3 scale;
 };
 

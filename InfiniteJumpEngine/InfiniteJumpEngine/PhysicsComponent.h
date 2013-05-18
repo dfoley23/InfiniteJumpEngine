@@ -33,6 +33,8 @@ public:
 	virtual Collider * getMainCollider(){
 		return mainCollider;
 	}
+	void checkCollisionData(float dT);
+
 	glm::mat4 getTransform(){return kinematics.getTransform();};
 	KinematicComponent* getKinematics(){return &kinematics;}
 protected:
