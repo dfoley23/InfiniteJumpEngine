@@ -40,9 +40,6 @@ Ball::~Ball ( ) {
 void Ball::update( float dT ) {
 	glm::vec3 velocity = physComp->getKinematics()->vel.getPosition();
 	RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
-	ballRay->setRayStart( mesh->getCenter() );
-	ballRay->setDirection( velocity );
-
 	/*if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
 		rotation += dT * ( 4 * IJ_PI );

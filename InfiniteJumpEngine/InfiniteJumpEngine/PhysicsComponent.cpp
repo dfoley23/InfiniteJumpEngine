@@ -1,6 +1,8 @@
 #include "PhysicsComponent.h"
 
 
+const int PhysicsComponent::COLLISION_CHECKS = 5;
+
 PhysicsComponent::PhysicsComponent(void)
 {
 	game_time = (double)clock()/CLOCKS_PER_SEC;
@@ -9,7 +11,9 @@ PhysicsComponent::PhysicsComponent(void)
 	prev_game_time = game_time;
 	kinematics.setParent( this );
 	closestPlane = NULL;
-
+	cFriction = -1.0f;
+	friction.start();
+	forces.push_back(&friction);
 }
 
 
@@ -24,35 +28,50 @@ void PhysicsComponent::update( float dT ) {
 	pair<bool, double> intersect;
 	pair<bool, double> closestIntersect = pair<bool, double>(false,0.0f);
 	PlaneCollider* closest = NULL;
-	/*for ( int i=0; i<static_cast<int>(meshCollision.size()); i++ ) {
-		if ( pointCollider->isColliding( meshCollision.at( i ) ) ) {
-			break;
-		}
-	}*/
-	for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
-		intersect = mainCollider->predictIntersection((*cIter));
-		if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
-			if ( !closestIntersect.first 
-				|| intersect.second < closestIntersect.second 
-				//|| (intersect.first == closestIntersect.first 
-				//	&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
-				//		< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() ) 
-				)
-			{
-				closest = (*cIter);
-				closestIntersect = intersect;
-			}
-		}
-	}
-	if ( closestIntersect.first && closestIntersect.second < dT ){
-		sendMessage( getParent(), closest, "InterSection", closest->getNormal() );
-	}
+	PlaneCollider* lastClosest = NULL;
+	glm::vec3 f = kinematics.vel.getPosition() * cFriction;
+	f.y = 0.0f;
+	friction.setVector( f );
 	glm::vec3 sumOfForces = glm::vec3(0,0,0);
 	for (forceIter i = forces.begin(); i != forces.end(); i++){
 		(*i)->update(dT);
 		sumOfForces += (*i)->getValue();
 	}
 	kinematics.applyImpulse( sumOfForces );
+	for (int check = 0; 
+		check < COLLISION_CHECKS 
+		&& (check == 0 
+			|| (closest != lastClosest)); 
+		check++)
+		{
+		lastClosest = closest;
+		closest = NULL;
+		closestIntersect.first = false;
+		mainCollider->setRayStart( kinematics.loc.getPosition() );
+		mainCollider->setDirection( kinematics.vel.getPosition() );
+		for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
+			intersect = mainCollider->predictIntersection((*cIter));
+			//if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
+			if ( intersect.first && abs(intersect.second) < dT ) {
+				if ( !closestIntersect.first 
+					|| abs(intersect.second) < abs(closestIntersect.second) 
+					//|| (intersect.first == closestIntersect.first 
+					//	&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
+					//		< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() ) 
+					)
+				{
+					closest = (*cIter);
+					closestIntersect = intersect;
+				}
+			}
+		}
+		if ( closest ){
+			//cout << closestIntersect.second << endl;
+			kinematics.update(closestIntersect.second/2.0);
+			sendMessage( getParent(), closest, "InterSection", closest->getNormal() );
+			dT -= closestIntersect.second/2.0;
+		}
+	}
 	kinematics.update(dT);
 }
 
