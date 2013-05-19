@@ -15,7 +15,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	physComp = new PhysicsComponent();
 	physComp->setParent(this);
 	mesh->setParent(physComp);
-	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
+	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y, pos.z+radius );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 	RayCollider * intersect = new RayCollider( );
 	intersect->setParent(physComp);
@@ -43,11 +43,11 @@ void Ball::update( float dT ) {
 	ballRay->setRayStart( mesh->getCenter() );
 	ballRay->setDirection( velocity );
 
-	if ( glm::length( velocity ) > 0 ) {
+	/*if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
 		rotation -= dT * ( 8 * IJ_PI );
 		sendMessage(physComp->getKinematics(), NULL, "rotate", glm::vec4(rotAxis.x, rotAxis.y, rotAxis.z, rotation));
-	}
+	}*/
 	/*physComp->collisionData.clear();
 	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
 		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
@@ -58,13 +58,9 @@ void Ball::update( float dT ) {
 				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
 		}
 	}*/
-	//physComp->checkCollisionData( dT );
-	//if ( reflect ) {
-	//	physComp->checkCollisionData( dT );
-	//}
 	physComp->update( dT );
-	float minYPos = currentTile->getMesh()->getMinPoint().y+radius;
-	float maxYPos = currentTile->getMesh()->getMaxPoint().y+radius;
+	float minYPos = currentTile->getMesh()->getMinPoint().y;
+	float maxYPos = currentTile->getMesh()->getMaxPoint().y;
 	glm::vec3 curPos = physComp->getKinematics()->loc.getPosition();
 	if ( minYPos > curPos.y ) {
 		glm::vec3 newPos = glm::vec3( curPos.x, minYPos, curPos.z );

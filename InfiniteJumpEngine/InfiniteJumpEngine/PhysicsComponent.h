@@ -4,6 +4,7 @@
 #include <vector>
 #include <ctime>
 #include <queue>
+#include "glIncludes.h"
 #include "IJMessage.h"
 #include "Force.h"
 #include "Collider.h"
@@ -37,6 +38,8 @@ public:
 
 	glm::mat4 getTransform(){return kinematics.getTransform();};
 	KinematicComponent* getKinematics(){return &kinematics;}
+
+	static const int COLLISION_CHECKS;
 protected:
 	
 	double game_time;
@@ -46,6 +49,9 @@ protected:
 	
 	vector<PlaneCollider*> collisionData;
 	PlaneCollider * closestPlane;
+
+	float cFriction;
+	Force friction;
 
 	KinematicComponent kinematics;
 	RayCollider * mainCollider;

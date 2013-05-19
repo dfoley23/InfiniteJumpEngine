@@ -20,17 +20,17 @@ void Camera::update (glm::vec3 pos, glm::vec3 dir){
 	switch( cameraProfile ) {
 		case 0: //third person
 			cam = glm::lookAt( glm::vec3( pos.x - scaleDir.x, 
-				pos.y - scaleDir.y + 0.1f,
-				pos.z - scaleDir.z ),
+				pos.y - scaleDir.y + 0.4f,
+				pos.z - scaleDir.z*1.2),
 				pos, glm::vec3( 0, 1, 0 ) );
 			break;
 		case 1: //first person
 			cam = glm::lookAt( glm::vec3( pos.x, 
-				pos.y+0.05,
+				pos.y+0.1f,
 				pos.z ),
-				glm::vec3( pos.x+dir.x, 
-				pos.y+dir.y+0.01,
-				pos.z+dir.z ), glm::vec3( 0, 1, 0 ) );
+				glm::vec3( pos.x+dir.x*2, 
+				pos.y+0.01f,
+				pos.z+dir.z*2 ), glm::vec3( 0, 1, 0 ) );
 			break;
 		case 2: //top down
 			cam = glm::lookAt( glm::vec3( pos.x, 
