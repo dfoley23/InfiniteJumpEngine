@@ -58,6 +58,14 @@ void Ball::update( float dT ) {
 				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
 		}
 	}*/
+	
+	//glm::vec3 tN = glm::normalize(currentTile->getNormal());
+	//glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
+	//rolling force direction
+	//glm::vec3 tR = glm::cross( tN, t_xAxis ) * glm::dot( tN, glm::vec3( 0, 1, 0 ) );
+
+	//physComp->addForce( new Force( tR, dT, false ) );
+
 	physComp->update( dT );
 	float minYPos = currentTile->getMesh()->getMinPoint().y;
 	float maxYPos = currentTile->getMesh()->getMaxPoint().y;
@@ -138,10 +146,10 @@ void Ball::receiveMessage( IJMessage* message ){
 			//rolling force direction
 			glm::vec3 tR = glm::cross( tN, t_xAxis );
 			//xaxis to direction
-			glm::vec3 dir_xAxis = glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) );
+			glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
 			//balls new direction
-			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis ));
+			glm::vec3 new_dir = glm::cross( tN, dir_xAxis ) * glm::length( xZ_dir );
 			glm::vec3 final_dir = xZ_dir * glm::dot( xZ_dir, new_dir );
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
