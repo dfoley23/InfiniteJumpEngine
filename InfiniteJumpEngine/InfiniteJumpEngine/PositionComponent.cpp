@@ -17,9 +17,9 @@ glm::mat4 PositionComponent::getTransform(){
 	glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 t_minus = glm::translate(glm::mat4(), -position);
 	glm::mat4 r;
-	//if ( rotation.x > 0.f || rotation.y > 0.f || rotation.z > 0.f || rotation.w > 0.f ) {
-	//	r = glm::rotate( glm::mat4(), rotation.w, glm::vec3( rotation.x, rotation.y, rotation.z ) );
-	//} else
+	if ( rotation.x > 0.f || rotation.y > 0.f || rotation.z > 0.f || rotation.w > 0.f ) {
+		r = glm::rotate( glm::mat4(), rotation.w, glm::vec3( rotation.x, rotation.y, rotation.z ) );
+	} else
 	{
 		glm::mat4 rX = glm::rotate( glm::mat4( ), rotation.x, glm::vec3( 1, 0, 0 ) );
 		glm::mat4 rY = glm::rotate( glm::mat4( ), rotation.y, glm::vec3( 0, 1, 0 ) );

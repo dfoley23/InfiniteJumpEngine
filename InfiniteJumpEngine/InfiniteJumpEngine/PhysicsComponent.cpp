@@ -26,7 +26,7 @@ PhysicsComponent::~PhysicsComponent(void)
 
 void PhysicsComponent::update( float dT ) {
 	glm::vec3 f = kinematics.vel.getPosition() * cFriction;
-	f.y = 0.0f;
+	//f.y = 0.0f;
 	friction.setVector( f );
 	glm::vec3 sumOfForces = glm::vec3(0,0,0);
 	for (forceIter i = forces.begin(); i != forces.end(); i++){
@@ -43,6 +43,7 @@ void PhysicsComponent::checkCollisionData(float dT) {
 	pair<bool, double> closestIntersect = pair<bool, double>(false,0.0f);
 	PlaneCollider* closest = NULL;
 	PlaneCollider* lastClosest = NULL;
+	bool hitUnSolidPlane = false;
 	for (int check = 0; 
 		check < COLLISION_CHECKS 
 		&& (check == 0 
@@ -56,21 +57,22 @@ void PhysicsComponent::checkCollisionData(float dT) {
 		mainCollider->setDirection( kinematics.vel.getPosition() );
 		for (colliderIter cIter = collisionData.begin();  cIter != collisionData.end(); ++cIter ) {
 			intersect = mainCollider->predictIntersection((*cIter));
-			//if ( intersect.first && intersect.second > 0.0 && intersect.second < dT ) {
 			if ( intersect.first && abs(intersect.second) < dT ) {
 				if ( !closestIntersect.first 
-					|| abs(intersect.second) < abs(closestIntersect.second) 
-					//|| (intersect.first == closestIntersect.first 
-					//	&& (mainCollider->getRayStart() - closest->getPointOnPlane()).length() 
-					//		< (mainCollider->getRayStart() -(*cIter)->getPointOnPlane()).length() ) 
-					)
+					|| abs(intersect.second) < abs(closestIntersect.second) )
 				{
-					closest = (*cIter);
-					closestIntersect = intersect;
+					if ( !hitUnSolidPlane || (*cIter)->isSolidPlane() ) 
+					{
+						closest = (*cIter);
+						closestIntersect = intersect;
+					}
 				}
 			}
 		}
 		if ( closest ){
+			if ( !closest->isSolidPlane() ) { 
+				hitUnSolidPlane = true;
+			}
 			//cout << closestIntersect.second << endl;
 			kinematics.update(closestIntersect.second/2.0);
 			sendMessage( getParent(), closest, "InterSection", glm::vec4( closest->getNormal(), 1.0) );

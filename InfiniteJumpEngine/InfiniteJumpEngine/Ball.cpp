@@ -15,7 +15,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	physComp = new PhysicsComponent();
 	physComp->setParent(this);
 	mesh->setParent(physComp);
-	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y, pos.z+radius );
+	physComp->getKinematics()->loc.setPosition( pos.x+radius, pos.y+radius, pos.z+radius );
 	mesh->center = physComp->getKinematics()->loc.getPosition();
 	RayCollider * intersect = new RayCollider( );
 	intersect->setParent(physComp);
@@ -24,6 +24,8 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	physComp->addForce(&back);
 	physComp->addForce(&left);
 	physComp->addForce(&right);
+	physComp->addForce(&rolling);
+	rolling.start();
 	for ( int i=0; i<static_cast<int>(tiles->tiles.size()); i++ ) {
 		vector<PlaneCollider*> edgeColliders = tiles->tiles.at(i)->getEdgeColliders();
 		for ( int j=0; j<static_cast<int>(edgeColliders.size()); j++ ) {
@@ -39,36 +41,36 @@ Ball::~Ball ( ) {
 
 void Ball::update( float dT ) {
 	glm::vec3 velocity = physComp->getKinematics()->vel.getPosition();
-	RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
-	ballRay->setRayStart( mesh->getCenter() );
-	ballRay->setDirection( velocity );
+	//RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
+	//ballRay->setRayStart( mesh->getCenter() );
+	//ballRay->setDirection( velocity );
 
-	/*if ( glm::length( velocity ) > 0 ) {
+	if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
-		rotation -= dT * ( 8 * IJ_PI );
+		rotation -= dT * ( 16 * IJ_PI );
 		sendMessage(physComp->getKinematics(), NULL, "rotate", glm::vec4(rotAxis.x, rotAxis.y, rotAxis.z, rotation));
-	}*/
+	}
 	/*physComp->collisionData.clear();
 	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
-		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
-			physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
-		} else {
-			Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
-			physComp->collisionData.insert( physComp->collisionData.end(), 
-				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
-		}
+	if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
+	physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
+	} else {
+	Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
+	physComp->collisionData.insert( physComp->collisionData.end(), 
+	neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
+	}
 	}*/
-	
-	//glm::vec3 tN = glm::normalize(currentTile->getNormal());
-	//glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
-	//rolling force direction
-	//glm::vec3 tR = glm::cross( tN, t_xAxis ) * glm::dot( tN, glm::vec3( 0, 1, 0 ) );
 
-	//physComp->addForce( new Force( tR, dT, false ) );
+	glm::vec3 tN = glm::normalize(currentTile->getNormal());
+	glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
+	//rolling force direction
+	glm::vec3 tR = glm::cross( tN, t_xAxis ) * glm::dot( tN, glm::vec3( 0, 1, 0 ) );
+
+	rolling.setVector( tR );
 
 	physComp->update( dT );
-	float minYPos = currentTile->getMesh()->getMinPoint().y;
-	float maxYPos = currentTile->getMesh()->getMaxPoint().y;
+	float minYPos = currentTile->getMesh()->getMinPoint().y+radius;
+	float maxYPos = currentTile->getMesh()->getMaxPoint().y+radius;
 	glm::vec3 curPos = physComp->getKinematics()->loc.getPosition();
 	if ( minYPos > curPos.y ) {
 		glm::vec3 newPos = glm::vec3( curPos.x, minYPos, curPos.z );
@@ -122,7 +124,23 @@ void Ball::receiveMessage( IJMessage* message ){
 		cout<< "ball moving right" << endl;
 		right.start();
 	} else if (!message->getContent().compare("shoot")){
-		physComp->getKinematics()->vel.setPosition( message->getVector().xyz );
+		glm::vec3 tN = glm::normalize(currentTile->getNormal());
+		glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
+		//rolling force direction
+		glm::vec3 tR = glm::cross( tN, t_xAxis );
+		glm::vec3 xZ_dir = message->getVector().xyz;
+		//xaxis to direction
+		glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
+
+		//balls new direction
+		glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );//
+		//new_dir.x *= xZ_dir.x;
+		//new_dir.y *= xZ_dir.y;
+		//new_dir.z *= xZ_dir.z; //
+		physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
+		physComp->getKinematics()->vel.setPosition( new_dir );
+
+		//physComp->getKinematics()->vel.setPosition( message->getVector().xyz );
 	} else if (!message->getContent().compare("InterSection")){
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
@@ -149,8 +167,10 @@ void Ball::receiveMessage( IJMessage* message ){
 			glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
 			//balls new direction
-			glm::vec3 new_dir = glm::cross( tN, dir_xAxis ) * glm::length( xZ_dir );
-			glm::vec3 final_dir = xZ_dir * glm::dot( xZ_dir, new_dir );
+			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );//
+			//new_dir.x *= xZ_dir.x;
+			//new_dir.y *= xZ_dir.y;
+			//new_dir.z *= xZ_dir.z; //
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
 

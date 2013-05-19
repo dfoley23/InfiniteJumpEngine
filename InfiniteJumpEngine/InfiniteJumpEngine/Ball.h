@@ -43,6 +43,7 @@ private:
 	Force back;
 	Force left;
 	Force right;
+	Force rolling;
 	void buildMesh( );
 	bool reflect;
 protected:

@@ -119,6 +119,9 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="Cup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -202,9 +205,6 @@
     <ClInclude Include="IJTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Force.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -222,6 +222,12 @@
     </ClInclude>
     <ClInclude Include="InterSection.h">
       <Filter>Header Files\Collision Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Cup.h">
+      <Filter>Header Files\Entities and Loadouts</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Entities and Loadouts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

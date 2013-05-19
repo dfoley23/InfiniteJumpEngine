@@ -17,12 +17,16 @@ Camera::~Camera ( ) {
 void Camera::update (glm::vec3 pos, glm::vec3 dir){
 	glm::vec3 camPos = glm::normalize(dir) + glm::vec3( 0, 1, 0 );
 	glm::vec3 scaleDir = glm::normalize( dir ) * 0.25f;
+	glm::vec3 oppoDir = glm::vec3( 0, 0, 0.25f );
+	if ( glm::length( scaleDir ) > 0 ) {
+		oppoDir = scaleDir;
+	}
 	switch( cameraProfile ) {
 		case 0: //third person
-			cam = glm::lookAt( glm::vec3( pos.x - scaleDir.x*1.2f, 
-				pos.y + 0.4f,
-				pos.z - scaleDir.z*1.2f),
-				pos, glm::vec3( 0, 1, 0 ) );
+			cam = glm::lookAt( glm::vec3( pos.x-scaleDir.x, 
+				pos.y + 0.2f,
+				pos.z - scaleDir.z),
+				glm::vec3( pos.x, pos.y+0.1f, pos.z), glm::vec3( 0, 1, 0 ) );
 			break;
 		case 1: //first person
 			cam = glm::lookAt( glm::vec3( pos.x, 
