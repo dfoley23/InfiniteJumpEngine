@@ -21,6 +21,9 @@ void keyboard(unsigned char key, int x, int y) {
 	Game::game()->keyboard(key,x,y);
 }
 
+void special_keyboard(int key, int x, int y) { 
+	Game::game()->special_keyboard( key, x, y );
+}
 
 void mouse_click(int button, int state, int x, int y) {
 	Game::game( )->mouse_click(button, state, x, y);

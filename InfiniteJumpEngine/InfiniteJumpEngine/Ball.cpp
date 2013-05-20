@@ -167,14 +167,14 @@ void Ball::receiveMessage( IJMessage* message ){
 			glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
 			//balls new direction
-			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );//
-			//new_dir.x *= xZ_dir.x;
-			//new_dir.y *= xZ_dir.y;
-			//new_dir.z *= xZ_dir.z; //
+			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );
 			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 			physComp->getKinematics()->vel.setPosition( new_dir );
 
 		}
+	} else if ( !message->getContent().compare("CupCollide") ){
+		physComp->getKinematics()->vel.setPosition( glm::vec3( 0, -1, 0 ) );
+		Game::game()->switchLevel( );
 	} else if ( !message->getContent().compare("MeshCollision") ){
 		Tile * tile = (Tile*)message->getOther()->getParent();
 		this->currentTile = tile;

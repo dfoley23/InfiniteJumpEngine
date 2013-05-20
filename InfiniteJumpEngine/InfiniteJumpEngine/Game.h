@@ -58,8 +58,10 @@ public:
 	void mouse_click(int, int, int, int);
 	void mouse_drag(int, int );
 	void keyboard(unsigned char, int, int);
+	void special_keyboard(int key, int x, int y);
 	void setupInterface(void(*cb)(int i));
 	void glui_callBack( int id );
+	void switchLevel( );
 
 	static void clear(){
 		delete inst; inst = NULL;
@@ -93,13 +95,6 @@ private:
 	float   transZ;
 	float   rotX;
 	float   rotY;
-	float   camEyeX;
-	float   camEyeY;
-	float   camEyeZ;
-	float   camLookAtX;
-	float   camLookAtY;
-	float   camLookAtZ;
-	int     cameraProfile;
 	int     picking;
 };
 

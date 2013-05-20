@@ -76,6 +76,7 @@ void PhysicsComponent::checkCollisionData(float dT) {
 			//cout << closestIntersect.second << endl;
 			kinematics.update(closestIntersect.second/2.0);
 			sendMessage( getParent(), closest, "InterSection", glm::vec4( closest->getNormal(), 1.0) );
+			sendMessage( closest, getParent(), "InterSection", glm::vec4( closest->getNormal(), 1.0) );
 			dT -= closestIntersect.second/2.0;
 		}
 	}

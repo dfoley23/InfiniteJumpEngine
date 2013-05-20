@@ -5,6 +5,7 @@
 
 #include "Tile.h"
 #include "Ball.h"
+#include "Cup.h"
 #include "Entity.h"
 #include "Level.h"
 

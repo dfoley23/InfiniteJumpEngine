@@ -17,14 +17,7 @@ Game::Game(void)
 	transZ = 0.0f;
 	rotX = 0.0f;
 	rotY = 0.0f;
-	camEyeX = 0.0f;
-	camEyeY = 4.0f;
-	camEyeZ = 6.0f;
-	camLookAtX = 0.0f;
-	camLookAtY = 0.0f;
-	camLookAtZ = 0.0f;
 	picking = 0;
-	cameraProfile = 4;
 	hasPressed = false;
 }
 
@@ -65,7 +58,7 @@ void Game::display(){
 	if (level){
 		//if ( t_delta.getSeconds() > MIN_DT ) 
 		{
-			fps_gauge->set_float_val(1.0/t_delta.getSeconds());
+			//fps_gauge->set_float_val(1.0/t_delta.getSeconds());
 			level->update(t_delta.getSeconds());
 			t_init.reset();
 		}
@@ -112,22 +105,14 @@ void Game::displayForPick( int x, int y ) {
 }
 
 void Game::idle(){
-	glutSetWindow(main_window);
+	//glutSetWindow(main_window);
 	glutPostRedisplay();
-	Sleep (100);
+	//Sleep (100);
 }
 
 void Game::glui_callBack( int id ) {
 	glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
 	switch(id) {
-	case 0:
-		level->camera->cam = glm::lookAt( glm::vec3( camEyeX, camEyeY, camEyeZ ), 
-			glm::vec3( camLookAtX, camLookAtY, camLookAtZ ), glm::vec3( 0, 1, 0 ) );
-		level->camera->switchProfile( 4 );
-		break;
-	case 1:
-		level->camera->switchProfile( cameraProfile );
-		break;
 	case 2:
 		level->ball->getPhysics()->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0) );
 		level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 0, 0, 0) );
@@ -149,7 +134,7 @@ void Game::glui_callBack( int id ) {
 
 
 void Game::setupInterface( void(*cb)(int i) ){
-	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
+	/*glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
 	glui->set_main_gfx_window( main_window );
 
 	GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
@@ -164,27 +149,27 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_RadioButton *freeLook = glui->add_radiobutton_to_group( camProfiles, "Free Look View" );
 
 	GLUI_Spinner *transCam1_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam eye X:", GLUI_SPINNER_FLOAT, &camEyeX, 0, cb );
+	glui->add_spinner_to_panel( cam_panel, "Cam eye X:", GLUI_SPINNER_FLOAT, &camEyeX, 0, cb );
 	transCam1_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *transCam2_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam eye Y:", GLUI_SPINNER_FLOAT, &camEyeY, 0, cb );
+	glui->add_spinner_to_panel( cam_panel, "Cam eye Y:", GLUI_SPINNER_FLOAT, &camEyeY, 0, cb );
 	transCam2_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *transCam3_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam eye Z:", GLUI_SPINNER_FLOAT, &camEyeZ, 0, cb );
+	glui->add_spinner_to_panel( cam_panel, "Cam eye Z:", GLUI_SPINNER_FLOAT, &camEyeZ, 0, cb );
 	transCam3_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamX_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam look at X:", GLUI_SPINNER_FLOAT, &camLookAtX, 0, cb);
+	glui->add_spinner_to_panel( cam_panel, "Cam look at X:", GLUI_SPINNER_FLOAT, &camLookAtX, 0, cb);
 	angleCamX_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamY_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam look at Y:", GLUI_SPINNER_FLOAT, &camLookAtY, 0, cb);
+	glui->add_spinner_to_panel( cam_panel, "Cam look at Y:", GLUI_SPINNER_FLOAT, &camLookAtY, 0, cb);
 	angleCamY_spinner->set_float_limits(-10, 10);
 
 	GLUI_Spinner *angleCamZ_spinner =
-		glui->add_spinner_to_panel( cam_panel, "Cam look at Z:", GLUI_SPINNER_FLOAT, &camLookAtZ, 0, cb);
+	glui->add_spinner_to_panel( cam_panel, "Cam look at Z:", GLUI_SPINNER_FLOAT, &camLookAtZ, 0, cb);
 	angleCamZ_spinner->set_float_limits(-10, 10);
 
 	//picking mesh interface
@@ -210,8 +195,8 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
 	angleY_spinner->set_float_limits(-360, 360);*/
 
-	fps_text = std::string("Hello World!");
-	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
+	/*fps_text = std::string("Hello World!");
+	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);*/
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
@@ -240,8 +225,54 @@ void Game::mouse_drag(int, int ){
 
 }
 
+void Game::switchLevel( ) {
+	sub_levelID++;
+	level->clear();
+	delete level;
+	level = resman->getTriangleLevel(levelID, sub_levelID);
+	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+	level->camera->proj = glm::perspective(
+		glm::float_t(45),
+		glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+		glm::float_t(0.1f),
+		glm::float_t(1000.0)
+		);
+	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
+}
+
+void Game::special_keyboard(int key, int x, int y) {  
+		//arrow keys control camera translations
+	switch(key) {    
+	case GLUT_KEY_LEFT:
+		transX -= 2;
+		break;    
+	case GLUT_KEY_RIGHT:
+		transX += 2;
+		break;  
+	case GLUT_KEY_UP:
+		transZ -= 2;
+		break;
+	case GLUT_KEY_DOWN:
+		transZ += 2;
+	default:
+		break;
+	}
+}
+
 void Game::keyboard(unsigned char key, int x, int y){
 	switch (key) {
+	case 48: // 0
+		level->camera->switchProfile( 0 );
+		break;
+	case 49: // 1
+		level->camera->switchProfile( 1 );
+		break;
+	case 50: // 2
+		level->camera->switchProfile( 2 );
+		break;
+	case 51:
+		level->camera->switchProfile( 3 );
+		break;
 	case 27:
 		exit(0);
 		break;

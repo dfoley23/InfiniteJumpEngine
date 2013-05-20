@@ -16,7 +16,6 @@ using namespace std;
 class Cup: public Component
 {
 public:	
-	friend class TileSet;
     // Constructors/Destructors
     //
 	virtual ~Cup ( );

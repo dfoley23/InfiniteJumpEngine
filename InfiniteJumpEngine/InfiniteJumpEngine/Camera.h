@@ -21,6 +21,10 @@ protected:
 private:
 	int cameraProfile;
     void initAttributes ( ) ;
+	
+	glm::vec3 camEye;
+	glm::vec3 camLookAt;
+	glm::vec3 camUp;
 };
 
 #endif CAMERA_H

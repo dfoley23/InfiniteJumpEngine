@@ -15,36 +15,30 @@ Camera::~Camera ( ) {
 // Methods
 //  
 void Camera::update (glm::vec3 pos, glm::vec3 dir){
-	glm::vec3 camPos = glm::normalize(dir) + glm::vec3( 0, 1, 0 );
 	glm::vec3 scaleDir = glm::normalize( dir ) * 0.25f;
-	glm::vec3 oppoDir = glm::vec3( 0, 0, 0.25f );
-	if ( glm::length( scaleDir ) > 0 ) {
-		oppoDir = scaleDir;
-	}
 	switch( cameraProfile ) {
-		case 0: //third person
-			cam = glm::lookAt( glm::vec3( pos.x-scaleDir.x, 
-				pos.y + 0.2f,
-				pos.z - scaleDir.z),
-				glm::vec3( pos.x, pos.y+0.1f, pos.z), glm::vec3( 0, 1, 0 ) );
-			break;
-		case 1: //first person
-			cam = glm::lookAt( glm::vec3( pos.x, 
-				pos.y+0.1f,
-				pos.z ),
-				glm::vec3( pos.x+scaleDir.x, 
-				pos.y+0.01f,
-				pos.z+scaleDir.z ), glm::vec3( 0, 1, 0 ) );
-			break;
-		case 2: //top down
-			cam = glm::lookAt( glm::vec3( pos.x, 
-				pos.y+6.0f,
-				pos.z ),
-				pos, glm::vec3( 0, 0, -1 ) );
-			break;
-		default:
-			break;
-		}
+	case 0: //third person
+		camEye = glm::vec3( pos.x-scaleDir.x, pos.y + 0.2f, pos.z - scaleDir.z);
+		camLookAt = glm::vec3( pos.x, pos.y+0.1f, pos.z);
+		camUp = glm::vec3( 0, 1, 0 );
+		break;
+	case 1: //first person
+		camEye = glm::vec3( pos.x,pos.y+0.1f,pos.z);
+		camLookAt = glm::vec3( pos.x+scaleDir.x, pos.y+0.01f,pos.z+scaleDir.z );
+		camUp = glm::vec3( 0, 1, 0 );
+		break;
+	case 2: //top down
+		camEye = glm::vec3( pos.x, 
+			pos.y+6.0f,
+			pos.z );
+		camLookAt = pos;
+		camUp = glm::vec3( 0, 0, -1 );
+		break;
+	default:
+		break;
+	}
+
+	cam = glm::lookAt( camEye, camLookAt, camUp );
 }
 
 void Camera::switchProfile( int profile ) {
@@ -59,5 +53,7 @@ void Camera::switchProfile( int profile ) {
 //  
 
 void Camera::initAttributes ( ) {
-
+	camEye = glm::vec3( 0, 4, 6 );
+	camLookAt = glm::vec3( 0, 0, 0 );
+	camUp = glm::vec3( 0, 1, 0 );
 }

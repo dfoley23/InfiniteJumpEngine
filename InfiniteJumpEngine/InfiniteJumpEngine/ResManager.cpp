@@ -116,63 +116,24 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 			} else if ( !type.compare( "cup" ) ) {
 				if ( !course || begin_hole ) {
 					Entity * cupEntity = new Entity( );
-					Mesh * cup = new Mesh( );
 					string str_id;
 					string str_x, str_y, str_z;
 					iss >> str_id;
-					int i = atoi(str_id.c_str( ));
 					iss >> str_x;
 					iss >> str_y;
 					iss >> str_z;
 					float x = static_cast<float>(atof( str_x.c_str( ) ));
 					float y = static_cast<float>(atof( str_y.c_str( ) ));
 					float z = static_cast<float>(atof( str_z.c_str( ) ));
-					//cup mesh
-					glm::vec3 vert0 = glm::vec3( x-0.1f, y+0.001f, z+0.1f );
-					glm::vec3 vert1 = glm::vec3( x+0.1f, y+0.001f, z+0.1f );
-					glm::vec3 vert2 = glm::vec3( x+0.1f, y+0.001f, z-0.1f );
-					glm::vec3 vert3 = glm::vec3( x-0.1f, y+0.001f, z-0.1f );
+					Cup * cup = new Cup( glm::vec3( x, y+0.001, z) );
 
-					glm::vec3 tangent = vert1 - vert0;
-					glm::vec3 bitangent = vert2 - vert0;
-					glm::vec3 norm = glm::cross( tangent, bitangent );
-
-					cup->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 0, 0, 0 );
-					cup->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 0, 0, 0 );
-					cup->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 0, 0, 0 );
-
-					cup->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 0, 0, 0 );
-					cup->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 0, 0, 0 );
-					cup->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 0, 0, 0 );	
-
-					/*float edgeHeight = 0.2f;
-					glm::vec3 vert1Y = vert1;
-					glm::vec3 vert0Y = vert0;
-					glm::vec3 vert2Y = vert2;
-					glm::vec3 vert3Y = vert3;
-					vert0Y.y += edgeHeight;
-					vert1Y.y += edgeHeight;
-					vert2Y.y += edgeHeight;
-					vert3Y.y += edgeHeight;
-					PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert1Y, vert0Y, false );
-					pCollide->setParent( this );
-					ball->getPhysics()->addCollider( pCollide );
-
-					pCollide = new PlaneCollider ( vert1, vert2, vert2Y, vert1Y, false );
-					pCollide->setParent( this );
-					ball->getPhysics()->addCollider( pCollide );				
-
-					pCollide = new PlaneCollider ( vert2, vert3, vert3Y, vert2Y, false );
-					pCollide->setParent( this );
-					ball->getPhysics()->addCollider( pCollide );
-
-					pCollide = new PlaneCollider ( vert3, vert0, vert0Y, vert3Y, false );
-					pCollide->setParent( this );
-					ball->getPhysics()->addCollider( pCollide );
-					//cup->createYCube( 0.3f, 0.002f, vert0, vert1, color );*/
-
+					vector<PlaneCollider*> colliders = cup->edgeColliders;
+					for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
+						ball->getPhysics()->addCollider(colliders.at(i));
+					}
 					cupEntity->addComponent( cup );
 					level->addEntity( cupEntity );
+
 				}
 			} else if ( !type.compare( "course" ) ) {
 				course = true;
