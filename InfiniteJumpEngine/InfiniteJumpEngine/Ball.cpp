@@ -7,6 +7,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	,right(glm::vec3(5,0,0), 0.07f, true)
 {
 	tileSet = tiles;
+	hitCup = false;
 	currentTile = tileSet->getTile( tileId-1 );
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
@@ -142,6 +143,7 @@ void Ball::receiveMessage( IJMessage* message ){
 
 		//physComp->getKinematics()->vel.setPosition( message->getVector().xyz );
 	} else if (!message->getContent().compare("InterSection")){
+		if ( !hitCup ) {
 		PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
 		//balls current direction
@@ -172,9 +174,10 @@ void Ball::receiveMessage( IJMessage* message ){
 			physComp->getKinematics()->vel.setPosition( new_dir );
 
 		}
+		}
 	} else if ( !message->getContent().compare("CupCollide") ){
+		hitCup = true;
 		physComp->getKinematics()->vel.setPosition( glm::vec3( 0, -1, 0 ) );
-		Game::game()->switchLevel( );
 	} else if ( !message->getContent().compare("MeshCollision") ){
 		Tile * tile = (Tile*)message->getOther()->getParent();
 		this->currentTile = tile;

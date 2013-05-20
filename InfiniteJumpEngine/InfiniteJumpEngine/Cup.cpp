@@ -8,23 +8,21 @@ Cup::Cup ( glm::vec3 pos ) {
 	glm::vec3 vert1;
 	glm::vec3 vert2;
 	glm::vec3 vert3;
-	float planeHeight = 1.f;
+	float planeHeight = 0.3f;
 	Mesh * tempCollisionMesh = Game::game()->resman->readObjFile( "cupCollide.obj" );
 	vector<float> verts = tempCollisionMesh->getVerts();
-	for( int i=0 ; i< static_cast<int>(verts.size()); i++ ) {
+	for( int i=0 ; i< static_cast<int>(verts.size())-11; i++ ) {
 		vert0 = glm::vec3( verts.at(i)+pos.x, verts.at(i+1)+pos.y, verts.at(i+2)+pos.z );
 		vert1 = glm::vec3( verts.at(i+3)+pos.x, verts.at(i+4)+pos.y, verts.at(i+5)+pos.z );
-		vert2 = vert1;
-		vert2.y += planeHeight;
-		vert3 = vert0;
-		vert3.y += planeHeight;
+		vert2 = glm::vec3( verts.at(i+6)+pos.x, verts.at(i+7)+pos.y, verts.at(i+8)+pos.z );
+		vert3 = glm::vec3( verts.at(i+9)+pos.x, verts.at(i+10)+pos.y, verts.at(i+11)+pos.z );
 			
 		vert0.y -= planeHeight;
 		vert1.y -= planeHeight;
-		PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, false );
+		PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, false );
 		pCollide->setParent( this );
 		edgeColliders.push_back( pCollide );
-		i+=3;
+		i+=11;
 	}
 	delete tempCollisionMesh;
 	verts.clear();

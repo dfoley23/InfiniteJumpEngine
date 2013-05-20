@@ -71,6 +71,9 @@ void Game::display(){
 
 	}
 	glutSwapBuffers();
+	if ( level->ball->hitCup ) {
+		switchLevel( );
+	}
 }
 
 void Game::displayForPick( int x, int y ) {

@@ -32,6 +32,7 @@ public:
 	void receiveMessage( IJMessage* message );
 
 	PhysicsComponent *getPhysics();
+	bool hitCup;
 private:
 	PhysicsComponent * physComp;
 	Mesh * mesh;
@@ -46,6 +47,7 @@ private:
 	Force rolling;
 	void buildMesh( );
 	bool reflect;
+
 protected:
 };
 

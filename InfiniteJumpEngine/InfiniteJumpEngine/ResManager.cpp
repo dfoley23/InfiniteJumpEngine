@@ -18,6 +18,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	terrain->addComponent(tiles);
 	level->addEntity(terrain);
 	Ball * ball;
+	Cup * cup;
 	vector<PlaneCollider*> tileColliders;
 	bool end_hole = false;
 	bool begin_hole = false;
@@ -83,7 +84,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					float y = static_cast<float>(atof( str_y.c_str( ) ));
 					float z = static_cast<float>(atof( str_z.c_str( ) ));
 					//tee mesh
-					
+
 					glm::vec3 vert0 = glm::vec3( x-0.05f, y+0.001f, z+0.05f );
 					glm::vec3 vert1 = glm::vec3( x+0.05f, y+0.001f, z+0.05f );
 					glm::vec3 vert2 = glm::vec3( x+0.05f, y+0.001f, z-0.05f );
@@ -92,11 +93,11 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					glm::vec3 tangent = vert1 - vert0;
 					glm::vec3 bitangent = vert2 - vert0;
 					glm::vec3 norm = glm::cross( tangent, bitangent );
-					
+
 					tee->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1 );
 					tee->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 1 );
 					tee->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1 );
-					
+
 					tee->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1 );
 					tee->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1 );
 					tee->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1 );
@@ -125,12 +126,8 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					float x = static_cast<float>(atof( str_x.c_str( ) ));
 					float y = static_cast<float>(atof( str_y.c_str( ) ));
 					float z = static_cast<float>(atof( str_z.c_str( ) ));
-					Cup * cup = new Cup( glm::vec3( x, y+0.001, z) );
+					cup = new Cup( glm::vec3( x, y+0.001, z) );
 
-					vector<PlaneCollider*> colliders = cup->edgeColliders;
-					for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
-						ball->getPhysics()->addCollider(colliders.at(i));
-					}
 					cupEntity->addComponent( cup );
 					level->addEntity( cupEntity );
 
@@ -158,6 +155,10 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				cerr << "Found a unknown class type in " << filename << endl;
 				//return NULL;
 			}
+		}
+		vector<PlaneCollider*> colliders = cup->edgeColliders;
+		for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
+			ball->getPhysics()->addCollider(colliders.at(i));
 		}
 		return level;
 	} 
