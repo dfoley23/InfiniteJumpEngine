@@ -101,9 +101,6 @@
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="TileSetCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
-    </ClCompile>
     <ClCompile Include="EnvelopeASDR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="Cup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageUtilsGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="loadpng.cpp">
@@ -220,16 +214,10 @@
     <ClInclude Include="EnvelopeASDR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileSetCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlaneCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="RayCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InterSection.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="Cup.h">
@@ -237,9 +225,6 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Entities and Loadouts</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageUtilsGL.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="loadpng.h">
       <Filter>Header Files\pnglib</Filter>

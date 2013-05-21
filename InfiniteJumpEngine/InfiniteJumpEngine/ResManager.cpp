@@ -12,6 +12,7 @@ ResManager::~ResManager(void)
 
 Level* ResManager::getTriangleLevel(string filename, int holeID){
 	Level* level = new Level( "golfLevel" );
+	loadTextureList( "golfLevel" );
 	level->maxSubLevels = 0;
 	Entity* terrain = new Entity();
 	TileSet* tiles = new TileSet();
@@ -264,4 +265,60 @@ Mesh * ResManager::readObjFile( string filename ) {
 		}
 	}
 	return out;
+}
+
+void ResManager::loadTextureList( string filename ){
+	string line;
+	ifstream input;
+	string filePath = "Assets/";
+	input.open(filePath + filename.c_str( ) + "_textures.txt");
+	if ( input.fail( ) ) {
+		cerr << "Unable to open texture list file " << filename << endl;
+	} else {
+		while( !input.eof( ) ) {
+			getline( input, line );
+			istringstream iss(line);
+			string id, path;
+			iss >> id;
+			iss >> path;
+			loadTexture( path.c_str(), id );
+		}
+	}
+}
+
+GLuint ResManager::getTexture( string id ) {
+	if( textures.find( id ) != textures.end( ) ) {
+		return textures[id];
+	}
+	return 0;
+}
+
+//load png texture
+void ResManager::loadTexture(const char * filename, string id){
+	std::vector<unsigned char> png;
+	std::vector<unsigned char> image; //the raw pixels
+	unsigned width, height;
+	lodepng::State state; //optionally customize this one
+
+	lodepng::load_file(png, filename); //load the image file with given filename
+	unsigned error = lodepng::decode(image, width, height, state, png);
+
+	//if there's an error, display it
+	if(error) std::cout << "decoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
+
+	//the pixels are now in the vector "image", 4 bytes per pixel, ordered RGBARGBA..., use it as texture, draw it, ...
+	//State state contains extra information about the PNG such as text chunks, ...
+	
+	glEnable(GL_TEXTURE_2D);  
+	GLuint texName = 0;
+	glGenTextures(1, &texName);
+	textures.insert( pair<string, GLuint>(id, texName ) );
+	glBindTexture(GL_TEXTURE_2D, texName);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)image.data());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glDisable(GL_TEXTURE_2D);
 }

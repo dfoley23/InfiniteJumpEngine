@@ -39,6 +39,7 @@ void Mesh::draw( MeshBatch * batch ) {
 		batch->verts.resize( batch->verts.size( ) + 1 );
 		batch->norms.resize( batch->norms.size( ) + 1 );
 		batch->colors.resize( batch->colors.size( ) + 1 );
+		batch->texCoords.resize( batch->texCoords.size( ) + 1 );
 		index = static_cast<int>(batch->verts.size( )) - 1;
 		modelView = glm::mat4( );
 		modelView = translations * rotations * scaling * transform(); 
@@ -64,6 +65,7 @@ void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
 		batch->verts.resize( batch->verts.size( ) + 1 );
 		batch->norms.resize( batch->norms.size( ) + 1 );
 		batch->colors.resize( batch->colors.size( ) + 1 );
+		batch->texCoords.resize( batch->texCoords.size( ) + 1 );
 		index = static_cast<int>(batch->verts.size( )) - 1;
 		modelView = glm::mat4( );
 		modelView = translations * rotations * scaling; 
@@ -152,7 +154,7 @@ void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	addVert (x, y ,z, nx, ny, nz, r, g, b);
 }
 
-void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, float r, float g, float b, float u=0, float v=0){
+void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, float r, float g, float b, float u, float v){
 	if ( verts.empty( ) ) {
 		min = glm::vec3 ( x, y, z );
 		max = glm::vec3 ( x, y, z );
@@ -232,7 +234,6 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 	colors.push_back(b);
 	texCoords.push_back(u);
 	texCoords.push_back(v);
-
 }
 
 void Mesh::createYCube( float depth, float height, 
@@ -267,13 +268,13 @@ void Mesh::createPlane( glm::vec3 perpDepth, float height, float x1, float y1, f
 	glm::vec3 tangent = vert1 - vert0;
 	glm::vec3 bitangent = vert2 - vert0;
 	glm::vec3 norm = glm::cross( tangent, bitangent );
-	addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
-	addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
-	addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
+	addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 0, 0 ); 
+	addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 0 ); 
+	addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 1 ); 
 
-	addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
-	addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z ); 
-	addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z ); 
+	addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 0, 0 ); 
+	addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 1 ); 
+	addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z, 0, 1 ); 
 }
 
 glm::vec3 Mesh::getCenter( ) {

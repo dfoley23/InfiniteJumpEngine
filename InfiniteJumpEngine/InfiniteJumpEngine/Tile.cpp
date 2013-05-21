@@ -102,9 +102,9 @@ Mesh* Tile::generateMesh(){
 		bitangent = vert2 - vert0;
 		norm = glm::cross( tangent, bitangent );
 		this->normal = norm;
-		out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
-		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
-		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z );
+		out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 0, 0 );
+		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 0);
+		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 1);
 	}
 	for (int e = 0; e < static_cast<int>(neighbors.size()); e++){
 		if (neighbors.at(e) == Tile::NO_NEIGHBOR){

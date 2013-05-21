@@ -1,3 +1,4 @@
+#pragma once
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -6,14 +7,15 @@
 
 #include "Entity.h"
 #include "Camera.h"
+#include "MeshBatch.h"
 #include "MatrixComponent.h"
-#include "ImageUtilsGL.h"
 using namespace std;
 /**
 * class Level
 * 
 */
 class Ball;
+
 
 typedef std::vector<Entity*>::iterator entityIter;
 
@@ -65,10 +67,12 @@ private:
 	
 	vector<Entity*> entities;
 
+	vector<Entity*> hudEntities;
+
 	MatrixComponent * hudView;
 
 	string name;
 
 };
 
-#endif //LEVEL_H
+#endif LEVEL_H

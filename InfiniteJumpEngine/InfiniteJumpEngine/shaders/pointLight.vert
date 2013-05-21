@@ -33,6 +33,8 @@ void main() {
 		diff = color * 0.35;
 	}
 	
+	tex_coord = texCoord;
+	
     vec4 newColor = vec4(diff, 1.0);
     frag_color = clamp(newColor, 0.0, 1.0);
 	

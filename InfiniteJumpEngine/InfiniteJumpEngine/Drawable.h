@@ -1,8 +1,6 @@
-#pragma once
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 #include "Updatable.h"
-#include "MeshBatch.h"
 
 class MeshBatch;
 
@@ -15,4 +13,4 @@ public:
 	virtual bool compareDrawOrder(){ return false; };
 };
 
-#endif // ENTITY_H
+#endif DRAWABLE_H

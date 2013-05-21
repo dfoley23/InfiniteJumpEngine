@@ -1,4 +1,6 @@
 #pragma once
+#ifndef FORCE_H
+#define FORCE_H
 #include "glIncludes.h"
 #include "Component.h"
 #include "EnvelopeASDR.h"
@@ -20,4 +22,4 @@ protected:
 	EnvelopeASDR envelope;
 	bool b_impulse;
 };
-
+#endif FORCE_H

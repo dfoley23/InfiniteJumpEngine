@@ -4,11 +4,10 @@
 #include "glIncludes.h"
 #include "Collider.h"
 #include "BoxCollider.h"
-#include "SphereCollider.h"
+#include "MeshCollider.h"
+#include "Mesh.h"
 
-class BoxCollider;
 class SphereCollider;
-class MeshCollider;
 
 class PointCollider :
 	public Collider
@@ -30,4 +29,4 @@ public:
 protected:
 };
 
-#endif
+#endif POINT_COLLIDER_H

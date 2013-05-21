@@ -218,7 +218,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 				dir = glm::normalize( dir );
 			}
 			//cout << dir.x << " : " << dir.z << endl;
-			sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
+			if ( glm::length( dir ) > 0.07f ) {
+				sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
+			}
 			hasPressed = false;
 		}
 	}

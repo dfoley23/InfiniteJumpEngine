@@ -1,3 +1,6 @@
+#pragma once
+#ifndef TIME_H
+#define TIME_H
 #include <time.h>
 
 #pragma once
@@ -14,4 +17,4 @@ public:
 protected:
 	clock_t internal;
 };
-
+#endif TIME_H

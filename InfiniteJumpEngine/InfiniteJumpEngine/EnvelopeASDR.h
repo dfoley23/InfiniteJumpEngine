@@ -1,5 +1,8 @@
-#include "Component.h"
 #pragma once
+#ifndef ENVELOPE_ASDR_H
+#define ENVELOPE_ASDR_H
+#include "Component.h"
+
 class EnvelopeASDR : public Component
 {
 public:
@@ -35,4 +38,4 @@ protected:
 	float time;
 	bool hold;
 };
-
+#endif ENVELOPE_ASDR_H

@@ -2,13 +2,6 @@
 #ifndef MESH_COLLIDER_H
 #define MESH_COLLIDER_H
 #include "Collider.h"
-#include "BoxCollider.h"
-#include "SphereCollider.h"
-#include "PointCollider.h"
-
-class BoxCollider;
-class SphereCollider;
-class PointCollider;
 
 class MeshCollider :
 	public Collider
@@ -30,4 +23,4 @@ protected:
 	Mesh* mesh;
 };
 
-#endif
+#endif MESH_COLLIDER_H

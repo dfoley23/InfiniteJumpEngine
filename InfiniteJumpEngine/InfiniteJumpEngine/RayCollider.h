@@ -2,8 +2,8 @@
 #ifndef RAY_COLLIDER_H
 #define RAY_COLLIDER_H
 #include "glIncludes.h"
-#include "PlaneCollider.h"
 #include "Collider.h"
+#include "PlaneCollider.h"
 
 class RayCollider : public Collider
 {

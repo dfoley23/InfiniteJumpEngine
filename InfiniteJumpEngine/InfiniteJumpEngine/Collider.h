@@ -1,7 +1,16 @@
 #pragma once
+#ifndef COLLIDER_H
+#define COLLIDER_H
 #include "Component.h"
-#include "Mesh.h"
 #include "glIncludes.h"
+
+class Mesh;
+class SphereCollider;
+class MeshCollider;
+class BoxCollider;
+class PlaneCollider;
+class PointCollider;
+class RayCollider;
 /*
  * References
  * Point-in-triangle formula: http://www.blackpawn.com/texts/pointinpoly/
@@ -39,4 +48,6 @@ protected:
 	//Is the parent of this collider another collider or not?
 	bool b_parentCollider;
 };
+
+#endif COLLIDER_H
 

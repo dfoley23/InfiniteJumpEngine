@@ -1,11 +1,14 @@
+#pragma once
 #ifndef MESHBATCH_H
 #define MESHBATCH_H
 
 #include <string>
 
-#include "ImageUtilsGL.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Game.h"
+
+class Game;
 
 using namespace std;
 /**
@@ -25,7 +28,7 @@ public:
 	/**
 	* Empty Constructor
 	*/
-	MeshBatch ( Shader *, string texAtlasFile );
+	MeshBatch ( Shader * );
 
 	/**
 	* Empty Destructor
@@ -42,6 +45,7 @@ public:
 	glm::mat4 cam;
 	glm::mat4 proj;
 	glm::vec3 lightPos;
+	string texName;
 
 	void draw( );
 
@@ -91,8 +95,6 @@ private:
 	glm::mat4 rotations;
 	glm::mat4 scaling;
 	glm::vec3 pickColors;
-
-	UBTextureGL texture;
 
 	void bindBuffers( int pass );
 

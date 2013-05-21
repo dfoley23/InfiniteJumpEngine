@@ -1,13 +1,13 @@
-
+#pragma once
 #ifndef MESH_H
 #define MESH_H
 
 #include "glIncludes.h"
 
 #include "Component.h"
-#include "Shader.h"
-#include "Camera.h"
 #include "MeshBatch.h"
+
+class MeshBatch;
 
 using namespace std;
 /**
@@ -121,4 +121,4 @@ public:
 
 };
 
-#endif // MESH_H
+#endif MESH_H
