@@ -24,6 +24,9 @@
     <Filter Include="Source Files\Colliders">
       <UniqueIdentifier>{fd82e851-e2af-4f2d-9b7e-08085aa473ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\pnglib">
+      <UniqueIdentifier>{39ed5182-ef9d-4bb2-a4f6-eaf0c539e07b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp">
@@ -98,9 +101,6 @@
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="TileSetCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
-    </ClCompile>
     <ClCompile Include="EnvelopeASDR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -120,6 +120,9 @@
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="Cup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="loadpng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -211,16 +214,10 @@
     <ClInclude Include="EnvelopeASDR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileSetCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
     <ClInclude Include="PlaneCollider.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="RayCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InterSection.h">
       <Filter>Header Files\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="Cup.h">
@@ -228,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Entities and Loadouts</Filter>
+    </ClInclude>
+    <ClInclude Include="loadpng.h">
+      <Filter>Header Files\pnglib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -220,7 +220,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 				dir = glm::normalize( dir );
 			}
 			//cout << dir.x << " : " << dir.z << endl;
-			sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
+			if ( glm::length( dir ) > 0.07f ) {
+				sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
+			}
 			hasPressed = false;
 		}
 	}
@@ -249,16 +251,16 @@ void Game::special_keyboard(int key, int x, int y) {
 		//arrow keys control camera translations
 	switch(key) {    
 	case GLUT_KEY_LEFT:
-		transX -= 2;
+		level->camera->camEye.x -= 2;
 		break;    
 	case GLUT_KEY_RIGHT:
-		transX += 2;
+		level->camera->camEye.x += 2;
 		break;  
 	case GLUT_KEY_UP:
-		transZ -= 2;
+		level->camera->camEye.z -= 2;
 		break;
 	case GLUT_KEY_DOWN:
-		transZ += 2;
+		level->camera->camEye.z += 2;
 	default:
 		break;
 	}

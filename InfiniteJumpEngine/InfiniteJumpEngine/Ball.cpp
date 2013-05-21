@@ -48,7 +48,7 @@ void Ball::update( float dT ) {
 
 	if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
-		rotation -= dT * ( 16 * IJ_PI );
+		rotation -= dT * ( 16.f * (float)IJ_PI );
 		sendMessage(physComp->getKinematics(), NULL, "rotate", glm::vec4(rotAxis.x, rotAxis.y, rotAxis.z, rotation));
 	}
 	/*physComp->collisionData.clear();

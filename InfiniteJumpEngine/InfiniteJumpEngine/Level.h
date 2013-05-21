@@ -1,5 +1,4 @@
-
-
+#pragma once
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -8,12 +7,15 @@
 
 #include "Entity.h"
 #include "Camera.h"
+#include "MeshBatch.h"
+#include "MatrixComponent.h"
 using namespace std;
 /**
 * class Level
 * 
 */
 class Ball;
+
 
 typedef std::vector<Entity*>::iterator entityIter;
 
@@ -28,7 +30,7 @@ public:
 	/**
 	* Empty Constructor
 	*/
-	Level ( );
+	Level ( string name );
 
 	/**
 	* Empty Destructor
@@ -51,6 +53,8 @@ public:
 
 	MeshBatch * meshBatch;
 
+	MeshBatch * hudBatch;
+
 	MeshBatch * pickBatch;
 
 	Ball * ball;
@@ -63,7 +67,12 @@ private:
 	
 	vector<Entity*> entities;
 
+	vector<Entity*> hudEntities;
+
+	MatrixComponent * hudView;
+
+	string name;
 
 };
 
-#endif //LEVEL_H
+#endif LEVEL_H

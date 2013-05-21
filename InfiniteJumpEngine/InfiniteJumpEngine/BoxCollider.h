@@ -3,12 +3,7 @@
 #define BOX_COLLIDER_H
 
 #include "Collider.h"
-#include "SphereCollider.h"
-#include "MeshCollider.h"
 #include "PositionComponent.h"
-
-class MeshCollider;
-class SphereCollider;
 
 class BoxCollider :
 	public Collider
@@ -34,4 +29,4 @@ protected:
 	glm::vec3 dim;
 };
 
-#endif
+#endif BOX_COLLIDER_H

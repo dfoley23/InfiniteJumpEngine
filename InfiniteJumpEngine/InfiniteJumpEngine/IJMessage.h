@@ -1,3 +1,4 @@
+#pragma once
 #ifndef IJMESSAGE_H
 #define IJMESSAGE_H
 
@@ -24,4 +25,4 @@ protected:
 	glm::vec4 vecContent;
 };
 
-#endif
+#endif IJMESSAGE_H

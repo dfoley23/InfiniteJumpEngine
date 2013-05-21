@@ -3,10 +3,16 @@
 // Constructors/Destructors
 //  
 
-Level::Level ( ) {
+Level::Level ( string name ) {
 	camera = new Camera( ); 
+	hudView = new MatrixComponent( );
+	glm::mat4 hudMat = glm::ortho( -1.f, 1.f, -1.f, 1.f );
+	hudView->setMatrix( hudMat );
 	meshBatch = new MeshBatch( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
+	hudBatch->texName = "hudAtlas";
 	pickBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
+	
 }
 
 Level::~Level ( ) { 
@@ -14,6 +20,7 @@ Level::~Level ( ) {
 	vector<Entity*>().swap(entities);
 	delete meshBatch;
 	delete pickBatch;
+	delete hudBatch;
 }
 
 //  
@@ -26,6 +33,16 @@ void Level::update(float dT){
 }
 
 void Level::draw( ){
+	glDisable( GL_DEPTH_TEST );
+	for(entityIter it = hudEntities.begin(); it != hudEntities.end(); ++it) {
+		(*it)->draw( meshBatch );
+	}
+	hudBatch->cam = hudView->getTransformation();
+	hudBatch->proj = glm::mat4( 1.0f );
+	hudBatch->lightPos = glm::vec3( 0, 0, 1 );
+	hudBatch->draw( );
+
+	glEnable( GL_DEPTH_TEST );
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
 		(*it)->draw( meshBatch );
 	}
@@ -33,6 +50,7 @@ void Level::draw( ){
 	meshBatch->proj = camera->proj;
 	meshBatch->lightPos = camera->lightPos;
 	meshBatch->draw( );
+
 }
 
 void Level::drawForPick( ){

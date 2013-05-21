@@ -1,12 +1,14 @@
 #pragma once
+#ifndef TILE_SET_H
+#define TILE_SET_H
 #include <map>
 #include "glIncludes.h"
 #include "Tile.h"
 #include "Component.h"
-#include "MeshBatch.h"
+
 using std::vector;
 
-class Tile;
+class MeshBatch;
 
 typedef vector<Tile*> tileVec;
 typedef tileVec::iterator tileIter;
@@ -25,5 +27,5 @@ public:
 	Tile * getTile( int key );
 	vector<Tile *> tiles;
 protected:
-}
-;
+};
+#endif TILE_SET_H

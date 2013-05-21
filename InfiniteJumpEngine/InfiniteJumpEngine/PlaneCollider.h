@@ -4,8 +4,6 @@
 #include <vector>
 #include "glIncludes.h"
 #include "Collider.h"
-#include "BoxCollider.h"
-#include "MeshCollider.h"
 
 class PlaneCollider : public Collider
 {

@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef ENTITY_H
 #define ENTITY_H
 
@@ -9,7 +9,8 @@
 
 #include "Component.h"
 #include "TransformComponent.h"
-#include "Mesh.h"
+
+class MeshBatch;
 
 using namespace std;
 
@@ -84,4 +85,4 @@ protected:
 
 };
 
-#endif // ENTITY_H
+#endif ENTITY_H

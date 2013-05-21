@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MATRIX_COMPONENT_H
 #define MATRIX_COMPONENT_H
 #pragma once
@@ -16,4 +17,4 @@ protected:
 	glm::mat4 matrix;
 };
 
-#endif
+#endif MATRIX_COMPONENT_H

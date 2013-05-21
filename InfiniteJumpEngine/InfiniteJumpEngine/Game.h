@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GAME_H
 #define GAME_H
 
@@ -98,4 +99,4 @@ private:
 	int     picking;
 };
 
-#endif
+#endif GAME_H

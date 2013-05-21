@@ -1,17 +1,18 @@
+#pragma once
 #ifndef BALL_H
 #define BALL_H
 
 #include <string>
-#include "glIncludes.h"
+#include "Component.h"
 #include "Mesh.h"
-#include "Tile.h"
-#include "ResManager.h"
-#include "Game.h"
-#include "IJMessage.h"
 #include "PhysicsComponent.h"
+
+class Tile;
+class TileSet;
+
 using namespace std;
 /**
-* class Tile
+* class Ball
 *
 */
 

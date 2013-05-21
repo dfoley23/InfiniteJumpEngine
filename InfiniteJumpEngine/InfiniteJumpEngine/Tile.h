@@ -3,10 +3,11 @@
 
 #include "Component.h"
 #include "glIncludes.h"
-#include "Mesh.h"
-#include "TileSet.h"
 #include "PlaneCollider.h"
-#include "Collider.h"
+#include "Mesh.h"
+
+class TileSet;
+
 using namespace std;
 /**
 * class Tile

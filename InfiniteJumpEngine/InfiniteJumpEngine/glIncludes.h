@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GLINCLUDES_H
 #define GLINCLUDES_H
 
@@ -21,4 +22,4 @@
 
 #define IJ_PI        3.14159265358979323846264338327950288
 
-#endif
+#endif GLINCLUDES_H

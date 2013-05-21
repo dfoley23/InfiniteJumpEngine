@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MESHBATCH_H
 #define MESHBATCH_H
 
@@ -5,6 +6,9 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "Game.h"
+
+class Game;
 
 using namespace std;
 /**
@@ -24,7 +28,6 @@ public:
 	/**
 	* Empty Constructor
 	*/
-	MeshBatch ( );
 	MeshBatch ( Shader * );
 
 	/**
@@ -42,6 +45,7 @@ public:
 	glm::mat4 cam;
 	glm::mat4 proj;
 	glm::vec3 lightPos;
+	string texName;
 
 	void draw( );
 
@@ -84,6 +88,9 @@ public:
 	glm::vec3 getPickColors( );
 
 private:
+	
+	MeshBatch ( );
+
 	glm::mat4 translations;
 	glm::mat4 rotations;
 	glm::mat4 scaling;

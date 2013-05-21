@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CUP_H
 #define CUP_H
 

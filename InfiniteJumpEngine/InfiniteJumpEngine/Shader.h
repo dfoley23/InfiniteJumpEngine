@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef SHADER_H
 #define SHADER_H
 
@@ -42,10 +42,12 @@ public:
 		program = glCreateProgram();
 
 		//Compile the source code for each shader and attach it to the program.
+		cout << "compiling shader " + vertFile << endl;
 		glCompileShader(vSource);
 		printLog("vertex shader: ", vSource);
 		glAttachShader(program, vSource);
-
+		
+		cout << "compiling shader " + fragFile << endl;
 		glCompileShader(fSource);
 		printLog("fragment shader: ", fSource);
 		glAttachShader(program, fSource);
@@ -107,14 +109,17 @@ public:
 		program = glCreateProgram();
 
 		//Compile the source code for each shader and attach it to the program.
+		cout << "compiling shader " + vertFile << endl;
 		glCompileShader(vSource);
 		printLog("vertex shader: ", vSource);
 		glAttachShader(program, vSource);
-
+		
+		cout << "compiling shader " + geomFile << endl;
 		glCompileShader(gSource);
 		printLog("geometry shader: ", gSource);
 		glAttachShader(program, gSource);
-
+		
+		cout << "compiling shader " + fragFile << endl;
 		glCompileShader(fSource);
 		printLog("fragment shader: ", fSource);
 		glAttachShader(program, fSource);
@@ -156,8 +161,11 @@ public:
 	GLint lightPosLoc;
 	GLint vertexLoc;
 	GLint normalLoc;
+	GLint texCoordLoc;
 	GLint colorLoc;
+	GLint textureLoc;
 	GLuint vertexBuffer;
+	GLuint texCoordBuffer;
 	GLuint normalBuffer;
 	GLuint colorBuffer;
 
@@ -307,4 +315,4 @@ private:
 
 };
 
-#endif // SHADER_H
+#endif SHADER_H

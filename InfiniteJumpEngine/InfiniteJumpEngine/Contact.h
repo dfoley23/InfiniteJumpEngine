@@ -3,7 +3,9 @@
 #define CONTACT_H
 
 #include "glIncludes.h"
-#include "Collider.h"
+
+class Collider;
+
 class Contact
 {
 public:
@@ -13,4 +15,4 @@ public:
 	glm::vec3 normalA, normalB;
 };
 
-#endif
+#endif CONTACT_H

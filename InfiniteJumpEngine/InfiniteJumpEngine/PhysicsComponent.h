@@ -1,20 +1,18 @@
 #pragma once
-
+#ifndef PHYSICS_COMPONENT_H
+#define PHYSICS_COMPONENT_H
 
 #include <vector>
 #include <ctime>
-#include <queue>
 #include "glIncludes.h"
 #include "IJMessage.h"
 #include "Force.h"
 #include "Collider.h"
+#include "PlaneCollider.h"
+#include "RayCollider.h"
 #include "TransformComponent.h"
 #include "KinematicComponent.h"
 #include "Contact.h"
-#include "RayCollider.h"
-#include "PlaneCollider.h"
-#include "Tile.h"
-#include "InterSection.h"
 
 typedef vector<PlaneCollider*>::iterator colliderIter;
 
@@ -57,4 +55,4 @@ protected:
 	RayCollider * mainCollider;
 	forceVector forces;
 };
-
+#endif PHYSICS_COMPONENT_H

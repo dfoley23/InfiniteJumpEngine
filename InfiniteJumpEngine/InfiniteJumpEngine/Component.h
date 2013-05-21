@@ -1,10 +1,10 @@
-#pragma once
 #ifndef COMPONENT_H
 #define COMPONENT_H
 #include "IJMessage.h"
 #include "Drawable.h"
 #include <vector>
 
+using namespace std;
 class Component: public Drawable
 {
 public:

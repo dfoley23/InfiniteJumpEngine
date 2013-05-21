@@ -1,4 +1,3 @@
-#pragma once
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
 
@@ -10,4 +9,4 @@ public:
 	virtual bool compareUpdateOrder(){ return false; };
 };
 
-#endif // ENTITY_H
+#endif UPDATABLE_H

@@ -74,17 +74,15 @@ void PhysicsComponent::checkCollisionData(float dT) {
 				hitUnSolidPlane = true;
 			}
 			//cout << closestIntersect.second << endl;
-			kinematics.update(closestIntersect.second/2.0);
-			sendMessage( closest, getParent(), "InterSection", glm::vec4( closest->getNormal(), 1.0) );
-			sendMessage( getParent(), closest, "InterSection", glm::vec4( closest->getNormal(), 1.0) );
-			dT -= closestIntersect.second/2.0;
+			kinematics.update((float)closestIntersect.second/2.0f);
+			sendMessage( closest, getParent(), "InterSection", glm::vec4( closest->getNormal(), 1.0f) );
+			sendMessage( getParent(), closest, "InterSection", glm::vec4( closest->getNormal(), 1.0f) );
+			dT -= (float)closestIntersect.second/2.0f;
 		}
 	}
 
 }
-bool operator<(const InterSection &x1, const InterSection &x2 ){
-	return (x1.getInterSectTime() < x2.getInterSectTime());
-}
+
 
 void PhysicsComponent::setMainCollider( RayCollider * collider){ 
 	mainCollider = collider;
