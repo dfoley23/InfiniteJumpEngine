@@ -212,7 +212,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 		} else if ( state==GLUT_UP && hasPressed ) {
 			glm::vec3 releasePoint = glm::vec3( x, 0, y);
 			glm::vec3 dir = -( releasePoint - clickPoint );
-			if ( glm::length( dir ) > 70 ) {
+			if ( glm::length( dir ) > 100 ) {
+				dir = glm::normalize( dir ) * 3.f;
+			} else if ( glm::length( dir ) > 50 ) {
 				dir = glm::normalize( dir ) * 2.f;
 			} else {
 				dir = glm::normalize( dir );
