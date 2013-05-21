@@ -43,6 +43,8 @@ void setupGLUT() {
 
 	glutKeyboardFunc(keyboard);
 
+	glutSpecialFunc(special_keyboard);
+
 	glutMouseFunc(mouse_click);
 
 	glutIdleFunc(display);
