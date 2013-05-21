@@ -94,7 +94,9 @@
     <ClCompile Include="EnvelopeASDR.cpp" />
     <ClCompile Include="Force.cpp" />
     <ClCompile Include="IJMessage.cpp" />
+    <ClCompile Include="ImageUtilsGL.cpp" />
     <ClCompile Include="InterSection.cpp" />
+    <ClCompile Include="loadpng.cpp" />
     <ClCompile Include="PlaneCollider.cpp" />
     <ClCompile Include="RayCollider.cpp" />
     <ClCompile Include="MatrixComponent.cpp" />
@@ -130,7 +132,9 @@
     <ClInclude Include="EnvelopeASDR.h" />
     <ClInclude Include="Force.h" />
     <ClInclude Include="IJMessage.h" />
+    <ClInclude Include="ImageUtilsGL.h" />
     <ClInclude Include="InterSection.h" />
+    <ClInclude Include="loadpng.h" />
     <ClInclude Include="RayCollider.h" />
     <ClInclude Include="MatrixComponent.h" />
     <ClInclude Include="MeshCollider.h" />

@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "ImageUtilsGL.h"
 #include "Shader.h"
 #include "Camera.h"
 
@@ -24,8 +25,7 @@ public:
 	/**
 	* Empty Constructor
 	*/
-	MeshBatch ( );
-	MeshBatch ( Shader * );
+	MeshBatch ( Shader *, string texAtlasFile );
 
 	/**
 	* Empty Destructor
@@ -84,10 +84,15 @@ public:
 	glm::vec3 getPickColors( );
 
 private:
+	
+	MeshBatch ( );
+
 	glm::mat4 translations;
 	glm::mat4 rotations;
 	glm::mat4 scaling;
 	glm::vec3 pickColors;
+
+	UBTextureGL texture;
 
 	void bindBuffers( int pass );
 

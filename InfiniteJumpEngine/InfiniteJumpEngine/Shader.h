@@ -156,8 +156,11 @@ public:
 	GLint lightPosLoc;
 	GLint vertexLoc;
 	GLint normalLoc;
+	GLint texCoordLoc;
 	GLint colorLoc;
+	GLint textureLoc;
 	GLuint vertexBuffer;
+	GLuint texCoordBuffer;
 	GLuint normalBuffer;
 	GLuint colorBuffer;
 

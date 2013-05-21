@@ -8,6 +8,7 @@
 #include "Cup.h"
 #include "Entity.h"
 #include "Level.h"
+#include "loadpng.h"
 
 class ResManager: public Component
 {
@@ -16,7 +17,7 @@ public:
 	~ResManager(void);
 	Level * getTriangleLevel(string filename, int holeID);
 	Mesh *readObjFile(string filename);
-
+	void loadTexture(char * filename, int id);
 private:
 };
 

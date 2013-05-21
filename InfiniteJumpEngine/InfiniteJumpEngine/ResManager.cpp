@@ -11,7 +11,7 @@ ResManager::~ResManager(void)
 }
 
 Level* ResManager::getTriangleLevel(string filename, int holeID){
-	Level* level = new Level();
+	Level* level = new Level( "golfLevel" );
 	level->maxSubLevels = 0;
 	Entity* terrain = new Entity();
 	TileSet* tiles = new TileSet();

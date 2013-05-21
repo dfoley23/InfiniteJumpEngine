@@ -16,15 +16,15 @@ public:
 	glm::vec3 lightPos;
 	void update(glm::vec3, glm::vec3);
 	void switchProfile( int profile );
+	
+	glm::vec3 camEye;
+	glm::vec3 camLookAt;
+	glm::vec3 camUp;
 protected:
 
 private:
 	int cameraProfile;
     void initAttributes ( ) ;
-	
-	glm::vec3 camEye;
-	glm::vec3 camLookAt;
-	glm::vec3 camUp;
 };
 
 #endif CAMERA_H

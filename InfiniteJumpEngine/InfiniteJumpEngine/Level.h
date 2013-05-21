@@ -1,5 +1,3 @@
-
-
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -8,6 +6,8 @@
 
 #include "Entity.h"
 #include "Camera.h"
+#include "MatrixComponent.h"
+#include "ImageUtilsGL.h"
 using namespace std;
 /**
 * class Level
@@ -28,7 +28,7 @@ public:
 	/**
 	* Empty Constructor
 	*/
-	Level ( );
+	Level ( string name );
 
 	/**
 	* Empty Destructor
@@ -51,6 +51,8 @@ public:
 
 	MeshBatch * meshBatch;
 
+	MeshBatch * hudBatch;
+
 	MeshBatch * pickBatch;
 
 	Ball * ball;
@@ -63,6 +65,9 @@ private:
 	
 	vector<Entity*> entities;
 
+	MatrixComponent * hudView;
+
+	string name;
 
 };
 

@@ -12,12 +12,18 @@ MeshBatch::~MeshBatch ( ) {
 	delete shader;
 }
 
-MeshBatch::MeshBatch ( Shader * shader ) { 
+MeshBatch::MeshBatch ( Shader * shader, string texAtlasFile ) { 
 	verts.resize( 1 );
 	norms.resize( 1 ); 
 	colors.resize( 1 ); 
+	texCoords.resize( 1 );
 	modelViews.push_back( glm::mat4( ) );
-	setShader( shader ); 
+	setShader( shader ); 	
+		
+	texture.loadFromFile(texAtlasFile + "_atlas.jpg");
+    texture.texName = 1;
+    texture.init();
+
 };
 
 void MeshBatch::draw( ) {
@@ -25,6 +31,12 @@ void MeshBatch::draw( ) {
 	glUniformMatrix4fv(shader->projectionLoc, 1, GL_FALSE, glm::value_ptr(proj));
 	glUniformMatrix4fv(shader->viewLoc, 1, GL_FALSE, glm::value_ptr(cam));
 	glUniform3fv( shader->lightPosLoc, 1, glm::value_ptr(lightPos));
+
+	glActiveTexture(GL_TEXTURE0);  
+    glEnable(GL_TEXTURE_2D);  
+    glUniform1i(shader->textureLoc, 0);  
+    glBindTexture(GL_TEXTURE_2D, texture.texName);  
+	
 	int index = 0;
 	for ( vecIter it = verts.begin(); it != verts.end(); ++it ) {
 		bindBuffers( index );
@@ -41,16 +53,18 @@ void MeshBatch::draw( ) {
 		glEnableVertexAttribArray(shader->vertexLoc); 
 		glVertexAttribPointer(shader->vertexLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-		//same procedure for the normal array
 		glBindBuffer(GL_ARRAY_BUFFER, shader->normalBuffer);
 		glEnableVertexAttribArray(shader->normalLoc);
 		glVertexAttribPointer(shader->normalLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
 		glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
 		glEnableVertexAttribArray(shader->colorLoc);
-		glVertexAttribPointer(shader->colorLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+		glVertexAttribPointer(shader->colorLoc, 3, GL_FLOAT, GL_FALSE, 0, NULL);		
 
-		//draw the vertices/normals we just specified.
+		glBindBuffer(GL_ARRAY_BUFFER, shader->texCoordBuffer);
+		glEnableVertexAttribArray(shader->colorLoc);
+		glVertexAttribPointer(shader->colorLoc, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
 		glDrawArrays(GL_TRIANGLES, 0, numVerts);
 
 		(*it).clear( );
@@ -58,12 +72,18 @@ void MeshBatch::draw( ) {
 		colors.at( index ).clear();
 		index++;
 	}
+	glActiveTexture(GL_TEXTURE1);  
+    glBindTexture(GL_TEXTURE_2D, 0);  
+    glDisable(GL_TEXTURE_2D);  
+
 	verts.clear( );
 	verts.resize( 1 );
 	norms.clear( );
 	norms.resize( 1 );
 	colors.clear( );
 	colors.resize( 1 );
+	texCoords.clear( );
+	texCoords.resize( 1 );
 	modelViews.clear( );
 	modelViews.push_back( glm::mat4( ) );
 }
@@ -119,17 +139,21 @@ void MeshBatch::setShader ( Shader * new_var )     {
 	shader->projectionLoc = glGetUniformLocation(shader->program, "P");
 	shader->normalMatLoc = glGetUniformLocation(shader->program, "M_n");
 	shader->lightPosLoc = glGetUniformLocation(shader->program, "lightPos");
+	
+    shader->textureLoc = glGetUniformLocation(shader->program, "tex"); 
 
 	shader->vertexLoc = glGetAttribLocation(shader->program, "pos");
 	shader->normalLoc = glGetAttribLocation(shader->program, "norm");
+	shader->texCoordLoc = glGetAttribLocation(shader->program, "texCoord");
 	shader->colorLoc = glGetAttribLocation(shader->program, "color");
 
-	GLuint bufs[3];
-	glGenBuffers(3, bufs);
+	GLuint bufs[4];
+	glGenBuffers(4, bufs);
 
 	shader->vertexBuffer = bufs[0];
 	shader->normalBuffer = bufs[1];
 	shader->colorBuffer = bufs[2];
+	shader->texCoordBuffer = bufs[3];
 
 	bindBuffers( 0 );
 }
@@ -157,6 +181,9 @@ void MeshBatch::bindBuffers( int pass ) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, shader->colorBuffer);
 	glBufferData( GL_ARRAY_BUFFER,colors.at(pass).size() * sizeof(float),colors.at(pass).data(),GL_DYNAMIC_DRAW );
+
+	glBindBuffer(GL_ARRAY_BUFFER, shader->texCoordBuffer);
+	glBufferData( GL_ARRAY_BUFFER,texCoords.at(pass).size() * sizeof(float),texCoords.at(pass).data(),GL_DYNAMIC_DRAW );
 
 	numVerts = verts.at(pass).size() / 3;
 }

@@ -11,9 +11,11 @@ uniform vec3 lightPos;
 in vec3 pos; //vertex position
 in vec3 norm; //vertex normal
 in vec3 color; //vertex color 
+in vec2 texCoord;
 
 //variables to be passed to the fragment shader
 out vec4 frag_color;
+out vec2 tex_coord;
 
 void main() {
 	vec4 posT = M * vec4(pos,1.0);

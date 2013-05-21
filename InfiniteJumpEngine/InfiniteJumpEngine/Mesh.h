@@ -67,8 +67,6 @@ public:
 
 	void drawForPick( MeshBatch * batch, glm::vec3 pickColors );
 
-	void render( MeshBatch * batch, int picking );
-
 	void translate (float x, float y, float z );
 
 	void rotate (float angle, glm::vec3 axis);
@@ -89,7 +87,7 @@ public:
 
 	void addVert (float x, float y, float z, 
 		float nx, float ny, float nz, 
-		float r, float g, float b);
+		float r, float g, float b, float u=0, float v=0);
 
 	void createYCube( float depth, float height, 
 		glm::vec3 vert0, glm::vec3 vert1, 
