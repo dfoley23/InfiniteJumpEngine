@@ -19,6 +19,8 @@ Game::Game(void)
 	rotY = 0.0f;
 	picking = 0;
 	hasPressed = false;
+	holeStrokeCount = 0;
+	totalStrokeCount = 0;
 }
 
 
@@ -109,7 +111,7 @@ void Game::displayForPick( int x, int y ) {
 }
 
 void Game::idle(){
-	//glutSetWindow(main_window);
+	glutSetWindow(main_window);
 	glutPostRedisplay();
 	//Sleep (100);
 }
@@ -138,10 +140,17 @@ void Game::glui_callBack( int id ) {
 
 
 void Game::setupInterface( void(*cb)(int i) ){
-	/*glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_LEFT );
+	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_TOP );
 	glui->set_main_gfx_window( main_window );
 
-	GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
+	
+	courseName = glui->add_statictext( "Course Name" );
+	holeName = glui->add_statictext( "Hole Number: Name" );
+	holePar = glui->add_statictext( "Par Num" );
+	strokes = glui->add_statictext( "Strokes: 0" );
+	score = glui->add_statictext( "Score: 0" );
+
+	/*GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
 	GLUI_Panel *mesh_panel = glui->add_panel(" ");
 	GLUI_RadioGroup *camProfiles= glui->add_radiogroup_to_panel( cam_panel, &cameraProfile, 1, cb );
 
@@ -199,8 +208,8 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
 	angleY_spinner->set_float_limits(-360, 360);*/
 
-	/*fps_text = std::string("Hello World!");
-	fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);*/
+	//fps_text = std::string("Hello World!");
+	//fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
@@ -209,8 +218,17 @@ void Game::mouse_click(int button, int state, int x, int y){
 	} else {
 		if(state==GLUT_DOWN && !hasPressed ){
 			clickPoint = glm::vec3( x, 0, y );
+			level->ballDirHud->translate( x, y, 0 );
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
+			holeStrokeCount++;
+			totalStrokeCount++;
+			string stroke_str;
+			stringstream out;
+			out << holeStrokeCount;
+			stroke_str = out.str();
+			string complete = "Strokes: " + stroke_str;
+			this->strokes->set_text( complete.c_str() );
 			glm::vec3 releasePoint = glm::vec3( x, 0, y);
 			glm::vec3 dir = -( releasePoint - clickPoint );
 			if ( glm::length( dir ) > 100 ) {
@@ -229,12 +247,22 @@ void Game::mouse_click(int button, int state, int x, int y){
 	}
 }
 
-void Game::mouse_drag(int, int ){
-
+void Game::mouse_drag(int x, int y){
+	glm::vec3 curPos = level->ballDirHud->getCenter();
+	if ( y-curPos.y > 0 ) {
+		glm::vec3 dragPoint = glm::vec3( x, 0, y );
+		level->ballDirHud->scale( 0, x-curPos.y, 0 );
+		glm::vec3 dir = -( dragPoint - clickPoint );
+		float angle = glm::acos( glm::dot( dir, glm::vec3( 0, 0, 1 ) ) );
+		level->ballDirHud->rotate( angle, glm::vec3( 0, 0, 1 ) );
+	}
 }
 
 void Game::switchLevel( ) {
 	sub_levelID++;
+	if ( sub_levelID > level->maxSubLevels ) {
+		sub_levelID = 0;
+	}
 	level->clear();
 	delete level;
 	level = resman->getTriangleLevel(levelID, sub_levelID);

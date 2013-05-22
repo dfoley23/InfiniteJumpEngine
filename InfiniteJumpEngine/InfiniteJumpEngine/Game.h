@@ -68,6 +68,11 @@ public:
 		delete inst; inst = NULL;
 	}
 	ResManager * resman;
+	GLUI_StaticText * courseName;
+	GLUI_StaticText * holeName;
+	GLUI_StaticText * holePar;
+	GLUI_StaticText * strokes;
+	GLUI_StaticText * score;
 private:
 	Game(void);
 	static Game* inst;
@@ -89,6 +94,8 @@ private:
 
 	glm::vec3 clickPoint;
 	bool hasPressed;
+	int holeStrokeCount;
+	int totalStrokeCount;
 
 	//glui interface variables
 	float   transX;

@@ -139,6 +139,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				iss >> course_name;
 				iss >> numHoles;
 				level->maxSubLevels = atoi( numHoles.c_str() ) - 1;
+				Game::game()->holeName->set_text(course_name.c_str());
 			} else if ( !type.compare( "begin_hole" ) ) {
 				if ( skip == holeID ) {
 					begin_hole = true;
@@ -146,9 +147,33 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					skip++;
 				}
 			} else if ( !type.compare( "name" ) ) { 
-
+				string hole_name = "";
+				string name_append;
+				bool read = true;
+				while ( read ) { 
+					read = iss >> name_append;
+					if ( read ) {
+						hole_name = hole_name + " " + name_append;
+					}
+				}
+				string hole_num;
+				stringstream out;
+				int holeNum = skip + 1;
+				out << holeNum;
+				hole_num = out.str();
+				string complete = "hole " + hole_num + ": " + hole_name;
+				Game::game()->holeName->set_text(complete.c_str());
 			} else if ( !type.compare( "par" ) ) {
-
+				string par_num;
+				iss >> par_num;
+				string complete = "Par " + par_num;
+				Game::game()->holePar->set_text(complete.c_str());
+				int score = 0 - atoi(par_num.c_str());
+				string score_str;
+				stringstream out;
+				out << score;
+				score_str = out.str();
+				Game::game()->score->set_text(score_str.c_str());
 			} else if ( !type.compare( "end_hole" ) ) {
 				if ( begin_hole ) 
 					end_hole = true;
@@ -178,6 +203,24 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudEntity->addComponent( hudMesh );
 		hudMesh->setDynamic( 1 );
 		level->hudElement1 = hudMesh;
+		level->hudEntities.push_back( hudEntity );
+
+		hudEntity = new Entity( );
+		hudMesh = new Mesh( );
+		vert0 = glm::vec3( 0.0, 0.0, 0 );
+		vert1 = glm::vec3( 0.1, 0.0, 0 );
+		vert2 = glm::vec3( 0.1, 0.1, 0 );
+		vert3 = glm::vec3( 0.0, 0.1, 0 );
+		norm = glm::vec3( 0, 0, 1 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0, 0 );
+		hudEntity->addComponent( hudMesh );
+		hudMesh->setDynamic( 1 );
+		level->ballDirHud = hudMesh;
 		level->hudEntities.push_back( hudEntity );
 		return level;
 	} 

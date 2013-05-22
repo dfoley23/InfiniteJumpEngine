@@ -34,9 +34,8 @@ void Level::update(float dT){
 		
 	//hud stuff
 	glm::vec3 dir = ball->getPhysics()->getKinematics()->vel.getPosition();
-	glm::vec3 projDir = glm::vec3( dir.x, dir.z, 0 );
-	if ( glm::length( projDir ) > 0 ) {
-		orientation = glm::acos(glm::dot( projDir, glm::vec3( 0, 1, 0 ) ) );
+	if ( glm::length( dir ) > 0 ) {
+		orientation = glm::acos(glm::dot( glm::normalize( dir ), glm::vec3( 0, 0, -1 ) ) );
 	}
 	hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
 }
