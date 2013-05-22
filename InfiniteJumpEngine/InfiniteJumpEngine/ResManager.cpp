@@ -161,6 +161,24 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
 			ball->getPhysics()->addCollider(colliders.at(i));
 		}
+		//hud entities
+		Entity * hudEntity = new Entity( );
+		Mesh * hudMesh = new Mesh( );
+		glm::vec3 vert0 = glm::vec3( 0.65, 0.15, 0 );
+		glm::vec3 vert1 = glm::vec3( 0.97, 0.15, 0 );
+		glm::vec3 vert2 = glm::vec3( 0.97, 0.65, 0 );
+		glm::vec3 vert3 = glm::vec3( 0.65, 0.65, 0 );
+		glm::vec3 norm = glm::vec3( 0, 0, 1 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
+		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 0 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 1 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 1 );
+		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
+		hudEntity->addComponent( hudMesh );
+		hudMesh->setDynamic( 1 );
+		level->hudElement1 = hudMesh;
+		level->hudEntities.push_back( hudEntity );
 		return level;
 	} 
 	return NULL;
@@ -308,7 +326,7 @@ void ResManager::loadTexture(const char * filename, string id){
 
 	//the pixels are now in the vector "image", 4 bytes per pixel, ordered RGBARGBA..., use it as texture, draw it, ...
 	//State state contains extra information about the PNG such as text chunks, ...
-	
+
 	glEnable(GL_TEXTURE_2D);  
 	GLuint texName = 0;
 	glGenTextures(1, &texName);

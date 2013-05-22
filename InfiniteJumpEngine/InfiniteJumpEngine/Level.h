@@ -59,15 +59,21 @@ public:
 
 	Ball * ball;
 
+	Mesh * hudElement1;
+
+	Mesh * ballDirHud;
+
+	float orientation;
+
 	vector<Entity *> getEntities( );
+
+	vector<Entity*> hudEntities;
 
 	int maxSubLevels;
 
 private:
 	
 	vector<Entity*> entities;
-
-	vector<Entity*> hudEntities;
 
 	MatrixComponent * hudView;
 

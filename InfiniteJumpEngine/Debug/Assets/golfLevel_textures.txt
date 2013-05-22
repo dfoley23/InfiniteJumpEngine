@@ -1,1 +1,1 @@
-Golf Assets/Textures/golfLevel_atlas.png
+hudAtlas Assets/Textures/hudTex_atlas.png

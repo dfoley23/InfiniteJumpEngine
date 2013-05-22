@@ -12,5 +12,5 @@ void main() {
 	
 	vec4 final_color = frag_color;
 
-    end_color = normalize( final_color * tex_color);
+    end_color = tex_color;
 }

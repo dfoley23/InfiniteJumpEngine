@@ -27,5 +27,5 @@ void main() {
 	
 	tex_coord = texCoord;
 	
-    gl_Position = P * posT;
+    gl_Position = posT;
 }

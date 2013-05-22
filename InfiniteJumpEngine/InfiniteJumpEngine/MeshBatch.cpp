@@ -72,7 +72,7 @@ void MeshBatch::draw( ) {
 		index++;
 	}
 	if ( texName.length() > 0 ) {
-		glDisable(GL_TEXTURE_2D);  
+		//glDisable(GL_TEXTURE_2D);  
 	}
 
 	verts.clear( );
