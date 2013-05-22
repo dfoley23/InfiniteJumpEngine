@@ -143,12 +143,26 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_TOP );
 	glui->set_main_gfx_window( main_window );
 
-	
-	courseName = glui->add_statictext( "Course Name" );
-	holeName = glui->add_statictext( "Hole Number: Name" );
-	holePar = glui->add_statictext( "Par Num" );
-	strokes = glui->add_statictext( "Strokes: 0" );
-	score = glui->add_statictext( "Score: 0" );
+	GLUI_Panel *mainPanel = glui->add_panel( "" );
+
+	holePar = glui->add_statictext_to_panel( mainPanel, "Par Num" );
+	score = glui->add_statictext_to_panel( mainPanel, "Score: 0" );
+	glui->add_column_to_panel( mainPanel, true );
+	string spacer = " ";
+	for( int i=0; i<10; i++) {
+		spacer = spacer + " ";
+	}
+	glui->add_statictext_to_panel( mainPanel, spacer.c_str() );
+	glui->add_column_to_panel( mainPanel, false );
+	//courseName = glui->add_statictext_to_panel( mainPanel, "Course Name" );
+	holeName = glui->add_statictext_to_panel( mainPanel, "Hole Number: Name" );
+	spacer = " ";
+	for( int i=0; i<225; i++) {
+		spacer = spacer + " ";
+	}
+	glui->add_statictext_to_panel( mainPanel, spacer.c_str() );
+	glui->add_column_to_panel( mainPanel, true );
+	strokes = glui->add_statictext_to_panel( mainPanel, "Strokes: 0" );
 
 	/*GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
 	GLUI_Panel *mesh_panel = glui->add_panel(" ");
@@ -218,7 +232,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 	} else {
 		if(state==GLUT_DOWN && !hasPressed ){
 			clickPoint = glm::vec3( x, 0, y );
-			level->ballDirHud->translate( x, y, 0 );
+			int scaledX = ((-2*x ) / ( getWinWidth() )) + 1;
+			int scaledY = ((-2*y ) / ( getWinHeight() )) + 1;
+			level->ballDirHud->translate( scaledX, scaledY, 0 );
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
 			holeStrokeCount++;
@@ -249,12 +265,14 @@ void Game::mouse_click(int button, int state, int x, int y){
 
 void Game::mouse_drag(int x, int y){
 	glm::vec3 curPos = level->ballDirHud->getCenter();
+	int scaledX = ((-2*x ) / ( getWinWidth() )) + 1;
+	int scaledY = ((-2*y ) / ( getWinHeight() )) + 1;
 	if ( y-curPos.y > 0 ) {
 		glm::vec3 dragPoint = glm::vec3( x, 0, y );
-		level->ballDirHud->scale( 0, x-curPos.y, 0 );
+		level->ballDirHud->scale( 0, scaledX-curPos.y, 0 );
 		glm::vec3 dir = -( dragPoint - clickPoint );
 		float angle = glm::acos( glm::dot( dir, glm::vec3( 0, 0, 1 ) ) );
-		level->ballDirHud->rotate( angle, glm::vec3( 0, 0, 1 ) );
+		level->ballDirHud->rotate( angle*deg_to_rad, glm::vec3( 0, 0, 1 ) );
 	}
 }
 

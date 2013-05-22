@@ -21,5 +21,6 @@
 #include <fstream>
 
 #define IJ_PI        3.14159265358979323846264338327950288
+#define deg_to_rad   57.2957795131
 
 #endif GLINCLUDES_H

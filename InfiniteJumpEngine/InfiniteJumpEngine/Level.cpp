@@ -37,7 +37,7 @@ void Level::update(float dT){
 	if ( glm::length( dir ) > 0 ) {
 		orientation = glm::acos(glm::dot( glm::normalize( dir ), glm::vec3( 0, 0, -1 ) ) );
 	}
-	hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
+	hudElement1->rotate( orientation, glm::vec3( 0, 0, -1 ) );
 }
 
 void Level::draw( ){
