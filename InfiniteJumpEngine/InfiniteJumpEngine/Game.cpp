@@ -232,8 +232,8 @@ void Game::mouse_click(int button, int state, int x, int y){
 	} else {
 		if(state==GLUT_DOWN && !hasPressed ){
 			clickPoint = glm::vec3( x, 0, y );
-			int scaledX = ((-2*x ) / ( getWinWidth() )) + 1;
-			int scaledY = ((-2*y ) / ( getWinHeight() )) + 1;
+			float scaledX = ((2.f*(float)x ) / ( (float)getWinWidth() )) - 1.f;
+			float scaledY = ((-2.f*(float)y ) / ( (float)getWinHeight() )) + 1.f;
 			level->ballDirHud->translate( scaledX, scaledY, 0 );
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
@@ -258,6 +258,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 			if ( glm::length( dir ) > 0.07f ) {
 				sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
 			}
+
+			level->ballDirHud->scale( 1, 1, 1 );
+			level->ballDirHud->rotate( 0, glm::vec3( 0, 0, 1 ) );
 			hasPressed = false;
 		}
 	}
@@ -265,14 +268,26 @@ void Game::mouse_click(int button, int state, int x, int y){
 
 void Game::mouse_drag(int x, int y){
 	glm::vec3 curPos = level->ballDirHud->getCenter();
-	int scaledX = ((-2*x ) / ( getWinWidth() )) + 1;
-	int scaledY = ((-2*y ) / ( getWinHeight() )) + 1;
-	if ( y-curPos.y > 0 ) {
+	float scaledX = ((16.f*(float)x ) / ( (float)getWinWidth() )) - 8.f;
+	float scaledY = ((16.f*(float)y ) / ( (float)getWinHeight() )) - 8.f;
+	if ( glm::abs(curPos.y-scaledY) > 0 ) {
 		glm::vec3 dragPoint = glm::vec3( x, 0, y );
-		level->ballDirHud->scale( 0, scaledX-curPos.y, 0 );
+		level->ballDirHud->scale( 1, 1+(glm::abs(curPos.y-scaledY)), 1 );
 		glm::vec3 dir = -( dragPoint - clickPoint );
-		float angle = glm::acos( glm::dot( dir, glm::vec3( 0, 0, 1 ) ) );
-		level->ballDirHud->rotate( angle*deg_to_rad, glm::vec3( 0, 0, 1 ) );
+		float angle = glm::acos( glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) ) );
+		if ( x > clickPoint.x ) {
+			angle = -angle;
+		}
+		level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0, 0, -1 ) );
+	} else if ( glm::abs( curPos.x-scaledX) > 0 ) {
+		glm::vec3 dragPoint = glm::vec3( x, 0, y );
+		level->ballDirHud->scale( 1, 1+(glm::abs(curPos.x-scaledX)), 1 );
+		glm::vec3 dir = -( dragPoint - clickPoint );
+		float angle = glm::acos( glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) ) );
+		if ( x > clickPoint.x ) {
+			angle = -angle;
+		}
+		level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0, 0, -1 ) );
 	}
 }
 
@@ -295,7 +310,7 @@ void Game::switchLevel( ) {
 }
 
 void Game::special_keyboard(int key, int x, int y) {  
-		//arrow keys control camera translations
+	//arrow keys control camera translations
 	switch(key) {    
 	case GLUT_KEY_LEFT:
 		level->camera->camEye.x -= 2;

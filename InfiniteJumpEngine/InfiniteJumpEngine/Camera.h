@@ -20,6 +20,8 @@ public:
 	glm::vec3 camEye;
 	glm::vec3 camLookAt;
 	glm::vec3 camUp;
+	glm::vec3 getDir( );
+	glm::vec3 camDir;
 protected:
 
 private:

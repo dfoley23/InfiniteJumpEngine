@@ -6,7 +6,7 @@
 Level::Level ( string name ) {
 	camera = new Camera( ); 
 	hudView = new MatrixComponent( );
-	glm::mat4 hudMat = glm::ortho( -1.f, 1.f, 1.f, -1.f );
+	glm::mat4 hudMat = glm::ortho( -1.f, 1.f, -1.f, 1.f );
 	hudView->setMatrix( hudMat );
 	meshBatch = new MeshBatch( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
@@ -33,11 +33,15 @@ void Level::update(float dT){
 	}
 		
 	//hud stuff
-	glm::vec3 dir = ball->getPhysics()->getKinematics()->vel.getPosition();
-	if ( glm::length( dir ) > 0 ) {
-		orientation = glm::acos(glm::dot( glm::normalize( dir ), glm::vec3( 0, 0, -1 ) ) );
+	glm::vec3 dir = camera->getDir();
+	dir.y = 0;
+	float dDotNorth = glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) );
+	float theta = glm::acos( dDotNorth);
+	orientation = theta * rad_to_deg;
+	if ( dir.x < 0 ) {
+		orientation = -orientation;
 	}
-	hudElement1->rotate( orientation, glm::vec3( 0, 0, -1 ) );
+	hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
 }
 
 void Level::draw( ){

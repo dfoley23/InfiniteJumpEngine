@@ -47,6 +47,8 @@ void setupGLUT() {
 
 	glutMouseFunc(mouse_click);
 
+	glutMotionFunc(mouse_drag);
+
 	glutIdleFunc(display);
 }
 

@@ -104,6 +104,8 @@ private:
 	float   rotX;
 	float   rotY;
 	int     picking;
+
+	int scaleDir;
 };
 
 #endif GAME_H

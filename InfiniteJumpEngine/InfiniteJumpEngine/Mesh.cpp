@@ -113,7 +113,7 @@ void Mesh::translate (float x, float y, float z )
 void Mesh::rotate (float angle, glm::vec3 axis)
 {
 	dynamic = true;
-	rotations = glm::rotate( glm::mat4( ), angle, axis );
+	rotations = glm::rotate( glm::mat4(1.0f), angle, axis );
 }
 
 /**

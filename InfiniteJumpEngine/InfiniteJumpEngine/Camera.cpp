@@ -21,11 +21,13 @@ void Camera::update (glm::vec3 pos, glm::vec3 dir){
 		camEye = glm::vec3( pos.x-scaleDir.x, pos.y + 0.2f, pos.z - scaleDir.z);
 		camLookAt = glm::vec3( pos.x, pos.y+0.1f, pos.z);
 		camUp = glm::vec3( 0, 1, 0 );
+		camDir = camLookAt*10.f - camEye*10.f;
 		break;
 	case 1: //first person
 		camEye = glm::vec3( pos.x,pos.y+0.1f,pos.z);
 		camLookAt = glm::vec3( pos.x+scaleDir.x, pos.y+0.01f,pos.z+scaleDir.z );
 		camUp = glm::vec3( 0, 1, 0 );
+		camDir = camLookAt*10.f - camEye*10.f;
 		break;
 	case 2: //top down
 		camEye = glm::vec3( pos.x, 
@@ -33,16 +35,21 @@ void Camera::update (glm::vec3 pos, glm::vec3 dir){
 			pos.z );
 		camLookAt = pos;
 		camUp = glm::vec3( 0, 0, -1 );
+		camDir = camUp;
 		break;
 	default:
 		break;
 	}
-
+	
 	cam = glm::lookAt( camEye, camLookAt, camUp );
 }
 
 void Camera::switchProfile( int profile ) {
 	cameraProfile = profile;
+}
+
+glm::vec3 Camera::getDir( ) {
+	return camDir;
 }
 
 // Accessor methods
@@ -56,4 +63,5 @@ void Camera::initAttributes ( ) {
 	camEye = glm::vec3( 0, 4, 6 );
 	camLookAt = glm::vec3( 0, 0, 0 );
 	camUp = glm::vec3( 0, 1, 0 );
+	camDir = glm::vec3( 0, 0, -1 );
 }

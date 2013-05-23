@@ -9,8 +9,6 @@ out vec4 end_color;
 
 void main() {
     vec4 tex_color = vec4(texture2D(tex, tex_coord));
-	
-	vec4 final_color = frag_color;
 
-    end_color = tex_color;
+    end_color = tex_color * frag_color;
 }
