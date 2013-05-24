@@ -7,6 +7,7 @@
 #include "IJMessage.h"
 #include "Component.h"
 #include "glIncludes.h"
+#include "luaIncludes.h"
 #include "ResManager.h"
 
 #define PIXEL(c,x,y,w)	(c[(x)+w*(y)])

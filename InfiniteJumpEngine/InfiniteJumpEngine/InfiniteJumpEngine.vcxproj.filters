@@ -5,234 +5,250 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Interfaces">
-      <UniqueIdentifier>{41c3629c-4ed9-462b-900e-eb1afff37d9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Collision Components">
-      <UniqueIdentifier>{0c553b49-924a-44e0-bfea-51396e799535}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Transform Components">
-      <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entities and Loadouts">
-      <UniqueIdentifier>{80e5f160-8a86-408d-a6f1-69722931a70b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Colliders">
+    <Filter Include="Source Files\Minigolf-Specific">
+      <UniqueIdentifier>{f86d59bd-36f1-48a0-9d81-e9c2a81173f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\General">
+      <UniqueIdentifier>{49d5d96c-30b4-441d-95cc-2686fc8fdaef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\General\Colliders">
       <UniqueIdentifier>{fd82e851-e2af-4f2d-9b7e-08085aa473ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\pnglib">
+    <Filter Include="Header Files\General">
+      <UniqueIdentifier>{dcec5dd4-eddd-4abe-8ef5-b1e76ffd81d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Library Integration">
+      <UniqueIdentifier>{f6b133a0-7d68-4a89-bbd2-79eb83b45f48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Minigolf-Specific">
+      <UniqueIdentifier>{fa210c86-f807-4558-ada6-8a0abee10dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\Collision Components">
+      <UniqueIdentifier>{0c553b49-924a-44e0-bfea-51396e799535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\Entities and Loadouts">
+      <UniqueIdentifier>{80e5f160-8a86-408d-a6f1-69722931a70b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\Interfaces">
+      <UniqueIdentifier>{41c3629c-4ed9-462b-900e-eb1afff37d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\Lua Components">
+      <UniqueIdentifier>{817f4801-fee0-43f3-94a0-0871f7aa000e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Library Integration\pnglib">
       <UniqueIdentifier>{39ed5182-ef9d-4bb2-a4f6-eaf0c539e07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\PhysicsComponents">
+      <UniqueIdentifier>{c8e14f53-8ec9-433f-b076-a5c12fd1f324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\General\Transform Components">
+      <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TileSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Contact.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glew.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IJMessage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KinematicComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MatrixComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshBatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PositionComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IJTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="MeshCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="PointCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
-    </ClCompile>
-    <ClCompile Include="EnvelopeASDR.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Force.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="RayCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="PlaneCollider.cpp">
-      <Filter>Source Files\Colliders</Filter>
-    </ClCompile>
-    <ClCompile Include="InterSection.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Source Files\Colliders</Filter>
+      <Filter>Source Files\General\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\Minigolf-Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\General</Filter>
     </ClCompile>
     <ClCompile Include="Cup.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Minigolf-Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="Contact.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="EnvelopeASDR.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Force.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="IJMessage.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="IJTime.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="KinematicComponent.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\General</Filter>
     </ClCompile>
     <ClCompile Include="loadpng.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixComponent.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshBatch.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionComponent.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManager.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
+    <ClCompile Include="glew.c">
+      <Filter>Source Files\General</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Updatable.h">
-      <Filter>Header Files\Interfaces</Filter>
+      <Filter>Header Files\General\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Drawable.h">
-      <Filter>Header Files\Interfaces</Filter>
+      <Filter>Header Files\General\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Header Files\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="glIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshBatch.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\General\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="KinematicComponent.h">
-      <Filter>Header Files\Transform Components</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files\Transform Components</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="MatrixComponent.h">
-      <Filter>Header Files\Transform Components</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="MeshCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files\Transform Components</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="PointCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsComponent.h">
-      <Filter>Header Files\Transform Components</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="Contact.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files\Entities and Loadouts</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header Files\Entities and Loadouts</Filter>
+      <Filter>Header Files\General\Entities and Loadouts</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.h">
-      <Filter>Header Files\Entities and Loadouts</Filter>
-    </ClInclude>
-    <ClInclude Include="IJMessage.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\General\Entities and Loadouts</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Transform Components</Filter>
-    </ClInclude>
-    <ClInclude Include="IJTime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Force.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnvelopeASDR.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\General\Transform Components</Filter>
     </ClInclude>
     <ClInclude Include="PlaneCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="RayCollider.h">
-      <Filter>Header Files\Collision Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Cup.h">
-      <Filter>Header Files\Entities and Loadouts</Filter>
+      <Filter>Header Files\General\Collision Components</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Header Files\Entities and Loadouts</Filter>
+      <Filter>Header Files\General\Entities and Loadouts</Filter>
     </ClInclude>
     <ClInclude Include="loadpng.h">
-      <Filter>Header Files\pnglib</Filter>
+      <Filter>Header Files\Library Integration\pnglib</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd">
-      <Filter>Source Files</Filter>
-    </None>
+    <ClInclude Include="glIncludes.h">
+      <Filter>Header Files\Library Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvelopeASDR.h">
+      <Filter>Header Files\General\PhysicsComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Force.h">
+      <Filter>Header Files\General\PhysicsComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\Minigolf-Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="Cup.h">
+      <Filter>Header Files\Minigolf-Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="IJMessage.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="IJTime.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBatch.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManager.h">
+      <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="luaIncludes.h">
+      <Filter>Header Files\General\Lua Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -130,6 +130,7 @@
     <ClInclude Include="Force.h" />
     <ClInclude Include="IJMessage.h" />
     <ClInclude Include="loadpng.h" />
+    <ClInclude Include="luaIncludes.h" />
     <ClInclude Include="RayCollider.h" />
     <ClInclude Include="MatrixComponent.h" />
     <ClInclude Include="MeshCollider.h" />
@@ -151,9 +152,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
