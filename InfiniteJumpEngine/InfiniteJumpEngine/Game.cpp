@@ -11,16 +11,11 @@ Game::Game(void)
 	resman = NULL;
 	level = NULL;
 	glui = NULL;
-	//glui interface variables
-	transX = 0.0f;
-	transY = 0.0f;
-	transZ = 0.0f;
-	rotX = 0.0f;
-	rotY = 0.0f;
-	picking = 0;
 	hasPressed = false;
 	holeStrokeCount = 0;
 	totalStrokeCount = 0;
+	totalPar = 0;
+	curPar = 0;
 }
 
 
@@ -62,7 +57,7 @@ void Game::display(){
 		//if ( t_delta.getSeconds() > MIN_DT ) 
 		{
 			//fps_gauge->set_float_val(1.0/t_delta.getSeconds());
-			level->update(t_delta.getSeconds());
+			level->update((float)t_delta.getSeconds());
 			t_init.reset();
 		}
 
@@ -80,7 +75,8 @@ void Game::display(){
 }
 
 void Game::displayForPick( int x, int y ) {
-	if ( picking ) {
+	//if ( picking ) 
+	{
 		glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);	
@@ -119,19 +115,15 @@ void Game::idle(){
 void Game::glui_callBack( int id ) {
 	glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
 	switch(id) {
+	case 1:
+		break;
 	case 2:
-		level->ball->getPhysics()->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0) );
-		level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 0, 0, 0) );
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x+transX, pos.y, pos.z,0.f));
 		break;
 	case 3:
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x, pos.y+transY, pos.z,0.f));
 		break;
 	case 4:
-		sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "translate", glm::vec4(pos.x, pos.y, pos.z+transZ,0.f));
 		break;
 	case 5:
-		//sendMessage(level->ball->getPhysics()->getKinematics(), NULL, "rotate", glm::vec4(rotX, rotY, 0.f,0.f));
 		break;
 	default:
 		break;
@@ -146,7 +138,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	GLUI_Panel *mainPanel = glui->add_panel( "" );
 
 	holePar = glui->add_statictext_to_panel( mainPanel, "Par Num" );
-	score = glui->add_statictext_to_panel( mainPanel, "Score: 0" );
+	holeScore = glui->add_statictext_to_panel( mainPanel, "Score: 0" );
 	glui->add_column_to_panel( mainPanel, true );
 	string spacer = " ";
 	for( int i=0; i<10; i++) {
@@ -162,74 +154,17 @@ void Game::setupInterface( void(*cb)(int i) ){
 	}
 	glui->add_statictext_to_panel( mainPanel, spacer.c_str() );
 	glui->add_column_to_panel( mainPanel, true );
-	strokes = glui->add_statictext_to_panel( mainPanel, "Strokes: 0" );
-
-	/*GLUI_Panel *cam_panel = glui->add_panel( "Camera Interface");
-	GLUI_Panel *mesh_panel = glui->add_panel(" ");
-	GLUI_RadioGroup *camProfiles= glui->add_radiogroup_to_panel( cam_panel, &cameraProfile, 1, cb );
-
-	//camera controls
-	//profiles
-	GLUI_RadioButton *thirdPersonCamera = glui->add_radiobutton_to_group( camProfiles, "Third Person View" );
-	GLUI_RadioButton *firstPersonCamera = glui->add_radiobutton_to_group( camProfiles, "First Person View" );
-	GLUI_RadioButton *topDownCamera = glui->add_radiobutton_to_group( camProfiles, "Top Down View" );
-	GLUI_RadioButton *freeLook = glui->add_radiobutton_to_group( camProfiles, "Free Look View" );
-
-	GLUI_Spinner *transCam1_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam eye X:", GLUI_SPINNER_FLOAT, &camEyeX, 0, cb );
-	transCam1_spinner->set_float_limits(-10, 10);
-
-	GLUI_Spinner *transCam2_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam eye Y:", GLUI_SPINNER_FLOAT, &camEyeY, 0, cb );
-	transCam2_spinner->set_float_limits(-10, 10);
-
-	GLUI_Spinner *transCam3_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam eye Z:", GLUI_SPINNER_FLOAT, &camEyeZ, 0, cb );
-	transCam3_spinner->set_float_limits(-10, 10);
-
-	GLUI_Spinner *angleCamX_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam look at X:", GLUI_SPINNER_FLOAT, &camLookAtX, 0, cb);
-	angleCamX_spinner->set_float_limits(-10, 10);
-
-	GLUI_Spinner *angleCamY_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam look at Y:", GLUI_SPINNER_FLOAT, &camLookAtY, 0, cb);
-	angleCamY_spinner->set_float_limits(-10, 10);
-
-	GLUI_Spinner *angleCamZ_spinner =
-	glui->add_spinner_to_panel( cam_panel, "Cam look at Z:", GLUI_SPINNER_FLOAT, &camLookAtZ, 0, cb);
-	angleCamZ_spinner->set_float_limits(-10, 10);
-
-	//picking mesh interface
-	/*GLUI_Checkbox *picking_check = glui->add_checkbox_to_panel(  mesh_panel, "pick mode", &picking );
-
-	GLUI_Spinner *trans1_spinner =
-	glui->add_spinner_to_panel( mesh_panel, "mesh x pos:", GLUI_SPINNER_FLOAT, &transX, 2, cb );
-	trans1_spinner->set_float_limits(-5, 5);
-
-	GLUI_Spinner *trans2_spinner =
-	glui->add_spinner_to_panel( mesh_panel, "mesh y pos:", GLUI_SPINNER_FLOAT, &transY, 3, cb );
-	trans2_spinner->set_float_limits(-5, 5);
-
-	GLUI_Spinner *trans3_spinner =
-	glui->add_spinner_to_panel( mesh_panel, "mesh z pos:", GLUI_SPINNER_FLOAT, &transZ, 4, cb );
-	trans3_spinner->set_float_limits(-5, 5);
-
-	GLUI_Spinner *angleX_spinner =
-	glui->add_spinner_to_panel( mesh_panel, "mesh angle on x", GLUI_SPINNER_FLOAT, &rotX, 5, cb);
-	angleX_spinner->set_float_limits(-360, 360);
-
-	GLUI_Spinner *angleY_spinner =
-	glui->add_spinner_to_panel( mesh_panel, "mesh angle on y:", GLUI_SPINNER_FLOAT, &rotY, 5, cb);
-	angleY_spinner->set_float_limits(-360, 360);*/
+	totalScore = glui->add_statictext_to_panel( mainPanel, "Total Score: Num" );
 
 	//fps_text = std::string("Hello World!");
 	//fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
-	if ( picking ) {
-		displayForPick( x, y );
-	} else {
+	//if ( picking ) {
+	//	displayForPick( x, y );
+	//	} else
+	{
 		if(state==GLUT_DOWN && !hasPressed ){
 			clickPoint = glm::vec3( x, 0, y );
 			float scaledX = ((2.f*(float)x ) / ( (float)getWinWidth() )) - 1.f;
@@ -238,13 +173,24 @@ void Game::mouse_click(int button, int state, int x, int y){
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
 			holeStrokeCount++;
-			totalStrokeCount++;
-			string stroke_str;
+			int curScore = holeStrokeCount - curPar;
+			string curScore_str;
 			stringstream out;
-			out << holeStrokeCount;
-			stroke_str = out.str();
-			string complete = "Strokes: " + stroke_str;
-			this->strokes->set_text( complete.c_str() );
+			out << curScore;
+			curScore_str = out.str();
+			if ( curScore > 0 )
+				curScore_str = "+" + curScore_str;
+			string complete = "Hole Score: " + curScore_str;
+			this->holeScore->set_text( complete.c_str() );
+			totalStrokeCount++;
+			int totScore = totalStrokeCount - totalPar;
+			string totScore_str;
+			out << totScore;
+			totScore_str = out.str();
+			if ( totScore > 0 )
+				totScore_str = "+" + totScore_str;
+			complete = "Total Score: " + totScore_str;
+			this->totalScore->set_text( complete.c_str() );
 			glm::vec3 releasePoint = glm::vec3( x, 0, y);
 			glm::vec3 dir = -( releasePoint - clickPoint );
 			if ( glm::length( dir ) > 100 ) {
@@ -287,7 +233,15 @@ void Game::mouse_drag(int x, int y){
 		if ( x > clickPoint.x ) {
 			angle = -angle;
 		}
-		level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0, 0, -1 ) );
+		level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0.f, 0.f, -1.f ) );
+	}
+}
+
+void Game::mouse_wheel( int wheel, int direction, int x, int y) {
+	if ( direction > 0 ) {
+		level->camera->camEye.z--;
+	} else {
+		level->camera->camEye.z++;
 	}
 }
 
@@ -312,17 +266,17 @@ void Game::switchLevel( ) {
 void Game::special_keyboard(int key, int x, int y) {  
 	//arrow keys control camera translations
 	switch(key) {    
-	case GLUT_KEY_LEFT:
-		level->camera->camEye.x -= 2;
-		break;    
 	case GLUT_KEY_RIGHT:
-		level->camera->camEye.x += 2;
-		break;  
+		level->camera->camEye.x++;
+		break;
+	case GLUT_KEY_LEFT:
+		level->camera->camEye.x--;
+		break;
 	case GLUT_KEY_UP:
-		level->camera->camEye.z -= 2;
+		level->camera->camEye.y++;
 		break;
 	case GLUT_KEY_DOWN:
-		level->camera->camEye.z += 2;
+		level->camera->camEye.y--;
 	default:
 		break;
 	}
@@ -339,18 +293,16 @@ void Game::keyboard(unsigned char key, int x, int y){
 	case 50: // 2
 		level->camera->switchProfile( 2 );
 		break;
-	case 51:
+	case 51: // 3
 		level->camera->switchProfile( 3 );
 		break;
-	case 27:
+	case 27: // escape
 		exit(0);
 		break;
 	case 119: //w
 		sendMessage(level->ball, NULL, "forward");
 		break;
 	case 97: //a
-		//level->ball->applyImpulse( glm::vec3( 0.03, 0, 0 ) );
-		//level->ball->getPhysics()->getKinematics()->vel.setPosition( glm::vec3( 1, 0, 0 ) );
 		sendMessage(level->ball, NULL, "left");
 		break;
 	case 115: //s

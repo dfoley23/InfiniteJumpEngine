@@ -58,6 +58,7 @@ public:
 	void idle();
 	void mouse_click(int, int, int, int);
 	void mouse_drag(int, int );
+	void mouse_wheel( int wheel, int direction, int x, int y );
 	void keyboard(unsigned char, int, int);
 	void special_keyboard(int key, int x, int y);
 	void setupInterface(void(*cb)(int i));
@@ -71,8 +72,11 @@ public:
 	GLUI_StaticText * courseName;
 	GLUI_StaticText * holeName;
 	GLUI_StaticText * holePar;
-	GLUI_StaticText * strokes;
-	GLUI_StaticText * score;
+	GLUI_StaticText * holeScore;
+	GLUI_StaticText * totalScore;
+	int totalPar;
+	int curPar;
+	int holeStrokeCount;
 private:
 	Game(void);
 	static Game* inst;
@@ -94,16 +98,7 @@ private:
 
 	glm::vec3 clickPoint;
 	bool hasPressed;
-	int holeStrokeCount;
 	int totalStrokeCount;
-
-	//glui interface variables
-	float   transX;
-	float   transY;
-	float   transZ;
-	float   rotX;
-	float   rotY;
-	int     picking;
 
 	int scaleDir;
 };

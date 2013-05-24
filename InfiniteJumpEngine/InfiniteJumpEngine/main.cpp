@@ -33,6 +33,10 @@ void mouse_drag( int x, int y ) {
 	Game::game( )->mouse_drag(x, y);
 }
 
+void mouse_wheel( int wheel, int direction, int x, int y ){
+	Game::game()->mouse_wheel( wheel, direction, x, y );
+}
+
 //do some GLUT initialization
 void setupGLUT() {
 	Game::game()->setupGLUT();
@@ -48,6 +52,8 @@ void setupGLUT() {
 	glutMouseFunc(mouse_click);
 
 	glutMotionFunc(mouse_drag);
+
+	glutMouseWheelFunc(mouse_wheel);
 
 	glutIdleFunc(display);
 }
