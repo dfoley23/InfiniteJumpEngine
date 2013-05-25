@@ -173,7 +173,7 @@ void Game::mouse_click(int button, int state, int x, int y){
 			hasPressed = true;
 		} else if ( state==GLUT_UP && hasPressed ) {
 			holeStrokeCount++;
-			int curScore = holeStrokeCount - curPar;
+			curScore = holeStrokeCount - curPar;
 			string curScore_str;
 			stringstream out;
 			out << curScore;
@@ -182,15 +182,6 @@ void Game::mouse_click(int button, int state, int x, int y){
 				curScore_str = "+" + curScore_str;
 			string complete = "Hole Score: " + curScore_str;
 			this->holeScore->set_text( complete.c_str() );
-			totalStrokeCount++;
-			int totScore = totalStrokeCount - totalPar;
-			string totScore_str;
-			out << totScore;
-			totScore_str = out.str();
-			if ( totScore > 0 )
-				totScore_str = "+" + totScore_str;
-			complete = "Total Score: " + totScore_str;
-			this->totalScore->set_text( complete.c_str() );
 			glm::vec3 releasePoint = glm::vec3( x, 0, y);
 			glm::vec3 dir = -( releasePoint - clickPoint );
 			if ( glm::length( dir ) > 100 ) {
@@ -246,6 +237,15 @@ void Game::mouse_wheel( int wheel, int direction, int x, int y) {
 }
 
 void Game::switchLevel( ) {
+	string totScore_str;
+	stringstream out;
+	totalStrokeCount+=curScore;
+	out << totalStrokeCount;
+	totScore_str = out.str();
+	if ( totalStrokeCount > 0 )
+		totScore_str = "+" + totScore_str;
+	string complete = "Total Score: " + totScore_str;
+	this->totalScore->set_text( complete.c_str() );
 	sub_levelID++;
 	if ( sub_levelID > level->maxSubLevels ) {
 		sub_levelID = 0;

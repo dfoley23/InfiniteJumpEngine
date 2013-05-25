@@ -20,7 +20,7 @@ to run a course you can enter InfiniteJumpEngine.exe course.db
 or InfiniteJumpEngine.exe course.db n (to jump to the nth hole of the course)
 
 
-CAMERA CONTROLS:
+CAMERA CONTROLS: (only available in free look)
 CAMERA UP ON Y AXIS: Arrow Key Up
 CAMERA DOWN ON Y AXIS: Arrow Key down
 CAMERA RIGHT ON X AXIS: Arrow Key right
@@ -32,14 +32,15 @@ CAMERA VIEWS
 0 IS THIRD PERSON PERSPECTIVE
 1 IS FIRST PERSON PERSPECTIVE
 2 IS TOP DOWN PERSPECTIVE
+3 IS FREE LOOK USE CAMERA CONTROLS ABOVE
 
 GAME CONTROLS
 Click and drag the mouse opposite the direction you want to shoot the ball
 
-To shoot NORTH DRAG THE MOUSE from TOP TO BOTTOM on the screen
-To shoot SOUTH DRAG THE MOUSE from BOTTOM TO TOP on the screen
-To shoot EAST DRAG THE MOUSE FROM RIGHT TO LEFT on the screen
-To shoot WEST DRAG THE MOUSE FROM LEFT TO RIGHT on the screen
+To shoot NORTH, DRAG THE MOUSE from TOP TO BOTTOM on the screen
+To shoot SOUTH, DRAG THE MOUSE from BOTTOM TO TOP on the screen
+To shoot EAST, DRAG THE MOUSE FROM RIGHT TO LEFT on the screen
+To shoot WEST, DRAG THE MOUSE FROM LEFT TO RIGHT on the screen
 
 THE COMPASS will tell you which way is north 
 while in third or first person perspective use the compass for orientation

@@ -6,11 +6,15 @@
 Level::Level ( string name ) {
 	camera = new Camera( ); 
 	hudView = new MatrixComponent( );
+	//set the hud ortho transformation
 	glm::mat4 hudMat = glm::ortho( -1.f, 1.f, -1.f, 1.f );
 	hudView->setMatrix( hudMat );
+	//make a mesh batch for the world elements
 	meshBatch = new MeshBatch( new Shader( "shaders/pointLight.vert", "shaders/pointLight.frag") );
+	//make a mesh batch for all of the hud elements
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
 	hudBatch->texName = "hudAtlas";
+	//debug mesh batch used for picking
 	pickBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
 	
 	orientation = 0.0f;
@@ -27,6 +31,9 @@ Level::~Level ( ) {
 //  
 // Methods
 //  
+/*
+* updates all of the entities in the level
+*/
 void Level::update(float dT){
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
 		(*it)->update( dT );
@@ -41,10 +48,12 @@ void Level::update(float dT){
 	if ( dir.x < 0 ) {
 		orientation = -orientation;
 	}
+	//rotate the compass
 	hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
 }
 
 void Level::draw( ){
+	//draw the world
 	glEnable( GL_DEPTH_TEST );
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
 		(*it)->draw( meshBatch );
@@ -54,6 +63,7 @@ void Level::draw( ){
 	meshBatch->lightPos = camera->lightPos;
 	meshBatch->draw( );
 
+	//draw the hud with depth disabled and blending enabled
 	glDisable( GL_DEPTH_TEST );
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

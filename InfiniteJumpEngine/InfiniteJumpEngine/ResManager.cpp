@@ -10,6 +10,11 @@ ResManager::~ResManager(void)
 {
 }
 
+/*
+* reads in a .db file for a mini golf level
+* builds the tiles tee cup and ball
+* put all of the hole info into a level
+*/
 Level* ResManager::getTriangleLevel(string filename, int holeID){
 	Level* level = new Level( "golfLevel" );
 	loadTextureList( "golfLevel" );
@@ -185,11 +190,12 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				//return NULL;
 			}
 		}
+		//insert all the colliders for the tiles
 		vector<PlaneCollider*> colliders = cup->edgeColliders;
 		for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
 			ball->getPhysics()->addCollider(colliders.at(i));
 		}
-		//hud entities
+		//add all hud entities
 		Entity * hudEntity = new Entity( );
 		Mesh * hudMesh = new Mesh( );
 		glm::vec3 vert0 = glm::vec3( -0.16, -0.25, 0 );
@@ -229,6 +235,9 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	return NULL;
 }
 
+/*
+* reads an wavefront .obj from blender
+*/
 Mesh * ResManager::readObjFile( string filename ) {
 	Mesh * out = new Mesh( );
 	//out->setSmooth( true );
@@ -330,6 +339,10 @@ Mesh * ResManager::readObjFile( string filename ) {
 	return out;
 }
 
+/*
+* loads a list of textures from a text file
+* and uses a string as an id to access them later
+*/
 void ResManager::loadTextureList( string filename ){
 	string line;
 	ifstream input;
@@ -349,6 +362,9 @@ void ResManager::loadTextureList( string filename ){
 	}
 }
 
+/*
+* gets the texture with the id
+*/
 GLuint ResManager::getTexture( string id ) {
 	if( textures.find( id ) != textures.end( ) ) {
 		return textures[id];
@@ -356,7 +372,9 @@ GLuint ResManager::getTexture( string id ) {
 	return 0;
 }
 
-//load png texture
+/*
+* loads and inserts a texture into the texture map
+*/
 void ResManager::loadTexture(const char * filename, string id){
 	std::vector<unsigned char> png;
 	std::vector<unsigned char> image; //the raw pixels
