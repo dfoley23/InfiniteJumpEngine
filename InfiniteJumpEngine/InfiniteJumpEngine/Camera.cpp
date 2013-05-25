@@ -15,7 +15,9 @@ Camera::~Camera ( ) {
 // Methods
 //  
 void Camera::update (glm::vec3 pos, glm::vec3 dir){
+	//updates camera based on it current profile
 	glm::vec3 scaleDir = glm::normalize( dir ) * 0.25f;
+	camDir = camLookAt*10.f - camEye*10.f;
 	switch( cameraProfile ) {
 	case 0: //third person
 		camEye = glm::vec3( pos.x-scaleDir.x, pos.y + 0.2f, pos.z - scaleDir.z);
@@ -40,10 +42,13 @@ void Camera::update (glm::vec3 pos, glm::vec3 dir){
 	default:
 		break;
 	}
-	
+	//sets the current camera transformation matrix
 	cam = glm::lookAt( camEye, camLookAt, camUp );
 }
 
+/**
+* switches the current camera profile
+*/
 void Camera::switchProfile( int profile ) {
 	cameraProfile = profile;
 }

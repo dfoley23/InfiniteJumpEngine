@@ -6,9 +6,11 @@
 #include "Component.h"
 #include "Mesh.h"
 #include "PhysicsComponent.h"
+#include "Cup.h"
 
 class Tile;
 class TileSet;
+class Cup;
 
 using namespace std;
 /**
@@ -31,9 +33,11 @@ public:
 	void drawForPick(MeshBatch * batch, glm::vec3 pickColors);
 	void hitTile( Tile * tile );
 	void receiveMessage( IJMessage* message );
+	void resetCollisionData( );
 
 	PhysicsComponent *getPhysics();
 	bool hitCup;
+	Cup * cup;
 private:
 	PhysicsComponent * physComp;
 	Mesh * mesh;

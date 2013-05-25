@@ -50,7 +50,7 @@ glm::vec3 Tile::getNormal(){
 }
 
 int Tile::getNeighbor(unsigned int e){
-	if (e > 0 && e < neighbors.size())
+	if (e >= 0 && e < neighbors.size())
 		return neighbors[e];
 	return NO_NEIGHBOR;
 }

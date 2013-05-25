@@ -35,7 +35,7 @@ public:
 		if (that){
 			that->receiveMessage(m);
 		} else {
-			cout << "Message fell out of parent chain:" << m->content << endl;
+			cout << "Message fell out of parent chain:" << m->content << " " << m->vecContent.x << " " << m->vecContent.y << " " << m->vecContent.z << endl;
 		}
 	}
 	virtual void receiveMessage( IJMessage *m ){

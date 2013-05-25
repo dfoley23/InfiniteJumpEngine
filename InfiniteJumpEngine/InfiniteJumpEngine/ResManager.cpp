@@ -10,21 +10,46 @@ ResManager::~ResManager(void)
 {
 }
 
+/*
+* reads in a .db file for a mini golf level
+* builds the tiles tee cup and ball
+* put all of the hole info into a level
+*/
 Level* ResManager::getTriangleLevel(string filename, int holeID){
 	Level* level = new Level( "golfLevel" );
-	loadTextureList( "golfLevel" );
 	level->maxSubLevels = 0;
-	Entity* terrain = new Entity();
-	TileSet* tiles = new TileSet();
-	terrain->addComponent(tiles);
-	level->addEntity(terrain);
-	Ball * ball;
-	Cup * cup;
+	Ball * ball = NULL;
+	Cup * cup = NULL;
 	vector<PlaneCollider*> tileColliders;
 	bool end_hole = false;
 	bool begin_hole = false;
 	bool course = false;
 	int skip = 0;
+	if ( holeID < 0 ) {
+		Entity * hudEntity = new Entity( );
+		Mesh * hudMesh = new Mesh( );
+		glm::vec3 vert0 = glm::vec3( -0.25, -0.25, 0 );
+		glm::vec3 vert1 = glm::vec3( 0.25, -0.25, 0 );
+		glm::vec3 vert2 = glm::vec3( 0.25, 0.25, 0 );
+		glm::vec3 vert3 = glm::vec3( -0.25, 0.25, 0 );
+		glm::vec3 norm = glm::vec3( 0, 0, 1 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
+		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 1 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 0 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 0.0 );
+		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
+		hudEntity->addComponent( hudMesh );
+		level->hudEntities.push_back( hudEntity );
+		loadTextureList( "MainMenu" );
+		return level;
+	} else {
+		loadTextureList( "golfLevel" );
+	}
+	Entity* terrain = new Entity();
+	TileSet* tiles = new TileSet();
+	terrain->addComponent(tiles);
+	level->addEntity(terrain);
 
 	string line;
 	ifstream input;
@@ -168,12 +193,15 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				iss >> par_num;
 				string complete = "Par " + par_num;
 				Game::game()->holePar->set_text(complete.c_str());
+				Game::game()->totalPar += atoi( par_num.c_str() );
+				Game::game()->curPar = atoi( par_num.c_str() );
+				Game::game()->holeStrokeCount = 0;
 				int score = 0 - atoi(par_num.c_str());
 				string score_str;
 				stringstream out;
 				out << score;
 				score_str = out.str();
-				Game::game()->score->set_text(score_str.c_str());
+				Game::game()->holeScore->set_text(score_str.c_str());
 			} else if ( !type.compare( "end_hole" ) ) {
 				if ( begin_hole ) 
 					end_hole = true;
@@ -182,11 +210,15 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				//return NULL;
 			}
 		}
+		if ( ball ) {
+			ball->cup = cup;
+		}
+		//insert all the colliders for the tiles
 		vector<PlaneCollider*> colliders = cup->edgeColliders;
 		for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
 			ball->getPhysics()->addCollider(colliders.at(i));
 		}
-		//hud entities
+		//add all hud entities
 		Entity * hudEntity = new Entity( );
 		Mesh * hudMesh = new Mesh( );
 		glm::vec3 vert0 = glm::vec3( -0.16, -0.25, 0 );
@@ -201,7 +233,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 0.5, 0.0 );
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
 		hudEntity->addComponent( hudMesh );
-		hudMesh->translate( 0.77, -0.70, 0 );
+		hudMesh->translate( 0.77f, -0.70f, 0 );
 		level->hudElement1 = hudMesh;
 		level->hudEntities.push_back( hudEntity );
 
@@ -212,12 +244,12 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		vert2 = glm::vec3( 0.01, 0.01, 0 );
 		vert3 = glm::vec3( -0.01, 0.01, 0 );
 		norm = glm::vec3( 0, 0, 1 );
-		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5, 0.5 );
-		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63, 0.5 );
-		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63, 0.0 );
-		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5, 0.5 );
-		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63, 0.0 );
-		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5, 0.0 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
+		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.5f );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
+		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
 		hudEntity->addComponent( hudMesh );
 		level->ballDirHud = hudMesh;
 		level->hudEntities.push_back( hudEntity );
@@ -226,6 +258,9 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	return NULL;
 }
 
+/*
+* reads an wavefront .obj from blender
+*/
 Mesh * ResManager::readObjFile( string filename ) {
 	Mesh * out = new Mesh( );
 	//out->setSmooth( true );
@@ -327,6 +362,10 @@ Mesh * ResManager::readObjFile( string filename ) {
 	return out;
 }
 
+/*
+* loads a list of textures from a text file
+* and uses a string as an id to access them later
+*/
 void ResManager::loadTextureList( string filename ){
 	string line;
 	ifstream input;
@@ -346,6 +385,9 @@ void ResManager::loadTextureList( string filename ){
 	}
 }
 
+/*
+* gets the texture with the id
+*/
 GLuint ResManager::getTexture( string id ) {
 	if( textures.find( id ) != textures.end( ) ) {
 		return textures[id];
@@ -353,7 +395,9 @@ GLuint ResManager::getTexture( string id ) {
 	return 0;
 }
 
-//load png texture
+/*
+* loads and inserts a texture into the texture map
+*/
 void ResManager::loadTexture(const char * filename, string id){
 	std::vector<unsigned char> png;
 	std::vector<unsigned char> image; //the raw pixels
@@ -381,4 +425,8 @@ void ResManager::loadTexture(const char * filename, string id){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void ResManager::clearTextures(){
+	textures.clear();
 }

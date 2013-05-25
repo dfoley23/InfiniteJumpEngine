@@ -21,6 +21,10 @@ MeshBatch::MeshBatch ( Shader * shader ) {
 	setShader( shader ); 	
 };
 
+/*
+* draw all the compiled meshes
+* seperating draw calls if dynamic transformations
+*/
 void MeshBatch::draw( ) {
 	glUseProgram(shader->program);
 	glUniformMatrix4fv(shader->projectionLoc, 1, GL_FALSE, glm::value_ptr(proj));

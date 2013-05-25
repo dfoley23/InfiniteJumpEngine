@@ -28,7 +28,10 @@ void Mesh::createMesh (string meshFile )
 {
 }
 
-
+/*
+* adds the meshes vertices to meshbatch
+* to be drawn later
+*/
 void Mesh::draw( MeshBatch * batch ) {
 	glm::vec3 vert;
 	glm::vec3 norm;
@@ -154,6 +157,9 @@ void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	addVert (x, y ,z, nx, ny, nz, r, g, b);
 }
 
+/*
+* add a vertex with normal color and tex coord to the mesh
+*/
 void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, float r, float g, float b, float u, float v){
 	if ( verts.empty( ) ) {
 		min = glm::vec3 ( x, y, z );
@@ -236,6 +242,9 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 	texCoords.push_back(v);
 }
 
+/*
+* creates a cube with a constant y height
+*/
 void Mesh::createYCube( float depth, float height, 
 	glm::vec3 vert0, glm::vec3 vert1, 
 	glm::vec3 color ) {
@@ -261,6 +270,9 @@ void Mesh::createYCube( float depth, float height,
 		createPlane( perpDepth, 0, vert1.x, vert1.y, vert1.z, vert0.x, vert0.y, vert0.z, color );
 }
 
+/*
+* creates a plane with a constant y height
+*/
 void Mesh::createPlane( glm::vec3 perpDepth, float height, float x1, float y1, float z1, float x2, float y2, float z2, glm::vec3 color ) {
 	glm::vec3 vert0 = glm::vec3( x1, y1, z1 );
 	glm::vec3 vert1 = glm::vec3( x2, y2, z2 );
@@ -275,6 +287,17 @@ void Mesh::createPlane( glm::vec3 perpDepth, float height, float x1, float y1, f
 	addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 0, 0 ); 
 	addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 1 ); 
 	addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z, 0, 1 ); 
+}
+
+/*
+* change the color to rgb
+*/
+void Mesh::changeColor( float r, float g, float b ) {
+	for( int i=0; i<static_cast<int>(colors.size()); i+=3){
+		colors.at(i) = r;
+		colors.at(i+1) = g;
+		colors.at(i+2) = b;
+	}
 }
 
 glm::vec3 Mesh::getCenter( ) {

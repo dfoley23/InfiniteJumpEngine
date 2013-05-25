@@ -26,6 +26,7 @@ public:
 	Mesh *readObjFile(string filename);
 	void loadTextureList( string filename );
 	GLuint getTexture( string id );
+	void clearTextures( );
 private:
 	void loadTexture(const char * filename, string id);
 	map< string, GLuint > textures;

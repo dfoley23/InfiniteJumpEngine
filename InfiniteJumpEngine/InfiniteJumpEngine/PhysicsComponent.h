@@ -36,7 +36,8 @@ public:
 
 	glm::mat4 getTransform(){return kinematics.getTransform();};
 	KinematicComponent* getKinematics(){return &kinematics;}
-
+	
+	vector<PlaneCollider*> collisionData;
 	static const int COLLISION_CHECKS;
 protected:
 	
@@ -45,7 +46,6 @@ protected:
 	double delta_t;
 	double physics_lag_time;
 	
-	vector<PlaneCollider*> collisionData;
 	PlaneCollider * closestPlane;
 
 	float cFriction;

@@ -9,6 +9,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	tileSet = tiles;
 	hitCup = false;
 	currentTile = tileSet->getTile( tileId-1 );
+	currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
 	radius = (mesh->max.x - mesh->min.x ) /2.0f;
@@ -42,25 +43,12 @@ Ball::~Ball ( ) {
 
 void Ball::update( float dT ) {
 	glm::vec3 velocity = physComp->getKinematics()->vel.getPosition();
-	//RayCollider* ballRay = (RayCollider*)physComp->getMainCollider();
-	//ballRay->setRayStart( mesh->getCenter() );
-	//ballRay->setDirection( velocity );
 
 	if ( glm::length( velocity ) > 0 ) {
 		glm::vec3 rotAxis = glm::cross( velocity, glm::vec3( 0, 1, 0 ) );
 		rotation -= dT * ( 16.f * (float)IJ_PI );
 		sendMessage(physComp->getKinematics(), NULL, "rotate", glm::vec4(rotAxis.x, rotAxis.y, rotAxis.z, rotation));
 	}
-	/*physComp->collisionData.clear();
-	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
-	if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
-	physComp->collisionData.push_back( currentTile->edgeColliders.at( i ) );
-	} else {
-	Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i ) );
-	physComp->collisionData.insert( physComp->collisionData.end(), 
-	neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
-	}
-	}*/
 
 	glm::vec3 tN = glm::normalize(currentTile->getNormal());
 	glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
@@ -90,6 +78,43 @@ void Ball::draw( MeshBatch * batch ) {
 
 void Ball::drawForPick( MeshBatch * batch, glm::vec3 pickColors ) {
 	getMesh()->drawForPick(batch, pickColors);
+}
+
+/*
+* reset the data you want to check collision with 
+* use the current tiles walls and all colliders from neighbors
+* and neighbors of neighbors
+*/
+void Ball::resetCollisionData( ) {
+	physComp->collisionData.clear();
+	map<int, int> usedNeighbors;
+	usedNeighbors.insert( pair<int, int>(currentTile->getTileId(), currentTile->getTileId()) );
+	//insert the cups collision data
+	physComp->collisionData.insert( physComp->collisionData.end(), cup->edgeColliders.begin(), cup->edgeColliders.end() );
+	for ( int i=0; i< currentTile->getNeighborCount(); i++ ) {
+		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
+			physComp->collisionData.push_back( currentTile->getEdgeColliders().at( i ) );
+		} else {
+			//push back first neighbors data
+			Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i )-1 );
+			physComp->collisionData.insert( physComp->collisionData.end(), 
+				neighbor->edgeColliders.begin(), neighbor->edgeColliders.end() );
+			//this neighbor has been used
+			usedNeighbors.insert( pair<int, int>(neighbor->getTileId(), neighbor->getTileId()) );
+			//neighbors of this neighbor
+			for ( int j=0; j< neighbor->getNeighborCount(); j++ ) {
+				if ( neighbor->getNeighbor( j ) != Tile::NO_NEIGHBOR ) {
+					Tile * neighbor2 = tileSet->getTile( neighbor->getNeighbor( j )-1 );
+					//if this neighbor has not been used
+					if ( usedNeighbors.find( neighbor2->getTileId() ) == usedNeighbors.end() ) {
+						physComp->collisionData.insert( physComp->collisionData.end(), 
+							neighbor2->edgeColliders.begin(), neighbor2->edgeColliders.end() );
+						usedNeighbors.insert( pair<int, int>(neighbor2->getTileId(), neighbor2->getTileId()) );
+					}
+				} 
+			}
+		}
+	}
 }
 
 PhysicsComponent * Ball::getPhysics(){
@@ -134,46 +159,48 @@ void Ball::receiveMessage( IJMessage* message ){
 		glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
 		//balls new direction
-		glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );//
-		//new_dir.x *= xZ_dir.x;
-		//new_dir.y *= xZ_dir.y;
-		//new_dir.z *= xZ_dir.z; //
+		glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );
 		physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 		physComp->getKinematics()->vel.setPosition( new_dir );
 
 		//physComp->getKinematics()->vel.setPosition( message->getVector().xyz );
 	} else if (!message->getContent().compare("InterSection")){
 		if ( !hitCup ) {
-		PlaneCollider * plane = (PlaneCollider*)message->getOther();
+			PlaneCollider * plane = (PlaneCollider*)message->getOther();
 
-		//balls current direction
-		glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
-		if ( plane->isSolidPlane() ) {
-			glm::vec3 pN = glm::normalize(plane->getNormal());
-			glm::vec3 projDir = pN * glm::dot( pN, -xZ_dir );
-			//reflect direction
-			glm::vec3 reflect_dir = projDir + ( projDir + xZ_dir );
+			//balls current direction
+			glm::vec3 xZ_dir = physComp->getKinematics()->vel.getPosition();
+			if ( plane->isSolidPlane() ) {
+				glm::vec3 pN = glm::normalize(plane->getNormal());
+				glm::vec3 projDir = pN * glm::dot( pN, -xZ_dir );
+				//reflect direction
+				glm::vec3 reflect_dir = projDir + ( projDir + xZ_dir );
 
-			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
-			physComp->getKinematics()->vel.setPosition( reflect_dir );
+				physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
+				physComp->getKinematics()->vel.setPosition( reflect_dir );
 
-			reflect = true;
-		} else {
-			Tile * tile = (Tile*)plane->getParent();
-			this->currentTile = tile;
-			glm::vec3 tN = glm::normalize(tile->getNormal());
-			glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
-			//rolling force direction
-			glm::vec3 tR = glm::cross( tN, t_xAxis );
-			//xaxis to direction
-			glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
+				reflect = true;
+			} else {
+				Tile * tile = (Tile*)plane->getParent();
+				currentTile->getMesh()->changeColor( 0, 0.7, 0 );
+				this->currentTile = tile;
+				//reset the collision data based on the current tile
+				resetCollisionData( );
+				cout << currentTile->getTileId() << endl;
+				currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
+				glm::vec3 tN = glm::normalize(tile->getNormal());
+				glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
+				//rolling force direction
+				glm::vec3 tR = glm::cross( tN, t_xAxis );
+				//xaxis to direction
+				glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
-			//balls new direction
-			glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );
-			physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
-			physComp->getKinematics()->vel.setPosition( new_dir );
+				//balls new direction
+				glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );
+				physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
+				physComp->getKinematics()->vel.setPosition( new_dir );
 
-		}
+			}
 		}
 	} else if ( !message->getContent().compare("CupCollide") ){
 		hitCup = true;
