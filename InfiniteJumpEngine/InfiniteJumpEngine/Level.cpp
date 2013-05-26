@@ -16,7 +16,9 @@ Level::Level ( string name ) {
 	hudBatch->texName = "hudAtlas";
 	//debug mesh batch used for picking
 	pickBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
-	
+	hudElement1 = NULL;
+	ballDirHud = NULL;
+	ball = NULL;
 	orientation = 0.0f;
 }
 
@@ -49,7 +51,8 @@ void Level::update(float dT){
 		orientation = -orientation;
 	}
 	//rotate the compass
-	hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
+	if ( hudElement1  != NULL ) 
+		hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
 }
 
 void Level::draw( ){
@@ -102,9 +105,9 @@ vector<Entity *> Level::getEntities( ) {
 }
 
 void Level::clear( ){
-	//for(entityIter it = entities.begin(); it != entities.end(); ++it) {
-	//	delete (*it);
-	//}
+	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
+		delete (*it);
+	}
 	entities.clear();
 }
 

@@ -9,7 +9,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	tileSet = tiles;
 	hitCup = false;
 	currentTile = tileSet->getTile( tileId-1 );
-	currentTile->getMesh()->changeColor( 0, 1, 1 );
+	currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
 	radius = (mesh->max.x - mesh->min.x ) /2.0f;
@@ -159,10 +159,7 @@ void Ball::receiveMessage( IJMessage* message ){
 		glm::vec3 dir_xAxis = glm::normalize(glm::cross( xZ_dir, glm::vec3(0, 1, 0 ) ));
 
 		//balls new direction
-		glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );//
-		//new_dir.x *= xZ_dir.x;
-		//new_dir.y *= xZ_dir.y;
-		//new_dir.z *= xZ_dir.z; //
+		glm::vec3 new_dir = glm::normalize(glm::cross( tN, dir_xAxis )) * glm::length( xZ_dir );
 		physComp->getKinematics()->acc.setPosition( glm::vec3( 0, 0, 0 ) );
 		physComp->getKinematics()->vel.setPosition( new_dir );
 
@@ -190,7 +187,7 @@ void Ball::receiveMessage( IJMessage* message ){
 				//reset the collision data based on the current tile
 				resetCollisionData( );
 				cout << currentTile->getTileId() << endl;
-				currentTile->getMesh()->changeColor( 0, 1, 1 );
+				currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
 				glm::vec3 tN = glm::normalize(tile->getNormal());
 				glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
 				//rolling force direction

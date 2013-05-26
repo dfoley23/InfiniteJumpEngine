@@ -17,12 +17,7 @@ ResManager::~ResManager(void)
 */
 Level* ResManager::getTriangleLevel(string filename, int holeID){
 	Level* level = new Level( "golfLevel" );
-	loadTextureList( "golfLevel" );
 	level->maxSubLevels = 0;
-	Entity* terrain = new Entity();
-	TileSet* tiles = new TileSet();
-	terrain->addComponent(tiles);
-	level->addEntity(terrain);
 	Ball * ball = NULL;
 	Cup * cup = NULL;
 	vector<PlaneCollider*> tileColliders;
@@ -30,6 +25,31 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	bool begin_hole = false;
 	bool course = false;
 	int skip = 0;
+	if ( holeID < 0 ) {
+		Entity * hudEntity = new Entity( );
+		Mesh * hudMesh = new Mesh( );
+		glm::vec3 vert0 = glm::vec3( -0.25, -0.25, 0 );
+		glm::vec3 vert1 = glm::vec3( 0.25, -0.25, 0 );
+		glm::vec3 vert2 = glm::vec3( 0.25, 0.25, 0 );
+		glm::vec3 vert3 = glm::vec3( -0.25, 0.25, 0 );
+		glm::vec3 norm = glm::vec3( 0, 0, 1 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
+		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 1 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 0 );
+		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
+		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 1, 0.0 );
+		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
+		hudEntity->addComponent( hudMesh );
+		level->hudEntities.push_back( hudEntity );
+		loadTextureList( "MainMenu" );
+		return level;
+	} else {
+		loadTextureList( "golfLevel" );
+	}
+	Entity* terrain = new Entity();
+	TileSet* tiles = new TileSet();
+	terrain->addComponent(tiles);
+	level->addEntity(terrain);
 
 	string line;
 	ifstream input;
@@ -405,4 +425,8 @@ void ResManager::loadTexture(const char * filename, string id){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void ResManager::clearTextures(){
+	textures.clear();
 }
