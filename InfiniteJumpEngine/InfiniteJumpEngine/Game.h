@@ -58,6 +58,7 @@ public:
 	void display();
 	void displayForPick(int, int);
 	void idle();
+	//Move to an InputComponent?
 	void mouse_click(int, int, int, int);
 	void mouse_drag(int, int );
 	void mouse_wheel( int wheel, int direction, int x, int y );
@@ -71,11 +72,13 @@ public:
 		delete inst; inst = NULL;
 	}
 	ResManager * resman;
+	//Move to a GUI component
 	GLUI_StaticText * courseName;
 	GLUI_StaticText * holeName;
 	GLUI_StaticText * holePar;
 	GLUI_StaticText * holeScore;
 	GLUI_StaticText * totalScore;
+	//Move to Minigolf Script
 	int totalPar;
 	int curPar;
 	int curScore;

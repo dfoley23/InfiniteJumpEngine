@@ -144,6 +144,7 @@
       <Filter>Source Files\General</Filter>
     </ClCompile>
     <ClCompile Include="LuaBaseComponent.cpp" />
+    <ClCompile Include="LuaComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Updatable.h">
@@ -252,6 +253,9 @@
       <Filter>Header Files\General\Lua Components</Filter>
     </ClInclude>
     <ClInclude Include="LuaBaseComponent.h">
+      <Filter>Header Files\General\Lua Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

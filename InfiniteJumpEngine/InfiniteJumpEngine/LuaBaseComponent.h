@@ -7,6 +7,7 @@ class LuaBaseComponent
 public:
 	LuaBaseComponent(void);
 	~LuaBaseComponent(void);
+	lua_State *getState(){return state;}
 protected:
 	lua_State *state;
 };
