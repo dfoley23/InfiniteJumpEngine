@@ -143,6 +143,7 @@
     <ClCompile Include="glew.c">
       <Filter>Source Files\General</Filter>
     </ClCompile>
+    <ClCompile Include="LuaBaseComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Updatable.h">
@@ -249,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="luaIncludes.h">
       <Filter>Header Files\General\Lua Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBaseComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

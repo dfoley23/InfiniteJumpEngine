@@ -16,7 +16,6 @@ extern "C" {
 #include <iostream>
 #include <string>
 
-// We don't want to write std:: every time we're displaying some debug output
-using namespace std;
+using namespace luabind;
 
 #endif

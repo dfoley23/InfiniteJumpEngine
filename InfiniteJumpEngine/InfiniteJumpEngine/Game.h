@@ -9,6 +9,7 @@
 #include "glIncludes.h"
 #include "luaIncludes.h"
 #include "ResManager.h"
+#include "LuaBaseComponent.h"
 
 #define PIXEL(c,x,y,w)	(c[(x)+w*(y)])
 
@@ -103,6 +104,8 @@ private:
 	int totalStrokeCount;
 
 	int scaleDir;
+
+	LuaBaseComponent *lua;
 };
 
 #endif GAME_H

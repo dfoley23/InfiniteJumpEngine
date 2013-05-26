@@ -16,6 +16,7 @@ Game::Game(void)
 	totalStrokeCount = 0;
 	totalPar = 0;
 	curPar = 0;
+	lua = new LuaBaseComponent();
 }
 
 
@@ -24,6 +25,7 @@ Game::~Game(void)
 	for (componentIter c = components.begin(); c != components.end(); c++){
 		delete (*c);
 	}
+	delete lua;
 }
 
 void Game::setupGLUT(){
