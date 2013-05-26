@@ -23,8 +23,8 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	TileSet* tiles = new TileSet();
 	terrain->addComponent(tiles);
 	level->addEntity(terrain);
-	Ball * ball;
-	Cup * cup;
+	Ball * ball = NULL;
+	Cup * cup = NULL;
 	vector<PlaneCollider*> tileColliders;
 	bool end_hole = false;
 	bool begin_hole = false;
@@ -189,6 +189,9 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				cerr << "Found a unknown class type in " << filename << endl;
 				//return NULL;
 			}
+		}
+		if ( ball ) {
+			ball->cup = cup;
 		}
 		//insert all the colliders for the tiles
 		vector<PlaneCollider*> colliders = cup->edgeColliders;

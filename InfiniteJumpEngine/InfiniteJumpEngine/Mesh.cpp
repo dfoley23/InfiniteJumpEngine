@@ -289,6 +289,17 @@ void Mesh::createPlane( glm::vec3 perpDepth, float height, float x1, float y1, f
 	addVert( vert0.x+perpDepth.x, vert0.y+height, vert0.z+perpDepth.z, norm.x, norm.y, norm.z,  color.x, color.y, color.z, 0, 1 ); 
 }
 
+/*
+* change the color to rgb
+*/
+void Mesh::changeColor( float r, float g, float b ) {
+	for( int i=0; i<static_cast<int>(colors.size()); i+=3){
+		colors.at(i) = r;
+		colors.at(i+1) = g;
+		colors.at(i+2) = b;
+	}
+}
+
 glm::vec3 Mesh::getCenter( ) {
 	return center;
 }

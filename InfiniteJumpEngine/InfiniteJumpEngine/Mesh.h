@@ -81,6 +81,8 @@ public:
 
 	void setDynamic( int setting );
 
+	void changeColor( float r, float g, float b);
+
 	void setSmooth( int setting );
 
 	void addVert (float x, float y, float z, float r, float g, float b);
