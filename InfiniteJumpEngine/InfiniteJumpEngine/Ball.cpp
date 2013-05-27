@@ -9,7 +9,7 @@ forward(glm::vec3(0,0,-5), 0.07f, true)
 	tileSet = tiles;
 	hitCup = false;
 	currentTile = tileSet->getTile( tileId-1 );
-	currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
+	currentTile->getMesh()->changeColor( 0.0, 1, 1 );
 	mesh = generateMesh( );
 	mesh->setDynamic( 1 );
 	radius = (mesh->max.x - mesh->min.x ) /2.0f;
@@ -95,6 +95,7 @@ void Ball::resetCollisionData( ) {
 		if ( currentTile->getNeighbor( i ) == Tile::NO_NEIGHBOR ) {
 			physComp->collisionData.push_back( currentTile->getEdgeColliders().at( i ) );
 		} else {
+			physComp->collisionData.push_back( currentTile->getEdgeColliders().at( i ) );
 			//push back first neighbors data
 			Tile * neighbor = tileSet->getTile( currentTile->getNeighbor( i )-1 );
 			physComp->collisionData.insert( physComp->collisionData.end(), 
@@ -187,7 +188,7 @@ void Ball::receiveMessage( IJMessage* message ){
 				//reset the collision data based on the current tile
 				resetCollisionData( );
 				cout << currentTile->getTileId() << endl;
-				currentTile->getMesh()->changeColor( 0.7, 0, 0.7 );
+				currentTile->getMesh()->changeColor( 0.0, 1, 1 );
 				glm::vec3 tN = glm::normalize(tile->getNormal());
 				glm::vec3 t_xAxis = glm::cross( tN, glm::vec3(0, 1, 0) );
 				//rolling force direction
