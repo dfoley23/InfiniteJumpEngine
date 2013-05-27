@@ -1,7 +1,7 @@
 #include "PhysicsComponent.h"
 
 
-const int PhysicsComponent::COLLISION_CHECKS = 5;
+const int PhysicsComponent::COLLISION_CHECKS = 10;
 
 PhysicsComponent::PhysicsComponent(void)
 {
