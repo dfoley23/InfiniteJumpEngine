@@ -255,6 +255,12 @@ void Game::switchLevel( ) {
 		totScore_str = "+" + totScore_str;
 	string complete = "Total Score: " + totScore_str;
 	this->totalScore->set_text( complete.c_str() );
+
+	scores.registerScore(sub_levelID,holeStrokeCount);
+	cout << "Hole:" << sub_levelID
+		 << " Score:" << scores.getCurrentScore(sub_levelID) 
+		 << " Best:" << scores.getHighScore(sub_levelID)
+		 <<endl;
 	sub_levelID++;
 	if ( sub_levelID > level->maxSubLevels ) {
 		sub_levelID = 0;
@@ -367,6 +373,7 @@ void Game::keyboard(unsigned char key, int x, int y){
 
 int Game::run(int argc, char** argv){
 	resman = new ResManager();
+	char* profileName = "default";
 	if ( argc > 1 ) {
 		string directory = "Levels/";
 		levelID = directory + argv[1];
@@ -381,7 +388,7 @@ int Game::run(int argc, char** argv){
 		sub_levelID = -1;
 		level = resman->getTriangleLevel(directory, sub_levelID);
 	}
-
+	scores.loadProfile(profileName);
 	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	level->camera->proj = glm::perspective(
 		glm::float_t(45),

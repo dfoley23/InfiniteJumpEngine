@@ -113,9 +113,6 @@
     <ClCompile Include="PlaneCollider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="InterSection.cpp">
-      <Filter>Source Files\Colliders</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Colliders</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="loadpng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoresComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -229,10 +229,8 @@
     <ClInclude Include="loadpng.h">
       <Filter>Header Files\pnglib</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd">
-      <Filter>Source Files</Filter>
-    </None>
+    <ClInclude Include="ScoresComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
