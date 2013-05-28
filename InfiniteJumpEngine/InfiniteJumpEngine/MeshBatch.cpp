@@ -3,6 +3,9 @@
 // Constructors/Destructors
 //  
 
+/*
+* mesh batch is used to batch meshes together for drawing
+*/
 MeshBatch::~MeshBatch ( ) { 
 	vector< vector<float> >().swap(verts);
 	vector< vector<float> >().swap( norms);
@@ -12,6 +15,9 @@ MeshBatch::~MeshBatch ( ) {
 	delete shader;
 }
 
+/*
+* removes the meshbatch from memory
+*/
 MeshBatch::MeshBatch ( Shader * shader ) { 
 	verts.resize( 1 );
 	norms.resize( 1 ); 
@@ -105,8 +111,7 @@ void MeshBatch::translate (float x, float y, float z )
 
 
 /**
-* @param  dir
-* @param  up
+* rotates using a quaternion
 */
 void MeshBatch::rotate (float angle, glm::vec3 axis)
 {
@@ -114,8 +119,7 @@ void MeshBatch::rotate (float angle, glm::vec3 axis)
 }
 
 /**
-*
-*
+* rotates around the x, y, z axis
 */
 void MeshBatch::rotate( float x, float y, float z ) {
 	glm::mat4 rotateX = glm::rotate( glm::mat4( ), x, glm::vec3( 1, 0, 0 ) );
@@ -126,15 +130,16 @@ void MeshBatch::rotate( float x, float y, float z ) {
 }
 
 /**
-* @param  x
-* @param  y
-* @param  z
+* scales the entire meshbatch
 */
 void MeshBatch::scale (float x, float y, float z )
 {
 	scaling = glm::scale( glm::mat4( ), glm::vec3( x, y, z ) );
 }
 
+/*
+* sets the shader used by this meshbatch 
+*/
 void MeshBatch::setShader ( Shader * new_var )     {
 	shader = new_var;
 	shader->modelViewLoc = glGetUniformLocation(shader->program, "M");
@@ -173,6 +178,9 @@ glm::vec3 MeshBatch::getPickColors( ) {
 	return pickColors;
 }
 
+/*
+* binds the current buffers to be used by the shader
+*/
 void MeshBatch::bindBuffers( int pass ) {
 	//Create buffers for the vertex and normal attribute arrays
 

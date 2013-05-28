@@ -8,10 +8,18 @@ const int Mesh::UV_SIZE = 2;
 // Constructors/Destructors
 //  
 
+/*
+* mesh holds all vertex data 
+* tex coords norms colors and
+* per mesh transformations
+*/
 Mesh::Mesh ( ) {
 	initAttributes();
 }
 
+/*
+* removes the mesh from memory
+*/
 Mesh::~Mesh ( ) { 
 	vector<float>().swap(verts);
 	vector<float>().swap(norms);
@@ -59,6 +67,10 @@ void Mesh::draw( MeshBatch * batch ) {
 	}
 }
 
+/*
+* draw for color id picking 
+* mainly used for moving around object in debug mode
+*/
 void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
 	pickId.x = id.x;
 	pickId.y = id.y;
@@ -94,9 +106,7 @@ void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
 }
 
 /**
-* @param  x
-* @param  y
-* @param  z
+* translates the mesh by x y and z
 */
 void Mesh::translate (float x, float y, float z )
 {
@@ -110,8 +120,7 @@ void Mesh::translate (float x, float y, float z )
 
 
 /**
-* @param  dir
-* @param  up
+* rotates using a quaternion
 */
 void Mesh::rotate (float angle, glm::vec3 axis)
 {
@@ -120,8 +129,7 @@ void Mesh::rotate (float angle, glm::vec3 axis)
 }
 
 /**
-*
-*
+* rotates around the x, y, and z axis
 */
 void Mesh::rotate( float x, float y, float z ) {
 	dynamic = true;
@@ -133,9 +141,7 @@ void Mesh::rotate( float x, float y, float z ) {
 }
 
 /**
-* @param  x
-* @param  y
-* @param  z
+* scales the mesh
 */
 void Mesh::scale (float x, float y, float z )
 {
@@ -143,14 +149,23 @@ void Mesh::scale (float x, float y, float z )
 	scaling = glm::scale( glm::mat4( ), glm::vec3( x, y, z ) );
 }
 
+/*
+* makes this model use seperate transformations
+*/
 void Mesh::setDynamic( int setting ) {
 	dynamic = setting;
 }
 
+/*
+* set to use smooth shading
+*/
 void Mesh::setSmooth( int setting ) {
 	smooth = setting;
 }
 
+/*
+* adds a vert with a position and color
+*/
 void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	float nx = 0, ny = 0, nz = 0;
 	//Calculate normal from previous verts if possible
@@ -161,6 +176,7 @@ void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 * add a vertex with normal color and tex coord to the mesh
 */
 void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, float r, float g, float b, float u, float v){
+	//inititalize bounding box vals
 	if ( verts.empty( ) ) {
 		min = glm::vec3 ( x, y, z );
 		max = glm::vec3 ( x, y, z );
@@ -171,7 +187,7 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 		maxXPoint = max;
 		maxYPoint = max;
 		maxZPoint = max;
-	} else {
+	} else { //update bounding box vals
 		if ( x < minXPoint.x ) {
 			minXPoint = glm::vec3 ( x, y, z );
 		} else if ( x > maxXPoint.x ) {
@@ -203,10 +219,12 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 			max.z = z;
 		}		
 	}
+	//recalculate the center of the mesh
 	center.x = (center.x + x) / static_cast<float>(verts.size());
 	center.y = (center.y + y) / static_cast<float>(verts.size());
 	center.z = (center.z + z) / static_cast<float>(verts.size());
 	glm::vec3 vertexNormal = glm::vec3( 0, 0, 0 );
+	//if object using smooth shading calulate vertex normals
 	if ( smooth ) {
 		vector<int> sharedNorms;
 		for ( int i=0; i<static_cast<int>(norms.size())-2; i++ ) {
@@ -226,6 +244,7 @@ void Mesh::addVert (float x, float y, float z, float nx, float ny, float nz, flo
 			norms.at( sharedNorms.at( i )+2 ) = (vertexNormal.z + nz)/2.0f;
 		}
 	}
+	//add the vertex data to the mesh data
 	vertexNormal.x += nx;
 	vertexNormal.y += ny;
 	vertexNormal.z += nz;
@@ -300,6 +319,8 @@ void Mesh::changeColor( float r, float g, float b ) {
 	}
 }
 
+// ACCESS FUNCTION
+
 glm::vec3 Mesh::getCenter( ) {
 	return center;
 }
@@ -355,6 +376,10 @@ uniforms = new_var;
 return uniforms;
 }*/
 
+/*
+* binds one meshs buffers 
+* not used deprecated
+*/
 void Mesh::bindBuffers( MeshBatch * batch, int picking ) {
 	//Create buffers for the vertex and normal attribute arrays
 

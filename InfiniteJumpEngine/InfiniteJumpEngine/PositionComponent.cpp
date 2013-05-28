@@ -13,6 +13,10 @@ PositionComponent::~PositionComponent(void)
 {
 }
 
+/*
+* gets all of the transformations after kinematics have
+* caused transformations
+*/
 glm::mat4 PositionComponent::getTransform(){
 	glm::mat4 t = glm::translate(glm::mat4(1.0f), position);
 	glm::mat4 r;

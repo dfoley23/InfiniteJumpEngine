@@ -208,6 +208,9 @@ void Game::mouse_click(int button, int state, int x, int y){
 	}
 }
 
+/*
+* mouse-drag function
+*/
 void Game::mouse_drag(int x, int y){
 	if ( level->ballDirHud != NULL ) {
 		glm::vec3 curPos = level->ballDirHud->getCenter();
@@ -235,6 +238,9 @@ void Game::mouse_drag(int x, int y){
 	}
 }
 
+/*
+* mouse middle wheel function
+*/
 void Game::mouse_wheel( int wheel, int direction, int x, int y) {
 	if ( sub_levelID >= 0 ) {
 		if ( direction > 0 ) {
@@ -245,6 +251,9 @@ void Game::mouse_wheel( int wheel, int direction, int x, int y) {
 	}
 }
 
+/*
+* switches the level
+*/
 void Game::switchLevel( ) {
 	string totScore_str;
 	stringstream out;
@@ -278,6 +287,9 @@ void Game::switchLevel( ) {
 	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 }
 
+/*
+* the arrow key function
+*/
 void Game::special_keyboard(int key, int x, int y) {  
 	//arrow keys control camera translations
 	if ( sub_levelID >= 0 ) {
@@ -299,6 +311,9 @@ void Game::special_keyboard(int key, int x, int y) {
 	}
 }
 
+/*
+* the main keyboard function
+*/
 void Game::keyboard(unsigned char key, int x, int y){
 	switch (key) {
 	case 32: //space
@@ -371,6 +386,9 @@ void Game::keyboard(unsigned char key, int x, int y){
 	}
 }
 
+/*
+* the main run method that handles a game
+*/
 int Game::run(int argc, char** argv){
 	resman = new ResManager();
 	char* profileName = "default";

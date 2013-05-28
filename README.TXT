@@ -19,6 +19,8 @@ the level files have to be in a directory called Levels under the directory wher
 to run a course you can enter InfiniteJumpEngine.exe course.db
 or InfiniteJumpEngine.exe course.db n (to jump to the nth hole of the course)
 
+You can skip levels using the debug control press 'shift' and '+'
+
 
 CAMERA CONTROLS: (only available in free look)
 CAMERA UP ON Y AXIS: Arrow Key Up
