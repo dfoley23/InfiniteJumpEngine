@@ -9,6 +9,7 @@
 #include "glIncludes.h"
 #include "luaIncludes.h"
 #include "ResManager.h"
+#include "ScoresComponent.h"
 #include "LuaBaseComponent.h"
 
 #define PIXEL(c,x,y,w)	(c[(x)+w*(y)])
@@ -83,6 +84,7 @@ public:
 	int curPar;
 	int curScore;
 	int holeStrokeCount;
+	ScoresComponent scores;
 private:
 	Game(void);
 	static Game* inst;

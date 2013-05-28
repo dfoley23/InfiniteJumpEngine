@@ -101,7 +101,7 @@ Mesh* Tile::generateMesh(){
 		tangent = vert1 - vert0;
 		bitangent = vert2 - vert0;
 		norm = glm::cross( tangent, bitangent );
-		this->normal = norm;
+		this->normal = glm::normalize( norm );
 		out->addVert(vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 0, 0 );
 		out->addVert(vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 0);
 		out->addVert(vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, 1, 1);
@@ -115,41 +115,23 @@ Mesh* Tile::generateMesh(){
 			} else {
 				vert1 = verts[0];
 			}
-			
-			/*tangent = vert1 - vert0;
-			bitangent = vert2 - vert0;
-			norm = glm::cross( tangent, bitangent );
-			glm::vec3 eParralel = glm::normalize(glm::cross( norm, glm::vec3(0, 1, 0 ) ));
-			glm::vec3 vec1 = (vert0 + vert1) / 2.f;
-			glm::vec3 vec0 = vec1+norm;
-			glm::vec3 vec2 = vec1+eParralel;
-			
-			glm::vec3 norm = glm::cross( vec1-vec0, vec2-vec0);
-			glm::vec3 pointNorm = glm::cross( vec1-vec0, vert0-vec0 );
-			if ( glm::dot( pointNorm, norm ) > 0 ) {
-				vert0 = vert0 + eParralel * edgeHeight/2.0f;
-				vert1 = vert1 - eParralel * edgeHeight/2.0f;
-			} else {
-				vert1 = vert0 + eParralel * edgeHeight/2.0f;
-				vert0 = vert1 - eParralel * edgeHeight/2.0f;
-			}*/
 			edge->createYCube( edgeHeight/2.0f, edgeHeight, vert1, vert0, wall_color );
 			edges.push_back( edge );
 
-			vert2.x = vert1.x + normal.x * edgeHeight*8;
-			vert2.y = vert1.y + normal.y * edgeHeight*8;
-			vert2.z = vert1.z + normal.z * edgeHeight*8;
+			vert2.x = vert1.x + normal.x * edgeHeight*2;
+			vert2.y = vert1.y + normal.y * edgeHeight*2;
+			vert2.z = vert1.z + normal.z * edgeHeight*2;
 
-			vert3.x = vert0.x + normal.x * edgeHeight*8;
-			vert3.y = vert0.y + normal.y * edgeHeight*8;
-			vert3.z = vert0.z + normal.z * edgeHeight*8;
+			vert3.x = vert0.x + normal.x * edgeHeight*2;
+			vert3.y = vert0.y + normal.y * edgeHeight*2;
+			vert3.z = vert0.z + normal.z * edgeHeight*2;
 			
-			vert0.x = vert0.x - normal.x * edgeHeight*8;
-			vert0.y = vert0.y - normal.y * edgeHeight*8;
-			vert0.z = vert0.z - normal.z * edgeHeight*8;
-			vert1.x = vert1.x - normal.x * edgeHeight*8;
-			vert1.y = vert1.y - normal.y * edgeHeight*8;
-			vert1.z = vert1.z - normal.z * edgeHeight*8;
+			vert0.x = vert0.x - normal.x * edgeHeight*2;
+			vert0.y = vert0.y - normal.y * edgeHeight*2;
+			vert0.z = vert0.z - normal.z * edgeHeight*2;
+			vert1.x = vert1.x - normal.x * edgeHeight*2;
+			vert1.y = vert1.y - normal.y * edgeHeight*2;
+			vert1.z = vert1.z - normal.z * edgeHeight*2;
 			PlaneCollider * pCollide = new PlaneCollider ( vert1, vert0, vert3, vert2, true );
 			pCollide->setParent( this );
 			edgeColliders.push_back( pCollide );
@@ -163,15 +145,15 @@ Mesh* Tile::generateMesh(){
 			}
 			
 			vert2.x = vert1.x;
-			vert2.y = vert1.y + edgeHeight*8;
+			vert2.y = vert1.y + edgeHeight*2;
 			vert2.z = vert1.z;
 
 			vert3.x = vert0.x;
-			vert3.y = vert0.y + edgeHeight*8;
+			vert3.y = vert0.y + edgeHeight*2;
 			vert3.z = vert0.z;
 
-			vert0.y = vert0.y - edgeHeight*8;
-			vert1.y = vert1.y - edgeHeight*8;
+			vert0.y = vert0.y - edgeHeight*2;
+			vert1.y = vert1.y - edgeHeight*2;
 			//PlaneCollider * pCollide = new PlaneCollider ( vert0, vert3, vert2, vert1, false );
 			PlaneCollider * pCollide = new PlaneCollider ( vert0, vert1, vert2, vert3, false );
 			pCollide->setParent( this );
