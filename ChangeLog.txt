@@ -1,0 +1,16 @@
+Fixed some collision bugs
+Added in hud support for rendering in two stages
+Added mini-golf hole hud elements
+Added support to read a course file
+Added support to switch levels of a course
+Added hud elements that tracks the score of each hole and the overall score
+Added a main menu screen
+Added debugging in mini-golf to display what tile you are on
+Added documentation 
+
+For the final submission of our Engine
+We hope to refactor even more of our code 
+with an integrated scripting layer.
+
+Most of the gameplay code, hud elements, player input, 
+screens, scoring, can then be refactored into scripts

@@ -44,3 +44,4 @@ To shoot WEST, DRAG THE MOUSE FROM LEFT TO RIGHT on the screen
 
 THE COMPASS will tell you which way is north 
 while in third or first person perspective use the compass for orientation
+
