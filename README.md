@@ -1,5 +1,3 @@
-InfiniteJumpEngine
-==================
 Authors:
 Kevin Cameron
 Dennis Foley
@@ -20,6 +18,8 @@ the level files have to be in a directory called Levels under the directory wher
 
 to run a course you can enter InfiniteJumpEngine.exe course.db
 or InfiniteJumpEngine.exe course.db n (to jump to the nth hole of the course)
+
+You can skip levels using the debug control press 'shift' and '+'
 
 
 CAMERA CONTROLS: (only available in free look)
@@ -46,3 +46,4 @@ To shoot WEST, DRAG THE MOUSE FROM LEFT TO RIGHT on the screen
 
 THE COMPASS will tell you which way is north 
 while in third or first person perspective use the compass for orientation
+

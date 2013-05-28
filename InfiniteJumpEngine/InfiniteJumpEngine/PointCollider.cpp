@@ -11,6 +11,9 @@ PointCollider::~PointCollider(void)
 {
 }
 
+/*
+* checks if this point lies inside the bounding box
+*/
 bool PointCollider::isColliding(BoxCollider* that)
 {
 	glm::vec3 box = that->getPos();
@@ -31,6 +34,9 @@ bool PointCollider::isColliding(SphereCollider* that)
 	return false;
 }
 
+/*
+* checks if the point lies inside the meshes vertices
+*/
 bool PointCollider::isColliding(MeshCollider* that)
 {
 	vector<float> verts = that->getMesh()->getVerts();

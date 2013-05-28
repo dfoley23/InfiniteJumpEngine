@@ -29,6 +29,7 @@ public:
 	virtual ~Shader ( );
 
 	/**
+	* reads and compiles a vertex and fragment shader
 	* @param  vertFile
 	* @param  fragFile
 	*/
@@ -57,6 +58,7 @@ public:
 	}
 
 	/**
+	* parses the shader source
 	* @param source file
 	* @param type of shader
 	*/
@@ -93,6 +95,7 @@ public:
 
 
 	/**
+	* reads and compiles a vertex fragment and geometry shader files
 	* @param  vertFile
 	* @param  fragFile
 	* @param  geomFile
@@ -130,6 +133,7 @@ public:
 
 
 	/**
+	* prints shader compile error log
 	* @param  label
 	* @param  obj
 	*/

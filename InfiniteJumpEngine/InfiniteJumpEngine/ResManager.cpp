@@ -26,6 +26,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	bool course = false;
 	int skip = 0;
 	if ( holeID < 0 ) {
+		//builds the main menu
 		Entity * hudEntity = new Entity( );
 		Mesh * hudMesh = new Mesh( );
 		glm::vec3 vert0 = glm::vec3( -0.25, -0.25, 0 );
@@ -429,6 +430,9 @@ void ResManager::loadTexture(const char * filename, string id){
 	glDisable(GL_TEXTURE_2D);
 }
 
+/*
+* clear the textures from memory
+*/
 void ResManager::clearTextures(){
 	textures.clear();
 }
