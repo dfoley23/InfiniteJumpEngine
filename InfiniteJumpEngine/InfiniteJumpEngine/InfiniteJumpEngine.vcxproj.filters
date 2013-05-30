@@ -269,4 +269,9 @@
       <Filter>Header Files\General\Lua Components</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MiniGolf.lua">
+      <Filter>Source Files\Minigolf-Specific</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -317,6 +317,11 @@ void Game::special_keyboard(int key, int x, int y) {
 * the main keyboard function
 */
 void Game::keyboard(unsigned char key, int x, int y){
+	//call the lua function
+	luabind::call_function<int>(inputLuaState, "registerObject", "pressedKey", key);
+	cout << "value from lua registry " << 
+		luabind::call_function<int>(inputLuaState, "getRegisteredObject", "pressedKey" ) 
+		<< endl;
 	switch (key) {
 	case 32: //space
 		if (sub_levelID < 0 ) {
@@ -393,6 +398,9 @@ void Game::keyboard(unsigned char key, int x, int y){
 */
 int Game::run(int argc, char** argv){
 	resman = new ResManager();
+	//make a new lua state for input functions
+	inputLuaState = luaL_newstate();
+	luaL_dofile( inputLuaState, "MiniGolf.lua" );
 	char* profileName = "default";
 	if ( argc > 1 ) {
 		string directory = "Levels/";
@@ -419,5 +427,6 @@ int Game::run(int argc, char** argv){
 	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 
 	glutMainLoop();
+	lua_close(inputLuaState);
 	return 0;
 }

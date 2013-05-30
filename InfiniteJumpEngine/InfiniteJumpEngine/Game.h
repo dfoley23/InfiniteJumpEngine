@@ -85,6 +85,7 @@ public:
 	int curScore;
 	int holeStrokeCount;
 	ScoresComponent scores;
+	lua_State *inputLuaState;
 private:
 	Game(void);
 	static Game* inst;
