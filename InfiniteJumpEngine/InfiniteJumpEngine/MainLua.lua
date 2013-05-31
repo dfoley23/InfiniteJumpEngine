@@ -50,11 +50,11 @@ function mouseclick_cb( button, state, x, y )
 		releasePoint = vec3( x, 0, y)
 		dir = vec3( clickPoint.x - releasePoint.x, 0, clickPoint.z - releasePoint.z )
 		if length( dir.x, dir.y, dir.z ) > 100 then
-			dir = vec3( normalize( dir.x * 3.0, dir.y * 3.0, dir.z * 3.0 ) )
+			dir = vec3( normalizeVec( dir.x * 3.0, dir.y * 3.0, dir.z * 3.0 ) )
 		elseif length( dir.x, dir.y, dir.z ) > 50 then
-			dir = vec3( normalize( dir.x * 2.0, dir.y * 2.0, dir.z * 2.0 ) )
+			dir = vec3( normalizeVec( dir.x * 2.0, dir.y * 2.0, dir.z * 2.0 ) )
 		else
-			dir = vec3( normalize( dir.x, dir.y, dir.z ) )
+			dir = vec3( normalizeVec( dir.x, dir.y, dir.z ) )
 		end
 		if length( dir.x, dir.y, dir.z ) > 0.07 then
 			registryTable["ball"]:sendMessage(registryTable["ball"], nil, "shoot", vec4(dir.x, dir.y, dir.z, 0.0))
@@ -72,4 +72,23 @@ end
 
 function mousewheel_cb( wheel, direction, x, y )
 
+end
+
+function lengthSquared( x, y, z )
+	return x*x + y*y + z*z
+end
+
+function normalizeVec( x, y, z )
+	length = lengthSquared( x, y, z )
+	vec = vec3( x*x/length, y*y/length, z*z/length )
+	if x < 0 then
+		vec.x = -vec.x
+	end
+	if y < 0 then
+		vec.y = -vec.y
+	end
+	if y < 0 then
+		vec.z = -vec.z
+	end
+	return 
 end
