@@ -48,6 +48,9 @@
     <Filter Include="Header Files\General\Transform Components">
       <UniqueIdentifier>{43f14006-0e90-490e-b1fb-81f1ea053a19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\General\scripts">
+      <UniqueIdentifier>{34a36b8c-edb5-46ec-beda-eb199e8708bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoxCollider.cpp">
@@ -272,6 +275,15 @@
   <ItemGroup>
     <None Include="MiniGolf.lua">
       <Filter>Source Files\Minigolf-Specific</Filter>
+    </None>
+    <None Include="InputLua.lua">
+      <Filter>Source Files\General\scripts</Filter>
+    </None>
+    <None Include="ResourceLua.lua">
+      <Filter>Source Files\General\scripts</Filter>
+    </None>
+    <None Include="MainLua.lua">
+      <Filter>Source Files\General\scripts</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -31,11 +31,13 @@ inline glm::vec3 crossProduct( glm::vec3 u, glm::vec3 v) {
 	return glm::cross( u, v );
 }
 
-inline float length( glm::vec3 u ) {
+inline float length( float x, float y, float z ) {
+	glm::vec3 u = glm::vec3( x, y, z );
 	return glm::length( u );
 }
 
-inline glm::vec3 normalize( glm::vec3 u ) {
+inline glm::vec3 normalize( float x, float y, float z ) {
+	glm::vec3 u = glm::vec3( x, y, z );
 	return glm::normalize( u );
 }
 

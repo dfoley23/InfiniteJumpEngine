@@ -25,6 +25,7 @@ public:
 	* Empty Constructor
 	*/
 	Mesh ( );
+	Mesh ( Mesh * );
 
 	/**
 	* Empty Destructor

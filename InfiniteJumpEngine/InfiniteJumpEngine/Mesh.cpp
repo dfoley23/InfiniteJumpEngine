@@ -17,6 +17,15 @@ Mesh::Mesh ( ) {
 	initAttributes();
 }
 
+Mesh::Mesh( Mesh * mesh) {
+	initAttributes();
+	vector<float>().swap(mesh->verts);
+	vector<float>().swap(mesh->norms);
+	vector<float>().swap(mesh->colors);
+	vector<float>().swap(mesh->texCoords);
+	vector<float>().swap(mesh->pickColors);
+	vector<GLuint>().swap(mesh->textureNames);
+}
 /*
 * removes the mesh from memory
 */

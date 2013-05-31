@@ -257,9 +257,23 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
 		hudEntity->addComponent( hudMesh );
 		level->ballDirHud = hudMesh;
-		luabind::call_function<int>(Game::game()->inputLuaState, "registerObject", "ballDirHud", hudMesh );
+		try {
+			luabind::call_function<void>(Game::game()->inputLuaState, "registerObject", "ballDirHud", boost::shared_ptr<Mesh>( hudMesh ) );
+		} catch(luabind::error& e)
+		{
+			std::string error = lua_tostring( e.state(), -1 );
+			cerr << error << endl;
+		}
 		level->hudEntities.push_back( hudEntity );
 		
+			try {
+		luabind::call_function<void>(Game::game()->inputLuaState, "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+	} catch(luabind::error& e)
+	{
+		std::string error = lua_tostring( e.state(), -1 );
+		cerr << error << endl;
+	}
+
 		return level;
 	} 
 	return NULL;

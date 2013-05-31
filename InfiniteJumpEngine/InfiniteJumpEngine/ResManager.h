@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <map>
+#include <boost/smart_ptr.hpp>
 
 #include "glIncludes.h"
 #include "loadpng.h"
