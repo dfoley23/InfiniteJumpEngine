@@ -1,6 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 #include "IJMessage.h"
+#include "luaIncludes.h"
 #include "Drawable.h"
 #include <vector>
 
@@ -38,12 +39,30 @@ public:
 			cout << "Message fell out of parent chain:" << m->content << " " << m->vecContent.x << " " << m->vecContent.y << " " << m->vecContent.z << endl;
 		}
 	}
+
 	virtual void receiveMessage( IJMessage *m ){
 		sendMessage(m, parent);
 	}
+
+	virtual char* getType(){
+		return "Component";
+	}
+
+	static void luaRegister(lua_State* lua){
+		//Somewhere else
+	  luabind::module(lua) [
+		luabind::class_<Component>("Component")
+		  .def(luabind::constructor<void>())
+		  .def("getParent", &Component::getParent)
+		  .def("setParent", &Component::setParent)
+
+	  ];
+	}
+
 protected:
 	Component *parent;
 	glm::vec3 pickId;
+	lua_State* lua;
 };
 
 typedef std::vector<Component*> componentVector;

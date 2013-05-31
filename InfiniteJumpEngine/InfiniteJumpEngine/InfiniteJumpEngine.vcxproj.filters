@@ -146,9 +146,6 @@
     <ClCompile Include="LuaBaseComponent.cpp">
       <Filter>Source Files\General</Filter>
     </ClCompile>
-    <ClCompile Include="LuaComponent.cpp">
-      <Filter>Source Files\General</Filter>
-    </ClCompile>
     <ClCompile Include="ScoresComponent.cpp">
       <Filter>Source Files\Minigolf-Specific</Filter>
     </ClCompile>
@@ -264,9 +261,6 @@
     </ClInclude>
     <ClInclude Include="ScoresComponent.h">
       <Filter>Header Files\Minigolf-Specific</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaComponent.h">
-      <Filter>Header Files\General\Lua Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
