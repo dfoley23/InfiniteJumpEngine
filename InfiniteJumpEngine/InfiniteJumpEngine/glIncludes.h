@@ -23,4 +23,20 @@
 #define IJ_PI        3.14159265358979323846264338327950288
 #define rad_to_deg   57.2957795131
 
+inline float dotProduct( glm::vec3 u, glm::vec3 v ) {
+	return glm::dot( u, v );
+}
+
+inline glm::vec3 crossProduct( glm::vec3 u, glm::vec3 v) {
+	return glm::cross( u, v );
+}
+
+inline float length( glm::vec3 u ) {
+	return glm::length( u );
+}
+
+inline glm::vec3 normalize( glm::vec3 u ) {
+	return glm::normalize( u );
+}
+
 #endif GLINCLUDES_H

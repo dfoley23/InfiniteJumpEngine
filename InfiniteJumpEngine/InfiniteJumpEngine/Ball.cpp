@@ -183,7 +183,7 @@ void Ball::receiveMessage( IJMessage* message ){
 				reflect = true;
 			} else {
 				Tile * tile = (Tile*)plane->getParent();
-				currentTile->getMesh()->changeColor( 0, 0.7, 0 );
+				currentTile->getMesh()->changeColor( 0, 0.7f, 0 );
 				this->currentTile = tile;
 				//reset the collision data based on the current tile
 				resetCollisionData( );

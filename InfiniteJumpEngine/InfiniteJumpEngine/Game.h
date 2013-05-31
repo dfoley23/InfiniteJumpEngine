@@ -68,6 +68,7 @@ public:
 	void setupInterface(void(*cb)(int i));
 	void glui_callBack( int id );
 	void switchLevel( );
+	void registerComponentWithLua( const char* key, Component* value); 
 
 	static void clear(){
 		delete inst; inst = NULL;
@@ -87,6 +88,7 @@ public:
 	ScoresComponent scores;
 	lua_State *inputLuaState;
 private:
+	void exposeClassesToLua( );
 	Game(void);
 	static Game* inst;
 

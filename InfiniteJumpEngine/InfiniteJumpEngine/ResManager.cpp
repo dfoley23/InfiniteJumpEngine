@@ -140,6 +140,8 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					level->addEntity( ballEntity );
 					level->pickedMesh = ball->getMesh( );
 					level->ball = ball;
+					Game::game()->registerComponentWithLua( "ball", ball );
+					cout << "hello world" << endl;
 				}
 			} else if ( !type.compare( "cup" ) ) {
 				if ( !course || begin_hole ) {
@@ -255,7 +257,9 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
 		hudEntity->addComponent( hudMesh );
 		level->ballDirHud = hudMesh;
+		luabind::call_function<int>(Game::game()->inputLuaState, "registerObject", "ballDirHud", hudMesh );
 		level->hudEntities.push_back( hudEntity );
+		
 		return level;
 	} 
 	return NULL;

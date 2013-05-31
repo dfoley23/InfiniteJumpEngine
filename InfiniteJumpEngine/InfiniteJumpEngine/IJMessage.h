@@ -10,7 +10,7 @@ class Component;
 class IJMessage
 {
 public:
-	IJMessage(Component*, Component*, Component*, char* c, glm::vec4 v = glm::vec4(0.f,0.f,0.f,0.f) );
+	IJMessage(Component*, Component*, Component*, const char* c, glm::vec4 v = glm::vec4(0.f,0.f,0.f,0.f) );
 	~IJMessage(void);
 	friend class Component;
 	std::string getContent(){return content;}

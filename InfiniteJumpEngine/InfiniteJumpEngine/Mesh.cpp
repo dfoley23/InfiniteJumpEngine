@@ -72,37 +72,7 @@ void Mesh::draw( MeshBatch * batch ) {
 * mainly used for moving around object in debug mode
 */
 void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
-	pickId.x = id.x;
-	pickId.y = id.y;
-	pickId.z = id.z;
-	int index = 0;
-	if ( dynamic ) {
-		batch->verts.resize( batch->verts.size( ) + 1 );
-		batch->norms.resize( batch->norms.size( ) + 1 );
-		batch->colors.resize( batch->colors.size( ) + 1 );
-		batch->texCoords.resize( batch->texCoords.size( ) + 1 );
-		index = static_cast<int>(batch->verts.size( )) - 1;
-		modelView = glm::mat4( );
-		modelView = translations * rotations * scaling; 
-		batch->modelViews.push_back( modelView );
-		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
-		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
-		batch->texCoords.at(index).insert( batch->texCoords.at(index).end(), texCoords.begin(), texCoords.end() );
-		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-			batch->colors.at(index).push_back( id.x / 255.0f );
-			batch->colors.at(index).push_back( id.y / 255.0f );
-			batch->colors.at(index).push_back( id.z / 255.0f );
-		}
-	} else {
-		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
-		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
-		batch->texCoords.at(index).insert( batch->texCoords.at(index).end(), texCoords.begin(), texCoords.end() );
-		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-			batch->colors.at(index).push_back( id.x / 255.0f );
-			batch->colors.at(index).push_back( id.y / 255.0f );
-			batch->colors.at(index).push_back( id.z / 255.0f );
-		}
-	}
+
 }
 
 /**
@@ -172,6 +142,9 @@ void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	addVert (x, y ,z, nx, ny, nz, r, g, b);
 }
 
+void Mesh::addVert( glm::vec3 pos, glm::vec3 norm, glm::vec3 color, glm::vec2 tex ) {
+	addVert( pos.x, pos.y, pos.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, tex.x, tex.y );
+}
 /*
 * add a vertex with normal color and tex coord to the mesh
 */
@@ -381,22 +354,7 @@ return uniforms;
 * not used deprecated
 */
 void Mesh::bindBuffers( MeshBatch * batch, int picking ) {
-	//Create buffers for the vertex and normal attribute arrays
 
-	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(float),verts.data(), GL_DYNAMIC_DRAW );
-
-	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->normalBuffer);
-	glBufferData( GL_ARRAY_BUFFER,norms.size() * sizeof(float),norms.data(),GL_DYNAMIC_DRAW );
-
-	glBindBuffer(GL_ARRAY_BUFFER, batch->shader->colorBuffer);
-	if ( picking ) {
-		glBufferData( GL_ARRAY_BUFFER,pickColors.size() * sizeof(float), pickColors.data(),GL_DYNAMIC_DRAW );
-	} else {
-		glBufferData( GL_ARRAY_BUFFER,colors.size() * sizeof(float),colors.data(),GL_DYNAMIC_DRAW );
-	}
-
-	numVerts = verts.size() / 3;
 }
 
 void Mesh::initAttributes ( ) {
