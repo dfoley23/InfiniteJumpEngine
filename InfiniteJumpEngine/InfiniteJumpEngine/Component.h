@@ -48,17 +48,6 @@ public:
 		return "Component";
 	}
 
-	static void luaRegister(lua_State* lua){
-		//Somewhere else
-	  luabind::module(lua) [
-		luabind::class_<Component>("Component")
-		  .def(luabind::constructor<void>())
-		  .def("getParent", &Component::getParent)
-		  .def("setParent", &Component::setParent)
-
-	  ];
-	}
-
 protected:
 	Component *parent;
 	glm::vec3 pickId;

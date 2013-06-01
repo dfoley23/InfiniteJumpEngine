@@ -166,7 +166,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				iss >> numHoles_str;
 				int numHoles = atoi( numHoles_str.c_str() ) - 1;
 				level->maxSubLevels = numHoles;
-				Game::game()->scores.loadHoles(numHoles);
+				Game::game()->scores.loadHoles(numHoles+1);
 				Game::game()->holeName->set_text(course_name.c_str());
 			} else if ( !type.compare( "begin_hole" ) ) {
 				if ( skip == holeID ) {
