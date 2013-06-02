@@ -16,7 +16,6 @@ LuaBaseComponent::LuaBaseComponent(void)
 	luaL_dostring(state,"greet()\n");
  }
 
-
 LuaBaseComponent::~LuaBaseComponent(void)
 {
   lua_close(state);
