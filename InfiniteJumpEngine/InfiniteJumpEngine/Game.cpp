@@ -401,6 +401,8 @@ int Game::run(int argc, char** argv){
 	//make a new lua state for input functions
 	inputLuaState = luaL_newstate();
 	luaL_dofile( inputLuaState, "MiniGolf.lua" );
+	
+	//luabind::call_function<int>(inputLuaState, "loadDefaultScene", argc);
 	char* profileName = "default";
 	if ( argc > 1 ) {
 		string directory = "Levels/";
