@@ -399,9 +399,22 @@ void Game::keyboard(unsigned char key, int x, int y){
 int Game::run(int argc, char** argv){
 	resman = new ResManager();
 	//make a new lua state for input functions
-	luaL_dofile( lua->getState(), "MiniGolf.lua" );
-	
-	//luabind::call_function<int>(lua->getState(), "loadDefaultScene", argc);
+	luaL_dofile( lua->getState(), "main.lua" );
+
+	for (int a = 0; a < argc; a++){
+		try {
+			luabind::call_function<int>(lua->getState(), "registerArg", argv[a]);
+		} catch (luabind::error &e){
+			cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+		}
+	}
+	try {
+		luabind::call_function<int>(lua->getState(), "loadDefaultScene");
+	} catch (luabind::error &e){
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+	}
+
+
 	char* profileName = "default";
 	if ( argc > 1 ) {
 		string directory = "Levels/";

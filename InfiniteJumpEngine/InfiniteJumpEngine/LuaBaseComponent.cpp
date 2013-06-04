@@ -8,6 +8,7 @@ void greet()
 LuaBaseComponent::LuaBaseComponent(void)
 {
 	state = luaL_newstate();
+	luaL_openlibs(state);
 	open(state);
 	module(state)
     [
