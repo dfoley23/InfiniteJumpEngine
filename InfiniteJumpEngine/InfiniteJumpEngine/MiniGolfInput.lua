@@ -12,7 +12,19 @@ function keyboard_cb( key )
 end
 
 function spec_keyboard_cb( key )
-
+	if key == 102 then
+		eyePosX = eyePosX + 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	elseif key == 100 then
+		eyePosX = eyePosX - 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	elseif key == 101 then
+		eyePosY= eyePosY + 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	elseif key == 103 then
+		eyePosY= eyePosY - 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	end
 end
 
 function mouseclick_cb( button, state, x, y )
@@ -47,7 +59,14 @@ function mousedrag_cb( x, y )
 end
 
 function mousewheel_cb( wheel, direction, x, y )
-
+	if direction > 0 then
+		eyePosZ = eyePosZ - 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	else 
+		eyePosZ = eyePosZ + 1
+		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
+	end
 end
 
-requires( "main" )
+require( "main" )
+require( "GolfAttributes" )

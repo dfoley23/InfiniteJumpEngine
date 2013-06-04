@@ -118,24 +118,9 @@ void Game::idle(){
 	//Sleep (100);
 }
 
-void Game::glui_callBack( int id ) {
-	glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
-	switch(id) {
-	case 1:
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	default:
-		break;
-	}
-}
+void Game::glui_callBack( int id ){
 
+}
 
 void Game::setupInterface( void(*cb)(int i) ){
 	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_TOP );
@@ -170,6 +155,8 @@ void Game::mouse_click(int button, int state, int x, int y){
 	//if ( picking ) {
 	//	displayForPick( x, y );
 	//	} else
+	
+	//luabind::call_function<int>(lua->getState(), "mouseclick_cb", button, state, x, y);
 	{
 		if ( level->ballDirHud  != NULL ) {
 			if(state==GLUT_DOWN && !hasPressed ){
@@ -214,6 +201,7 @@ void Game::mouse_click(int button, int state, int x, int y){
 * mouse-drag function
 */
 void Game::mouse_drag(int x, int y){
+	//luabind::call_function<int>(lua->getState(), "mousedrag_cb", x, y);
 	if ( level->ballDirHud != NULL ) {
 		glm::vec3 curPos = level->ballDirHud->getCenter();
 		float scaledX = ((16.f*(float)x ) / ( (float)getWinWidth() )) - 8.f;
@@ -244,13 +232,7 @@ void Game::mouse_drag(int x, int y){
 * mouse middle wheel function
 */
 void Game::mouse_wheel( int wheel, int direction, int x, int y) {
-	if ( sub_levelID >= 0 ) {
-		if ( direction > 0 ) {
-			level->camera->camEye.z--;
-		} else {
-			level->camera->camEye.z++;
-		}
-	}
+	luabind::call_function<int>(lua->getState(), "mousewheel_cb", wheel, direction, x, y);
 }
 
 /*
@@ -291,32 +273,19 @@ void Game::switchLevel( ) {
 
 /*
 * the arrow key function
+* value of left is 102
+* value of right is
+* value of up is
+* value of down is
 */
 void Game::special_keyboard(int key, int x, int y) {  
-	//arrow keys control camera translations
-	if ( sub_levelID >= 0 ) {
-		switch(key) {    
-		case GLUT_KEY_RIGHT:
-			level->camera->camEye.x++;
-			break;
-		case GLUT_KEY_LEFT:
-			level->camera->camEye.x--;
-			break;
-		case GLUT_KEY_UP:
-			level->camera->camEye.y++;
-			break;
-		case GLUT_KEY_DOWN:
-			level->camera->camEye.y--;
-		default:
-			break;
-		}
-	}
+	luabind::call_function<int>(lua->getState(), "spec_keyboard_cb", key);
 }
 
 /*
 * the main keyboard function
 */
-void Game::keyboard(unsigned char key, int x, int y){
+void Game::keyboard(unsigned char key,int x, int y){
 	//call the lua function
 	luabind::call_function<int>(lua->getState(), "keyboard_cb", key);
 	switch (key) {
@@ -436,6 +405,13 @@ int Game::run(int argc, char** argv){
 	return 0;
 }
 
+float glmdot ( glm::vec3 u, glm::vec3 v ) {
+	return glm::dot( u, v );
+}
+
+glm::vec3 glmcross ( glm::vec3 u, glm::vec3 v ) {
+	return glm::cross( u, v );
+}
 /*
 * exports useful functions and classes to the lua state
 *
@@ -443,6 +419,8 @@ int Game::run(int argc, char** argv){
 void Game::exposeClassesToLua( ) {
 	luabind::module(lua->getState( )) [
 		//FUNCTIONS
+		luabind::def("dot", glmdot ),
+			luabind::def("cross", glmcross),
 
 			//CLASSES
 			luabind::class_<glm::vec3>("vec3")
