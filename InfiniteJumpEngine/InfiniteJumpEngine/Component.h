@@ -26,7 +26,7 @@ public:
 		return pickId;
 	}
 
-	virtual void sendMessage(Component* that, Component* other, char *s, glm::vec4 v = glm::vec4(0,0,0,0)){
+	virtual void sendMessage(Component* that, Component* other, const char *s, glm::vec4 v = glm::vec4(0,0,0,0)){
 		IJMessage *m =  new IJMessage(this, that, other, s, v);
 		sendMessage(m, that);
 		delete m; m = NULL;

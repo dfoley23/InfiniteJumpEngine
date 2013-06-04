@@ -318,10 +318,7 @@ void Game::special_keyboard(int key, int x, int y) {
 */
 void Game::keyboard(unsigned char key, int x, int y){
 	//call the lua function
-	luabind::call_function<int>(lua->getState(), "registerObject", "pressedKey", key);
-	cout << "value from lua registry " << 
-		luabind::call_function<int>(lua->getState(), "getRegisteredObject", "pressedKey" ) 
-		<< endl;
+	luabind::call_function<int>(lua->getState(), "keyboard_cb", key);
 	switch (key) {
 	case 32: //space
 		if (sub_levelID < 0 ) {
@@ -339,22 +336,6 @@ void Game::keyboard(unsigned char key, int x, int y){
 				);
 			level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 		}
-		break;
-	case 48: // 0
-		if ( sub_levelID >= 0 ) 
-			level->camera->switchProfile( 0 );
-		break;
-	case 49: // 1
-		if ( sub_levelID >= 0 ) 
-			level->camera->switchProfile( 1 );
-		break;
-	case 50: // 2
-		if ( sub_levelID >= 0 ) 
-			level->camera->switchProfile( 2 );
-		break;
-	case 51: // 3
-		if ( sub_levelID >= 0 ) 
-			level->camera->switchProfile( 3 );
 		break;
 	case 27: // escape
 		exit(0);
@@ -413,6 +394,11 @@ int Game::run(int argc, char** argv){
 	} catch (luabind::error &e){
 		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
 	}
+	try {
+		exposeClassesToLua( );
+	} catch( luabind::error &e) {
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+	}
 
 
 	char* profileName = "default";
@@ -430,16 +416,77 @@ int Game::run(int argc, char** argv){
 		sub_levelID = -1;
 		level = resman->getTriangleLevel(directory, sub_levelID);
 	}
+	
 	scores.loadProfile(profileName);
-	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
 	level->camera->proj = glm::perspective(
 		glm::float_t(45),
 		glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
 		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
-	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
+	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+	try {
+		luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );
+		//luabind::call_function<int>(lua->getState(), "keyboard_cb", '0');
+	} catch( luabind::error &e) {
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+	}
 
 	glutMainLoop();
 	return 0;
+}
+
+/*
+* exports useful functions and classes to the lua state
+*
+*/
+void Game::exposeClassesToLua( ) {
+	luabind::module(lua->getState( )) [
+		//FUNCTIONS
+
+			//CLASSES
+			luabind::class_<glm::vec3>("vec3")
+			.def(luabind::constructor<>())
+			.def_readwrite( "x", &glm::vec3::x )
+			.def_readwrite( "y", &glm::vec3::y )
+			.def_readwrite( "z", &glm::vec3::z )
+			.def(constructor<float, float, float>())
+			.def(constructor<glm::vec3&>()),
+
+			luabind::class_<glm::vec4>("vec4")
+			.def(luabind::constructor<>())
+			.def_readwrite( "x", &glm::vec4::x )
+			.def_readwrite( "y", &glm::vec4::y )
+			.def_readwrite( "z", &glm::vec4::z )
+			.def_readwrite( "w", &glm::vec4::w )
+			.def(constructor<float, float, float, float>())
+			.def(constructor<glm::vec4&>()),
+
+			luabind::class_<Camera>("Camera")
+			.def(luabind::constructor<>())
+			.def("switchProfile", &Camera::switchProfile)
+			.def("changeEyePos", &Camera::changeEyePos)
+			.def("changeLookAtPos", &Camera::changeLookAtPos)
+			.def("changeLightPos", &Camera::changeLightPos),
+
+			luabind::class_<Component>("Component")
+			.def(luabind::constructor<>())
+			.def("sendMessage", (void( Component::*)(Component*, Component*, const char*, glm::vec4 ))&Component::sendMessage )
+			.def("receiveMessage", &Component::receiveMessage ),
+
+			luabind::class_<Mesh>("Mesh")
+			.def(luabind::constructor<>())
+			.def(luabind::constructor<Mesh*>())
+			.def("translate", &Mesh::translate)
+			.def("rotate", (void( Mesh::*)(float, glm::vec3))&Mesh::rotate)
+			.def("rotate", (void( Mesh::*)(float, float, float))&Mesh::rotate)
+			.def("scale", &Mesh::scale)
+			.def("addVert", (void( Mesh::*)(glm::vec3, glm::vec3, glm::vec3, glm::vec2))&Mesh::addVert)
+			.def("createYCube", (void( Mesh::*)( 
+			float, float, glm::vec3, glm::vec3, glm::vec3 ))&Mesh::createYCube )
+			.def("changeColor", &Mesh::changeColor )
+			.def("getCenter", &Mesh::getCenter )
+	];
+	//luabind::object table = luabind::newtable( lua->getState( ) );
+	//luabind::globals(lua->getState( ))[ "registryTable" ] = table;
 }

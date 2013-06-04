@@ -57,6 +57,31 @@ glm::vec3 Camera::getDir( ) {
 	return camDir;
 }
 
+
+void Camera::changeLightPos( float x, float y, float z ) {
+	lightPos = glm::vec3( x, y, z );
+}
+
+void Camera::changeEyePos( float x, float y, float z ){
+	camEye = glm::vec3( x, y, z );
+}
+
+void Camera::changeLookAtPos( float x, float y, float z ){
+	camLookAt = glm::vec3( x, y, z );
+}
+
+/*void Camera::changeLightPos( glm::vec3 pos ) {
+	lightPos = pos;
+}
+
+void Camera::changeEyePos( glm::vec3 pos ){
+	camEye = pos;
+}
+
+void Camera::changeLookAtPos( glm::vec3 pos ){
+	camLookAt = pos;
+}*/
+
 // Accessor methods
 //  
 
@@ -69,4 +94,5 @@ void Camera::initAttributes ( ) {
 	camLookAt = glm::vec3( 0, 0, 0 );
 	camUp = glm::vec3( 0, 1, 0 );
 	camDir = glm::vec3( 0, 0, -1 );
+	cam = glm::lookAt( camEye, camLookAt, camUp );
 }

@@ -25,6 +25,8 @@ public:
 	* Empty Constructor
 	*/
 	Mesh ( );
+	
+	Mesh ( Mesh * );
 
 	/**
 	* Empty Destructor
@@ -86,6 +88,8 @@ public:
 	void setSmooth( int setting );
 
 	void addVert (float x, float y, float z, float r, float g, float b);
+
+	void addVert( glm::vec3 pos, glm::vec3 norm, glm::vec3 color, glm::vec2 tex );
 
 	void addVert (float x, float y, float z, 
 		float nx, float ny, float nz, 

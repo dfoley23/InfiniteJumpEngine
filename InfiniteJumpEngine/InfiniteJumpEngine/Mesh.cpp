@@ -29,6 +29,16 @@ Mesh::~Mesh ( ) {
 	vector<GLuint>().swap(textureNames);
 }
 
+Mesh::Mesh( Mesh * mesh) {
+	initAttributes();
+	vector<float>().swap(mesh->verts);
+	vector<float>().swap(mesh->norms);
+	vector<float>().swap(mesh->colors);
+	vector<float>().swap(mesh->texCoords);
+	vector<float>().swap(mesh->pickColors);
+	vector<GLuint>().swap(mesh->textureNames);
+}
+
 /**
 * @param  meshFile
 */
@@ -170,6 +180,10 @@ void Mesh::addVert (float x, float y, float z, float r, float g, float b){
 	float nx = 0, ny = 0, nz = 0;
 	//Calculate normal from previous verts if possible
 	addVert (x, y ,z, nx, ny, nz, r, g, b);
+}
+
+void Mesh::addVert( glm::vec3 pos, glm::vec3 norm, glm::vec3 color, glm::vec2 tex ) {
+	addVert( pos.x, pos.y, pos.z, norm.x, norm.y, norm.z, color.x, color.y, color.z, tex.x, tex.y );
 }
 
 /*
