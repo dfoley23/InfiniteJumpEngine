@@ -69,6 +69,7 @@ public:
 	void glui_callBack( int id );
 	void switchLevel( );
 	void exposeClassesToLua( );
+	LuaBaseComponent * getLuaBase( );
 
 	static void clear(){
 		delete inst; inst = NULL;

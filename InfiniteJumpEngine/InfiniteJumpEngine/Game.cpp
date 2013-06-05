@@ -56,12 +56,8 @@ void Game::display(){
 
 	t_delta = IJTime() - t_init;
 	if (level){
-		//if ( t_delta.getSeconds() > MIN_DT ) 
-		{
-			//fps_gauge->set_float_val(1.0/t_delta.getSeconds());
-			level->update((float)t_delta.getSeconds());
-			t_init.reset();
-		}
+		level->update((float)t_delta.getSeconds());
+		t_init.reset();
 
 		if (sub_levelID >= 0 ) {
 			glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
@@ -81,35 +77,7 @@ void Game::display(){
 }
 
 void Game::displayForPick( int x, int y ) {
-	//if ( picking ) 
-	{
-		glViewport(0,0,WIN_WIDTH,WIN_HEIGHT);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);	
 
-		level->drawForPick( );
-
-		pixel_t * pixels = (pixel_t *) malloc(getWinWidth()*getWinHeight() * sizeof(pixel_t));
-
-		glReadPixels(0,0,getWinWidth(),getWinHeight(),GL_RGBA,GL_UNSIGNED_BYTE,(void *)pixels);
-
-		pixel_t p = PIXEL(pixels, x, getWinHeight()-y, getWinWidth() );
-		float r = (float)RED(p);
-		float g = (float)GREEN(p);
-		float b = (float)BLUE(p);
-		if ( r != 0 || g != 0 || b != 0 ) {
-			for(int i = 0; i < static_cast<int>(level->getEntities().size()); i++) {
-				for (int j=0; j< static_cast<int>(level->getEntities().at(i)->getComponents().size()); j++){
-					if ( level->getEntities().at(i)->getComponents().at(j)->getPickId().x == r && 
-						level->getEntities().at(i)->getComponents().at(j)->getPickId().y == g && 
-						level->getEntities().at(i)->getComponents().at(j)->getPickId().z == b ) {
-							level->pickedMesh = (Mesh*)(level->getEntities().at(i)->getComponents().at(j));
-					}
-				}
-			}
-		}
-		free(pixels);
-	}
 }
 
 void Game::idle(){
@@ -152,12 +120,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
-	//if ( picking ) {
-	//	displayForPick( x, y );
-	//	} else
-	
 	//luabind::call_function<int>(lua->getState(), "mouseclick_cb", button, state, x, y);
-	{
 		if ( level->ballDirHud  != NULL ) {
 			if(state==GLUT_DOWN && !hasPressed ){
 				clickPoint = glm::vec3( x, 0, y );
@@ -194,7 +157,6 @@ void Game::mouse_click(int button, int state, int x, int y){
 				hasPressed = false;
 			}
 		}
-	}
 }
 
 /*
@@ -236,47 +198,11 @@ void Game::mouse_wheel( int wheel, int direction, int x, int y) {
 }
 
 /*
-* switches the level
-*/
-void Game::switchLevel( ) {
-	string totScore_str;
-	stringstream out;
-	totalStrokeCount+=curScore;
-	out << totalStrokeCount;
-	totScore_str = out.str();
-	if ( totalStrokeCount > 0 )
-		totScore_str = "+" + totScore_str;
-	string complete = "Total Score: " + totScore_str;
-	this->totalScore->set_text( complete.c_str() );
-
-	scores.registerScore(sub_levelID,holeStrokeCount);
-	cout << "Hole:" << sub_levelID
-		 << " Score:" << scores.getCurrentScore(sub_levelID) 
-		 << " Best:" << scores.getHighScore(sub_levelID)
-		 <<endl;
-	sub_levelID++;
-	if ( sub_levelID > level->maxSubLevels ) {
-		sub_levelID = 0;
-	}
-	level->clear();
-	delete level;
-	level = resman->getTriangleLevel(levelID, sub_levelID);
-	level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
-	level->camera->proj = glm::perspective(
-		glm::float_t(45),
-		glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
-		glm::float_t(0.1f),
-		glm::float_t(1000.0)
-		);
-	level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
-}
-
-/*
 * the arrow key function
-* value of left is 102
-* value of right is
-* value of up is
-* value of down is
+* value of left is 100
+* value of right is 102
+* value of up is 101
+* value of down is 103
 */
 void Game::special_keyboard(int key, int x, int y) {  
 	luabind::call_function<int>(lua->getState(), "spec_keyboard_cb", key);
@@ -309,6 +235,19 @@ void Game::keyboard(unsigned char key,int x, int y){
 	case 27: // escape
 		exit(0);
 		break;
+	case 43: // +
+		sub_levelID++;
+		level->clear();
+		delete level;
+		level = resman->getTriangleLevel(levelID, sub_levelID);
+		level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+		level->camera->proj = glm::perspective(
+			glm::float_t(45),
+			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+			glm::float_t(0.1f),
+			glm::float_t(1000.0)
+			);
+		level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 	case 119: //w
 		if ( sub_levelID >= 0 ) 
 			sendMessage(level->ball, NULL, "forward");
@@ -325,22 +264,49 @@ void Game::keyboard(unsigned char key,int x, int y){
 		if ( sub_levelID >= 0 ) 
 			sendMessage(level->ball, NULL, "right");
 		break;
-	case 43: // +
-		sub_levelID++;
-		level->clear();
-		delete level;
-		level = resman->getTriangleLevel(levelID, sub_levelID);
-		level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
-		level->camera->proj = glm::perspective(
-			glm::float_t(45),
-			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
-			glm::float_t(0.1f),
-			glm::float_t(1000.0)
-			);
-		level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 	default:
 		break;
 	}
+}
+
+/*
+* switches the level
+*/
+void Game::switchLevel( ) {
+	string totScore_str;
+	stringstream out;
+	totalStrokeCount+=curScore;
+	out << totalStrokeCount;
+	totScore_str = out.str();
+	if ( totalStrokeCount > 0 )
+		totScore_str = "+" + totScore_str;
+	string complete = "Total Score: " + totScore_str;
+	this->totalScore->set_text( complete.c_str() );
+
+	scores.registerScore(sub_levelID,holeStrokeCount);
+	cout << "Hole:" << sub_levelID
+		 << " Score:" << scores.getCurrentScore(sub_levelID) 
+		 << " Best:" << scores.getHighScore(sub_levelID)
+		 <<endl;
+	sub_levelID++;
+	if ( sub_levelID > level->maxSubLevels ) {
+		sub_levelID = 0;
+	}
+	level->clear();
+	delete level;
+	level = resman->getTriangleLevel(levelID, sub_levelID);
+	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+	luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
+	level->camera->proj = glm::perspective(
+		glm::float_t(45),
+		glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+		glm::float_t(0.1f),
+		glm::float_t(1000.0)
+		);
+}
+
+LuaBaseComponent * Game::getLuaBase( ){
+	return lua;
 }
 
 /*
@@ -365,7 +331,7 @@ int Game::run(int argc, char** argv){
 	}
 	try {
 		exposeClassesToLua( );
-	} catch( luabind::error &e) {
+	} catch (luabind::error &e){
 		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
 	}
 
@@ -393,11 +359,14 @@ int Game::run(int argc, char** argv){
 		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
-	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
 	try {
-		luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );
-		//luabind::call_function<int>(lua->getState(), "keyboard_cb", '0');
-	} catch( luabind::error &e) {
+	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+	}catch (luabind::error &e){
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+	}
+	try {
+	luabind::call_function<void>(lua->getState(), "setInitialCameraPos" );
+	}catch (luabind::error &e){
 		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
 	}
 
@@ -405,13 +374,32 @@ int Game::run(int argc, char** argv){
 	return 0;
 }
 
-float glmdot ( glm::vec3 u, glm::vec3 v ) {
+float glmdot ( float ux, float uy, float uz, float vx, float vy, float vz ) {
+	glm::vec3 u = glm::vec3( ux, uy, uz );
+	glm::vec3 v = glm::vec3( vx, vy, vz );
 	return glm::dot( u, v );
 }
 
-glm::vec3 glmcross ( glm::vec3 u, glm::vec3 v ) {
+glm::vec3 glmcross ( float ux, float uy, float uz, float vx, float vy, float vz ) {
+	glm::vec3 u = glm::vec3( ux, uy, uz );
+	glm::vec3 v = glm::vec3( vx, vy, vz );
 	return glm::cross( u, v );
 }
+
+glm::vec3 glmnormalize( float ux, float uy, float uz ) {
+	glm::vec3 u = glm::vec3( ux, uy, uz );
+	return glm::normalize( u );
+}
+
+float glmlength ( float ux, float uy, float uz ) {
+	glm::vec3 u = glm::vec3( ux, uy, uz );
+	return glm::length( u );
+}
+
+float glmacos( float dx ) {
+	return glm::acos( dx );
+}
+
 /*
 * exports useful functions and classes to the lua state
 *
@@ -421,6 +409,9 @@ void Game::exposeClassesToLua( ) {
 		//FUNCTIONS
 		luabind::def("dot", glmdot ),
 			luabind::def("cross", glmcross),
+			luabind::def("acos", glmacos),
+			luabind::def("length", glmlength),
+			luabind::def("normalize", glmnormalize),
 
 			//CLASSES
 			luabind::class_<glm::vec3>("vec3")
@@ -449,8 +440,9 @@ void Game::exposeClassesToLua( ) {
 
 			luabind::class_<Component>("Component")
 			.def(luabind::constructor<>())
-			.def("sendMessage", (void( Component::*)(Component*, Component*, const char*, glm::vec4 ))&Component::sendMessage )
-			.def("receiveMessage", &Component::receiveMessage ),
+			.def("sendMessage", (void( Component::*)(Component*, Component*, const char*, float, float, float, float ))&Component::sendMessage )
+			.def("receiveMessage", &Component::receiveMessage )
+			.def("getParent", &Component::getParent ),
 
 			luabind::class_<Mesh>("Mesh")
 			.def(luabind::constructor<>())

@@ -32,6 +32,13 @@ public:
 		delete m; m = NULL;
 	}
 
+	virtual void sendMessage(Component* that, Component* other, const char *s, float x, float y, float z, float w){
+		glm::vec4 v = glm::vec4( x, y, z, w );
+		IJMessage *m =  new IJMessage(this, that, other, s, v);
+		sendMessage(m, that);
+		delete m; m = NULL;
+	}
+
 	virtual void sendMessage( IJMessage *m, Component* that){
 		if (that){
 			that->receiveMessage(m);

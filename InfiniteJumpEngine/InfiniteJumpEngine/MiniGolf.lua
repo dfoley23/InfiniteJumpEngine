@@ -36,7 +36,7 @@ function loadDefaultScene()
 	--root.shouldDraw = function (comp) return (comp == root.branch) end
 end
 
-function setInitialCameraPos( num )
+function setInitialCameraPos( )
 	registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
 	registryTable["camera"]:changeLookAtPos( lookAtX, lookAtY, lookAtZ )
 	registryTable["camera"]:changeLightPos( lightPosX, lightPosY,lightPosZ )
