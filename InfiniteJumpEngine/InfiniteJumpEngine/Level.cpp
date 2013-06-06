@@ -81,23 +81,7 @@ void Level::draw( ){
 }
 
 void Level::drawForPick( ){
-	glm::vec3 pickColors = glm::vec3( 1, 0, 0 );
-	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
-		(*it)->drawForPick( pickBatch, pickColors );
-		pickColors.x+=5;
-		if ( pickColors.x > 255 ) {
-			pickColors.x = 0; 
-			pickColors.y+=5;
-			if ( pickColors.y > 255 ) {
-				pickColors.y = 0;
-				pickColors.z+=5;
-			}
-		}
-	}
-	pickBatch->cam = camera->cam;
-	pickBatch->proj = camera->proj;
-	pickBatch->lightPos = camera->lightPos;
-	pickBatch->draw( );
+
 }
 
 vector<Entity *> Level::getEntities( ) {

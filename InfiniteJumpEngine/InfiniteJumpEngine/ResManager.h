@@ -24,6 +24,8 @@ public:
 	~ResManager(void);
 	Level *getTriangleLevel(string filename, int holeID);
 	Mesh *readObjFile(string filename);
+	void writeScoreFile( string filename, string scores );
+	string readScoreFile( string filename );
 	void loadTextureList( string filename );
 	GLuint getTexture( string id );
 	void clearTextures( );

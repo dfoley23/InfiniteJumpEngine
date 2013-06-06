@@ -66,6 +66,7 @@ public:
 	void keyboard(unsigned char, int, int);
 	void special_keyboard(int key, int x, int y);
 	void setupInterface(void(*cb)(int i));
+	void setupHighScoreScreen( );
 	void glui_callBack( int id );
 	void switchLevel( );
 	void exposeClassesToLua( );
@@ -81,6 +82,8 @@ public:
 	GLUI_StaticText * holePar;
 	GLUI_StaticText * holeScore;
 	GLUI_StaticText * totalScore;
+	GLUI_StaticText * highScores;
+	GLUI_Panel * mainPanel;
 	//Move to Minigolf Script
 	int totalPar;
 	int curPar;

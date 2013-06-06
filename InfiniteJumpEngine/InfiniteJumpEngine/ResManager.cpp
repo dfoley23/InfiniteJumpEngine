@@ -277,6 +277,44 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 }
 
 /*
+* writes to a score file
+*/
+void ResManager::writeScoreFile( string filename, string scores ){ 
+  ofstream myfile;
+  string filePath = "Assets/";
+  myfile.open (filePath + filename);
+  if ( !myfile.fail() ) {
+	myfile << scores;
+	myfile.close();
+  }
+}
+
+/*
+* read a score file
+*/
+string ResManager::readScoreFile( string filename ) {
+	string scores;
+	string line;
+	ifstream input;
+	string filePath = "Assets/";
+	input.open(filePath + filename.c_str( ));
+
+	if ( input.fail( ) ) {
+		return "";
+	} else {
+		for( int lineNum=0; !input.eof( ); lineNum++ ) {
+			getline( input, line );
+			istringstream iss(line);
+			string name, str_score;
+			iss >> name;
+			iss >> str_score;
+			scores = name + " " + str_score + " ";			
+		}
+	}
+	return scores;
+}
+
+/*
 * reads an wavefront .obj from blender
 */
 Mesh * ResManager::readObjFile( string filename ) {

@@ -94,7 +94,7 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui = GLUI_Master.create_glui_subwindow( main_window, GLUI_SUBWINDOW_TOP );
 	glui->set_main_gfx_window( main_window );
 
-	GLUI_Panel *mainPanel = glui->add_panel( "" );
+	mainPanel = glui->add_panel( "" );
 
 	holePar = glui->add_statictext_to_panel( mainPanel, "Par Num" );
 	holeScore = glui->add_statictext_to_panel( mainPanel, "Score: 0" );
@@ -105,7 +105,6 @@ void Game::setupInterface( void(*cb)(int i) ){
 	}
 	glui->add_statictext_to_panel( mainPanel, spacer.c_str() );
 	glui->add_column_to_panel( mainPanel, false );
-	//courseName = glui->add_statictext_to_panel( mainPanel, "Course Name" );
 	holeName = glui->add_statictext_to_panel( mainPanel, "Hole Number: Name" );
 	spacer = " ";
 	for( int i=0; i<225; i++) {
@@ -114,9 +113,18 @@ void Game::setupInterface( void(*cb)(int i) ){
 	glui->add_statictext_to_panel( mainPanel, spacer.c_str() );
 	glui->add_column_to_panel( mainPanel, true );
 	totalScore = glui->add_statictext_to_panel( mainPanel, "Total Score: Num" );
+}
 
-	//fps_text = std::string("Hello World!");
-	//fps_gauge = glui->add_edittext_to_panel( mesh_panel, "FPS:", fps_text);
+void Game::setupHighScoreScreen( ) {
+	stringstream ss (stringstream::in | stringstream::out);
+	ss << totalScore->get_int_val();
+	string thisScore = ss.str();
+	holePar->set_text( "" );
+	holeScore->set_text( "" );
+	string scores = resman->readScoreFile( "courseScores.txt" );
+	scores = "test " + thisScore + "  " + scores;
+	holeName->set_text( scores.c_str() );
+	resman->writeScoreFile( "courseScores.txt", scores );
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
@@ -291,18 +299,31 @@ void Game::switchLevel( ) {
 	sub_levelID++;
 	if ( sub_levelID > level->maxSubLevels ) {
 		sub_levelID = 0;
+		level->clear();
+		delete level;
+		level = resman->getTriangleLevel(levelID, sub_levelID);
+		luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+		luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
+		level->camera->proj = glm::perspective(
+			glm::float_t(45),
+			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+			glm::float_t(0.1f),
+			glm::float_t(1000.0)
+			);
+		setupHighScoreScreen( );
+	} else {
+		level->clear();
+		delete level;
+		level = resman->getTriangleLevel(levelID, sub_levelID);
+		luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
+		luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
+		level->camera->proj = glm::perspective(
+			glm::float_t(45),
+			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
+			glm::float_t(0.1f),
+			glm::float_t(1000.0)
+			);
 	}
-	level->clear();
-	delete level;
-	level = resman->getTriangleLevel(levelID, sub_levelID);
-	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
-	luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
-	level->camera->proj = glm::perspective(
-		glm::float_t(45),
-		glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
-		glm::float_t(0.1f),
-		glm::float_t(1000.0)
-		);
 }
 
 LuaBaseComponent * Game::getLuaBase( ){
