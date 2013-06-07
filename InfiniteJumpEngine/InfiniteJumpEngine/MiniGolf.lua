@@ -19,8 +19,7 @@ function loadDefaultScene()
 	print ("Hole:" .. hole)
 
 	--require(GolfHoleSelector)
-	--course = GolfHoleSelector.__init(filename)
-	--course.setCurrentHole(hole)
+	--course = GolfHoleSelector.__init(filename, hole)
 	
 	--Define HUD
 	--hudRoot = GolfHud.init()

@@ -55,10 +55,17 @@ public:
 		return "Component";
 	}
 
+	static void registerLua(lua_State *lua){
+		module(lua)
+		[luabind::class_<Component>("Component")
+        .def(constructor<>())
+		//.def("sendMessage", ((void(*)(Component*, Component*, const char*, float, float, float, float))&Component::sendMessage))
+		];
+	}
+
 protected:
 	Component *parent;
 	glm::vec3 pickId;
-	lua_State* lua;
 };
 
 typedef std::vector<Component*> componentVector;
