@@ -136,14 +136,11 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					//build ball on tee
 					Entity * ballEntity = new Entity();
 					ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
+					//ball->setUpdateScript( "updateBall" );
 					ballEntity->addComponent( ball );
 					level->addEntity( ballEntity );
 					level->ball = ball;
-					try{
 					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "ball", boost::shared_ptr<Component>( ball ) );
-					}catch (luabind::error &e){
-						cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-					}
 				}
 			} else if ( !type.compare( "cup" ) ) {
 				if ( !course || begin_hole ) {
@@ -241,26 +238,30 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
 		hudEntity->addComponent( hudMesh );
 		hudMesh->translate( 0.77f, -0.70f, 0 );
+		Component * compassScript = new Component( "updateCompass");
+		compassScript->setLuaBase(Game::game()->getLuaBase() );
+		hudMesh->setUpdateScript( "updateCompass" );
+		hudMesh->setLuaBase(Game::game()->getLuaBase() );
 		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "compassMesh", boost::shared_ptr<Mesh>( hudMesh ) );
-		level->hudElement1 = hudMesh;
+		//level->hudElement1 = hudMesh;
 		level->hudEntities.push_back( hudEntity );
 
-		hudEntity = new Entity( );
-		hudMesh = new Mesh( );
+		Entity * hudEntity2 = new Entity( );
+		Mesh * hudMesh2 = new Mesh( );
 		vert0 = glm::vec3( -0.01, -0.01, 0 );
 		vert1 = glm::vec3( 0.01, -0.01, 0 );
 		vert2 = glm::vec3( 0.01, 0.01, 0 );
 		vert3 = glm::vec3( -0.01, 0.01, 0 );
 		norm = glm::vec3( 0, 0, 1 );
-		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
-		hudMesh->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.5f );
-		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
-		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
-		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
-		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
-		hudEntity->addComponent( hudMesh );
-		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "arrowMesh", boost::shared_ptr<Mesh>( hudMesh ) );
-		level->hudEntities.push_back( hudEntity );
+		hudMesh2->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
+		hudMesh2->addVert( vert1.x, vert1.y, vert1.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.5f );
+		hudMesh2->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
+		hudMesh2->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.5f );
+		hudMesh2->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
+		hudMesh2->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
+		hudEntity2->addComponent( hudMesh2 );
+		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "arrowMesh", boost::shared_ptr<Mesh>( hudMesh2 ) );
+		level->hudEntities.push_back( hudEntity2 );
 		return level;
 	} 
 	return NULL;

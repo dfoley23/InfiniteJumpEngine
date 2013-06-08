@@ -5,16 +5,15 @@ releasePointX = 0
 releasePointY = 0
 dragPointX = 0
 dragPointY = 0
-rad_to_deg = 57.2957795131
 
 function keyboard_cb( key )
-	if key == 48 then
+	if key == 48 then --0
 		registryTable["camera"]:switchProfile( 0 )
-	elseif key == 49 then
+	elseif key == 49 then --1
 		registryTable["camera"]:switchProfile( 1 )
-	elseif key == 50 then
+	elseif key == 50 then --2
 		registryTable["camera"]:switchProfile( 2 )
-	elseif key == 51 then
+	elseif key == 51 then --3
 		registryTable["camera"]:switchProfile( 3 )
 	elseif key == 119 then --w
 		registryTable["ball"]:sendMessage(registryTable["ball"], registryTable["ball"], "forward", 0.0,0.0,0.0,0.0);

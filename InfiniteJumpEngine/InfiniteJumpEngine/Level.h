@@ -55,10 +55,6 @@ public:
 
 	Ball * ball;
 
-	Mesh * hudElement1;
-
-	float orientation;
-
 	vector<Entity *> getEntities( );
 
 	vector<Entity*> hudEntities;

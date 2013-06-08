@@ -1,4 +1,6 @@
 
+rad_to_deg = 57.2957795131
+
 function loadDefaultScene()
 	--Define Root
 	--root = ComponentContainer.__init()
@@ -41,4 +43,19 @@ function setInitialCameraPos( num )
 	registryTable["camera"]:changeLightPos( lightPosX, lightPosY,lightPosZ )
 end
 
+function updateCompass( dT )
+	dir = vec3(registryTable["camera"]:getDir())
+	dir.y = 0
+	normDir = normalize( dir.x, dir.y, dir.z )
+	dDotNorth = dot( normDir.x, normDir.y, normDir.z, 0, 0, -1 )
+	theta = acos( dDotNorth)
+	orientation = theta * rad_to_deg
+	if normDir.x < 0 then
+		orientation = -orientation
+	end
+	--rotate the compass
+	registryTable["compassMesh"]:rotate( orientation, 0, 0, 1 )
+end
+
 require( "GolfAttributes" )
+require( "MiniGolfInput" )

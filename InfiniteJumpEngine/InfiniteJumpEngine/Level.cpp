@@ -14,7 +14,6 @@ Level::Level ( string name ) {
 	//make a mesh batch for all of the hud elements
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
 	hudBatch->texName = "hudAtlas";
-	hudElement1 = NULL;
 	ball = NULL;
 	orientation = 0.0f;
 }
@@ -37,20 +36,12 @@ void Level::update(float dT){
 		(*it)->update( dT );
 	}
 		
-
-	//TODO this stuff should go into the compass update script
-	//hud stuff
-	glm::vec3 dir = camera->getDir();
-	dir.y = 0;
-	float dDotNorth = glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) );
-	float theta = glm::acos( dDotNorth);
-	orientation = theta * rad_to_deg;
-	if ( dir.x < 0 ) {
-		orientation = -orientation;
+	//the compass script works but trying to call update inside of component doesnt work...
+	try {
+		luabind::call_function<int>(Game::game()->getLuaBase()->getState(), "updateCompass", dT);
+	} catch (luabind::error &e){
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
 	}
-	//rotate the compass
-	if ( hudElement1  != NULL ) 
-		hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
 }
 
 void Level::draw( ){

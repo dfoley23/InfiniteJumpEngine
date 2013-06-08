@@ -392,5 +392,7 @@ void Mesh::bindBuffers( MeshBatch * batch, int picking ) {
 void Mesh::initAttributes ( ) {
 	dynamic = 0;
 	smooth = 0;
+	updateScript = "";
+	usingScript = false;
 }
 

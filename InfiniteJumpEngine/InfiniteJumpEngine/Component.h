@@ -2,6 +2,7 @@
 #define COMPONENT_H
 #include "IJMessage.h"
 #include "luaIncludes.h"
+#include "LuaBaseComponent.h"
 #include "Drawable.h"
 #include <vector>
 
@@ -11,7 +12,20 @@ class Component: public Drawable
 public:
 	Component(){
 		parent = NULL;
+		updateScript = "";
+		usingScript = false;
 	}
+
+	Component(string scriptFile ) {
+		parent = NULL;
+		updateScript = scriptFile;
+		usingScript = true;
+	}
+
+	virtual void update(float dT );
+	void setLuaBase( LuaBaseComponent * luaBase );
+	void setUpdateScript( string scriptFile );
+
 	virtual Component * getParent(){return parent;};
 	virtual void setParent(Component * p){parent = p;};
 	virtual glm::mat4 transform(void){
@@ -21,9 +35,6 @@ public:
 		if (parent)
 			return parent->transform(in);
 		return in;
-	}
-	virtual glm::vec3 getPickId( ) {
-		return pickId;
 	}
 
 	virtual void sendMessage(Component* that, Component* other, const char *s, glm::vec4 v = glm::vec4(0,0,0,0)){
@@ -65,7 +76,9 @@ public:
 
 protected:
 	Component *parent;
-	glm::vec3 pickId;
+	string updateScript;
+	bool usingScript;
+	LuaBaseComponent * lua;
 };
 
 typedef std::vector<Component*> componentVector;

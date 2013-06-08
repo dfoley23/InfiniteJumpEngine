@@ -89,6 +89,7 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Contact.cpp" />
     <ClCompile Include="Cup.cpp" />
     <ClCompile Include="Entity.cpp" />

@@ -63,6 +63,7 @@ public:
 	/**
 	* @param  meshFile
 	*/
+
 	void createMesh (string meshFile );
 
 	void draw( MeshBatch * batch );

@@ -113,8 +113,6 @@ private:
 	bool hasPressed;
 	int totalStrokeCount;
 
-	int scaleDir;
-
 	LuaBaseComponent *lua;
 };
 

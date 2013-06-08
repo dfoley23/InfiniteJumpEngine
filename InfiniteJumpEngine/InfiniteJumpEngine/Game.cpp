@@ -62,7 +62,7 @@ void Game::display(){
 		if (sub_levelID >= 0 ) {
 			glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
 			glm::vec3 dir = level->ball->getPhysics()->getKinematics()->vel.getPosition();
-
+			
 			level->camera->update( pos, dir );
 		}
 		level->draw();
@@ -370,6 +370,7 @@ void Game::exposeClassesToLua( ) {
 			luabind::class_<Camera>("Camera")
 			.def(luabind::constructor<>())
 			.def("switchProfile", &Camera::switchProfile)
+			.def("getDir", &Camera::getDir)
 			.def("changeEyePos", &Camera::changeEyePos)
 			.def("changeLookAtPos", &Camera::changeLookAtPos)
 			.def("changeLightPos", &Camera::changeLightPos),
