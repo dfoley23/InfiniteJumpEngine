@@ -138,7 +138,6 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
 					ballEntity->addComponent( ball );
 					level->addEntity( ballEntity );
-					level->pickedMesh = ball->getMesh( );
 					level->ball = ball;
 					try{
 					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "ball", boost::shared_ptr<Component>( ball ) );
@@ -242,11 +241,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
 		hudEntity->addComponent( hudMesh );
 		hudMesh->translate( 0.77f, -0.70f, 0 );
-		try{
 		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "compassMesh", boost::shared_ptr<Mesh>( hudMesh ) );
-					}catch (luabind::error &e){
-						cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-					}
 		level->hudElement1 = hudMesh;
 		level->hudEntities.push_back( hudEntity );
 
@@ -264,12 +259,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.63f, 0.0f );
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 0, 0.5f, 0.0f );
 		hudEntity->addComponent( hudMesh );
-		try {
 		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "arrowMesh", boost::shared_ptr<Mesh>( hudMesh ) );
-					}catch (luabind::error &e){
-						cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-					}
-		level->ballDirHud = hudMesh;
 		level->hudEntities.push_back( hudEntity );
 		return level;
 	} 

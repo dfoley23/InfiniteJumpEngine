@@ -14,10 +14,7 @@ Level::Level ( string name ) {
 	//make a mesh batch for all of the hud elements
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
 	hudBatch->texName = "hudAtlas";
-	//debug mesh batch used for picking
-	pickBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
 	hudElement1 = NULL;
-	ballDirHud = NULL;
 	ball = NULL;
 	orientation = 0.0f;
 }
@@ -26,7 +23,6 @@ Level::~Level ( ) {
 	clear();
 	vector<Entity*>().swap(entities);
 	delete meshBatch;
-	delete pickBatch;
 	delete hudBatch;
 }
 
@@ -41,6 +37,8 @@ void Level::update(float dT){
 		(*it)->update( dT );
 	}
 		
+
+	//TODO this stuff should go into the compass update script
 	//hud stuff
 	glm::vec3 dir = camera->getDir();
 	dir.y = 0;

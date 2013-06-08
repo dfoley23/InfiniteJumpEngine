@@ -82,37 +82,7 @@ void Mesh::draw( MeshBatch * batch ) {
 * mainly used for moving around object in debug mode
 */
 void Mesh::drawForPick( MeshBatch * batch, glm::vec3 id ) {
-	pickId.x = id.x;
-	pickId.y = id.y;
-	pickId.z = id.z;
-	int index = 0;
-	if ( dynamic ) {
-		batch->verts.resize( batch->verts.size( ) + 1 );
-		batch->norms.resize( batch->norms.size( ) + 1 );
-		batch->colors.resize( batch->colors.size( ) + 1 );
-		batch->texCoords.resize( batch->texCoords.size( ) + 1 );
-		index = static_cast<int>(batch->verts.size( )) - 1;
-		modelView = glm::mat4( );
-		modelView = translations * rotations * scaling; 
-		batch->modelViews.push_back( modelView );
-		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
-		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
-		batch->texCoords.at(index).insert( batch->texCoords.at(index).end(), texCoords.begin(), texCoords.end() );
-		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-			batch->colors.at(index).push_back( id.x / 255.0f );
-			batch->colors.at(index).push_back( id.y / 255.0f );
-			batch->colors.at(index).push_back( id.z / 255.0f );
-		}
-	} else {
-		batch->verts.at(index).insert( batch->verts.at(index).end(), verts.begin(), verts.end() );
-		batch->norms.at(index).insert( batch->norms.at(index).end(), norms.begin(), norms.end() );
-		batch->texCoords.at(index).insert( batch->texCoords.at(index).end(), texCoords.begin(), texCoords.end() );
-		for(int i=0; i < static_cast<int>(verts.size()); i+=3) {
-			batch->colors.at(index).push_back( id.x / 255.0f );
-			batch->colors.at(index).push_back( id.y / 255.0f );
-			batch->colors.at(index).push_back( id.z / 255.0f );
-		}
-	}
+	
 }
 
 /**
@@ -134,6 +104,12 @@ void Mesh::translate (float x, float y, float z )
 */
 void Mesh::rotate (float angle, glm::vec3 axis)
 {
+	dynamic = true;
+	rotations = glm::rotate( glm::mat4(1.0f), angle, axis );
+}
+
+void Mesh::rotate( float angle, float x, float y, float z ) {
+	glm::vec3 axis = glm::vec3( x, y, z );
 	dynamic = true;
 	rotations = glm::rotate( glm::mat4(1.0f), angle, axis );
 }

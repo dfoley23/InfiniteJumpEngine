@@ -49,19 +49,13 @@ public:
 
 	void addEntity( Entity * entity );
 
-	Mesh * pickedMesh;
-
 	MeshBatch * meshBatch;
 
 	MeshBatch * hudBatch;
 
-	MeshBatch * pickBatch;
-
 	Ball * ball;
 
 	Mesh * hudElement1;
-
-	Mesh * ballDirHud;
 
 	float orientation;
 
