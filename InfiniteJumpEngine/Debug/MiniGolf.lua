@@ -1,6 +1,9 @@
 
 rad_to_deg = 57.2957795131
 
+dofile( "GolfAttributes.lua" )
+dofile( "MiniGolfInput.lua" )
+
 function loadDefaultScene()
 	--Define Root
 	--root = ComponentContainer.__init()
@@ -56,6 +59,3 @@ function updateCompass( dT )
 	--rotate the compass
 	registryTable["compassMesh"]:rotate( orientation, 0, 0, 1 )
 end
-
-require( "GolfAttributes" )
-require( "MiniGolfInput" )

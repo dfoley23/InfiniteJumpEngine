@@ -1,3 +1,4 @@
+dofile( "GolfAttributes.lua" )
 
 function loadDefaultScene()
 	--Define Root
@@ -40,5 +41,3 @@ function setInitialCameraPos( num )
 	registryTable["camera"]:changeLookAtPos( lookAtX, lookAtY, lookAtZ )
 	registryTable["camera"]:changeLightPos( lightPosX, lightPosY,lightPosZ )
 end
-
-require( "GolfAttributes" )

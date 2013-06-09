@@ -6,6 +6,8 @@ releasePointY = 0
 dragPointX = 0
 dragPointY = 0
 
+dofile( "GolfAttributes.lua" )
+
 function keyboard_cb( key )
 	if key == 48 then --0
 		registryTable["camera"]:switchProfile( 0 )
@@ -127,5 +129,3 @@ function mousewheel_cb( wheel, direction, x, y )
 		registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
 	end
 end
-
-require( "GolfAttributes" )
