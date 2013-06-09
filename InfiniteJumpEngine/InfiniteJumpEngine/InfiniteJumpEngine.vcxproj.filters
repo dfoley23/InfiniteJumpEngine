@@ -149,9 +149,6 @@
     <ClCompile Include="ScoresComponent.cpp">
       <Filter>Source Files\Minigolf-Specific</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files\General</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Updatable.h">

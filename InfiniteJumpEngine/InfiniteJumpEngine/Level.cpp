@@ -15,7 +15,6 @@ Level::Level ( string name ) {
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
 	hudBatch->texName = "hudAtlas";
 	ball = NULL;
-	orientation = 0.0f;
 }
 
 Level::~Level ( ) { 
@@ -37,11 +36,11 @@ void Level::update(float dT){
 	}
 		
 	//the compass script works but trying to call update inside of component doesnt work...
-	try {
+	/*try {
 		luabind::call_function<int>(Game::game()->getLuaBase()->getState(), "updateCompass", dT);
 	} catch (luabind::error &e){
 		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-	}
+	}*/
 }
 
 void Level::draw( ){

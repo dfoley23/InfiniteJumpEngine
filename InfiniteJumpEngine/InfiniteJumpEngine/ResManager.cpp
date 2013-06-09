@@ -236,12 +236,10 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert0.x, vert0.y, vert0.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 1 );
 		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 0.5, 0.0 );
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
-		hudEntity->addComponent( hudMesh );
 		hudMesh->translate( 0.77f, -0.70f, 0 );
-		Component * compassScript = new Component( "updateCompass");
-		compassScript->setLuaBase(Game::game()->getLuaBase() );
 		hudMesh->setUpdateScript( "updateCompass" );
 		hudMesh->setLuaBase(Game::game()->getLuaBase() );
+		hudEntity->addComponent( hudMesh );
 		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "compassMesh", boost::shared_ptr<Mesh>( hudMesh ) );
 		//level->hudElement1 = hudMesh;
 		level->hudEntities.push_back( hudEntity );

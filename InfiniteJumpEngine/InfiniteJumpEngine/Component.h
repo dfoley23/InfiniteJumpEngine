@@ -22,9 +22,25 @@ public:
 		usingScript = true;
 	}
 
-	virtual void update(float dT );
-	void setLuaBase( LuaBaseComponent * luaBase );
-	void setUpdateScript( string scriptFile );
+	virtual void update(float dT ) {
+		if ( usingScript ) {
+			cout << "update using lua script" << updateScript << endl;
+			try {
+				luabind::call_function<int>(lua->getState(), "updateCompass", dT);
+			} catch (luabind::error &e){
+				cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+			}
+		}
+	}
+
+	void setLuaBase( LuaBaseComponent * luaBase ){
+		lua = luaBase;
+	}
+
+	void setUpdateScript( string scriptFile ) {
+		updateScript = scriptFile;
+		usingScript = true;
+	}
 
 	virtual Component * getParent(){return parent;};
 	virtual void setParent(Component * p){parent = p;};
