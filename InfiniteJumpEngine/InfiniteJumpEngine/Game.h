@@ -90,6 +90,7 @@ public:
 	int curScore;
 	int holeStrokeCount;
 	ScoresComponent scores;
+	char* profileName;
 private:
 	Game(void);
 	static Game* inst;

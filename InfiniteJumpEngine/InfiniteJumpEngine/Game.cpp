@@ -175,6 +175,7 @@ void Game::keyboard(unsigned char key,int x, int y){
 		}
 		break;
 	case 27: // escape
+		scores.saveProfile(profileName);
 		exit(0);
 		break;
 	case 43: // +
@@ -275,7 +276,7 @@ int Game::run(int argc, char** argv){
 	}
 
 
-	char* profileName = "default";
+	profileName = "default.sav";
 	if ( argc > 1 ) {
 		string directory = "Levels/";
 		levelID = directory + argv[1];

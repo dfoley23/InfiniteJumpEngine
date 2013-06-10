@@ -5,44 +5,51 @@ ScoresComponent::ScoresComponent(void)
 {
 	firstHole = 0;
 	lastHole = -1;
-	profileName = "default";
+	profileName = "default.sav";
 }
 
 
 ScoresComponent::~ScoresComponent(void)
 {
-	//saveProfile(profileName);
 }
 
 void ScoresComponent::loadProfile(char* filename)
 {
-	/*
 	ifstream proFile;
 	proFile.open (filename);
-	int numHoles;
-	proFile >> numHoles;
-	loadHoles(numHoles);
-	score s;
-	for (int i = 0; i < numHoles && i < highScores.size(); i++){
-		proFile >> s;
-		highScores[i] = s;
+	if (!proFile.fail()){
+		int numHoles;
+		proFile >> numHoles;
+		loadHoles(numHoles);
+		score s;
+		for (int i = 0; i < numHoles && i < highScores.size(); i++){
+			proFile >> s;
+			highScores[i] = s;
+		}
+		proFile.close();		
+		cout << "Loading profile:" << filename << endl;
+	} else {
+		cerr << "Failed to open profile for reading:" << filename;
 	}
-	proFile.close();
-	strcpy(profileName, filename);
-	*/
 }
 
 void ScoresComponent::saveProfile(char* filename)
 {
-	/*
 	ofstream proFile;
 	proFile.open (filename);
-	proFile << highScores.size();
-	for (int i = 0; i < highScores.size(); i++){
-		proFile << highScores.at(i);
+	if (!proFile.fail()){
+		int numHoles = highScores.size();
+		proFile << numHoles << endl;
+		score s;
+		for (int i = 0; i < numHoles; i++){
+			s = highScores[i];
+			proFile << s << endl;
+		}
+		proFile.close();
+		cout << "Saving profile:" << filename << endl;
+	} else {
+		cerr << "Failed to open profile for writing:" << filename;
 	}
-	proFile.close();
-	*/
 }
 
 void ScoresComponent::loadHoles(holeID last)
