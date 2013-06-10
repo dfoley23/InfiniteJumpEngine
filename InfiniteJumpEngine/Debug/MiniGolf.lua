@@ -1,4 +1,9 @@
 
+rad_to_deg = 57.2957795131
+
+dofile( "GolfAttributes.lua" )
+dofile( "MiniGolfInput.lua" )
+
 function loadDefaultScene()
 	--Define Root
 	--root = ComponentContainer.__init()
@@ -19,8 +24,7 @@ function loadDefaultScene()
 	print ("Hole:" .. hole)
 
 	--require(GolfHoleSelector)
-	--course = GolfHoleSelector.__init(filename)
-	--course.setCurrentHole(hole)
+	--course = GolfHoleSelector.__init(filename, hole)
 	
 	--Define HUD
 	--hudRoot = GolfHud.init()
@@ -42,4 +46,16 @@ function setInitialCameraPos( num )
 	registryTable["camera"]:changeLightPos( lightPosX, lightPosY,lightPosZ )
 end
 
-require( "GolfAttributes" )
+function updateCompass( dT )
+	dir = vec3(registryTable["camera"]:getDir())
+	dir.y = 0
+	normDir = normalize( dir.x, dir.y, dir.z )
+	dDotNorth = dot( normDir.x, normDir.y, normDir.z, 0, 0, -1 )
+	theta = acos( dDotNorth)
+	orientation = theta * rad_to_deg
+	if normDir.x < 0 then
+		orientation = -orientation
+	end
+	--rotate the compass
+	registryTable["compassMesh"]:rotate( orientation, 0, 0, 1 )
+end

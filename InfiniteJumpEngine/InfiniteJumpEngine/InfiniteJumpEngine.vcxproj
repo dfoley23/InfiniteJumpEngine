@@ -158,13 +158,6 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSet.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="GolfAttributes.lua" />
-    <None Include="GolfHoleSelector.lua" />
-    <None Include="main.lua" />
-    <None Include="MiniGolf.lua" />
-    <None Include="MiniGolfInput.lua" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -63,6 +63,7 @@ public:
 	/**
 	* @param  meshFile
 	*/
+
 	void createMesh (string meshFile );
 
 	void draw( MeshBatch * batch );
@@ -72,6 +73,8 @@ public:
 	void translate (float x, float y, float z );
 
 	void rotate (float angle, glm::vec3 axis);
+
+	void rotate ( float angle, float x, float y, float z );
 
 	void rotate( float x, float y, float z );
 

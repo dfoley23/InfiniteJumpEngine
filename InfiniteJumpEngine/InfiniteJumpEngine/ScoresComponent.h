@@ -71,6 +71,8 @@ public:
 	holeID getCurrentWorstHole();
 	//Scores below this value are considered unfinished holes.
 	static const int NO_SCORE = 0;
+
+	inline char* getProfileName(){return profileName;}
 protected:
 	//The par of each course.
 	ScoreContainer pars;

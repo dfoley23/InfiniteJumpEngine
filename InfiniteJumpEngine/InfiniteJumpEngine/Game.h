@@ -90,6 +90,7 @@ public:
 	int curScore;
 	int holeStrokeCount;
 	ScoresComponent scores;
+	char* profileName;
 private:
 	Game(void);
 	static Game* inst;
@@ -112,8 +113,6 @@ private:
 	glm::vec3 clickPoint;
 	bool hasPressed;
 	int totalStrokeCount;
-
-	int scaleDir;
 
 	LuaBaseComponent *lua;
 };

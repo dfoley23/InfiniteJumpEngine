@@ -10,3 +10,8 @@ lookAtZ = 0
 lightPosX = 0
 lightPosY = 100
 lightPosZ = 0
+
+hardShot = 3
+softShot = 2
+
+arrowScale = 16.0

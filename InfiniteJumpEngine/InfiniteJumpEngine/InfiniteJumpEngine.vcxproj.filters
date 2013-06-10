@@ -263,21 +263,4 @@
       <Filter>Header Files\Minigolf-Specific</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="MiniGolf.lua">
-      <Filter>Source Files\Minigolf-Specific</Filter>
-    </None>
-    <None Include="main.lua">
-      <Filter>Source Files\General</Filter>
-    </None>
-    <None Include="GolfHoleSelector.lua">
-      <Filter>Source Files\Minigolf-Specific</Filter>
-    </None>
-    <None Include="MiniGolfInput.lua">
-      <Filter>Source Files\Minigolf-Specific</Filter>
-    </None>
-    <None Include="GolfAttributes.lua">
-      <Filter>Source Files\Minigolf-Specific</Filter>
-    </None>
-  </ItemGroup>
 </Project>

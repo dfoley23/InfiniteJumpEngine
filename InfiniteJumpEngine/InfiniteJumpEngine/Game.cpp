@@ -62,7 +62,7 @@ void Game::display(){
 		if (sub_levelID >= 0 ) {
 			glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
 			glm::vec3 dir = level->ball->getPhysics()->getKinematics()->vel.getPosition();
-
+			
 			level->camera->update( pos, dir );
 		}
 		level->draw();
@@ -128,74 +128,14 @@ void Game::setupHighScoreScreen( ) {
 }
 
 void Game::mouse_click(int button, int state, int x, int y){ 
-	//luabind::call_function<int>(lua->getState(), "mouseclick_cb", button, state, x, y);
-		if ( level->ballDirHud  != NULL ) {
-			if(state==GLUT_DOWN && !hasPressed ){
-				clickPoint = glm::vec3( x, 0, y );
-				float scaledX = ((2.f*(float)x ) / ( (float)getWinWidth() )) - 1.f;
-				float scaledY = ((-2.f*(float)y ) / ( (float)getWinHeight() )) + 1.f;
-				level->ballDirHud->translate( scaledX, scaledY, 0 );
-				hasPressed = true;
-			} else if ( state==GLUT_UP && hasPressed ) {
-				holeStrokeCount++;
-				curScore = holeStrokeCount - curPar;
-				string curScore_str;
-				stringstream out;
-				out << curScore;
-				curScore_str = out.str();
-				if ( curScore > 0 )
-					curScore_str = "+" + curScore_str;
-				string complete = "Hole Score: " + curScore_str;
-				this->holeScore->set_text( complete.c_str() );
-				glm::vec3 releasePoint = glm::vec3( x, 0, y);
-				glm::vec3 dir = -( releasePoint - clickPoint );
-				if ( glm::length( dir ) > 100 ) {
-					dir = glm::normalize( dir ) * 3.f;
-				} else if ( glm::length( dir ) > 50 ) {
-					dir = glm::normalize( dir ) * 2.f;
-				} else {
-					dir = glm::normalize( dir );
-				}
-				//cout << dir.x << " : " << dir.z << endl;
-				if ( glm::length( dir ) > 0.07f ) {
-					sendMessage(level->ball, NULL, "shoot", glm::vec4(dir, 0.f));
-				}
-				level->ballDirHud->scale( 1, 1, 1 );
-				level->ballDirHud->rotate( 0, glm::vec3( 0, 0, 1 ) );
-				hasPressed = false;
-			}
-		}
+	luabind::call_function<int>(lua->getState(), "mouseclick_cb", button, state, x, y);
 }
 
 /*
 * mouse-drag function
 */
 void Game::mouse_drag(int x, int y){
-	//luabind::call_function<int>(lua->getState(), "mousedrag_cb", x, y);
-	if ( level->ballDirHud != NULL ) {
-		glm::vec3 curPos = level->ballDirHud->getCenter();
-		float scaledX = ((16.f*(float)x ) / ( (float)getWinWidth() )) - 8.f;
-		float scaledY = ((16.f*(float)y ) / ( (float)getWinHeight() )) - 8.f;
-		if ( glm::abs(curPos.y-scaledY) > 0 ) {
-			glm::vec3 dragPoint = glm::vec3( x, 0, y );
-			level->ballDirHud->scale( 1, 1+(glm::abs(curPos.y-scaledY)), 1 );
-			glm::vec3 dir = -( dragPoint - clickPoint );
-			float angle = glm::acos( glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) ) );
-			if ( x > clickPoint.x ) {
-				angle = -angle;
-			}
-			level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0, 0, -1 ) );
-		} else if ( glm::abs( curPos.x-scaledX) > 0 ) {
-			glm::vec3 dragPoint = glm::vec3( x, 0, y );
-			level->ballDirHud->scale( 1, 1+(glm::abs(curPos.x-scaledX)), 1 );
-			glm::vec3 dir = -( dragPoint - clickPoint );
-			float angle = glm::acos( glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) ) );
-			if ( x > clickPoint.x ) {
-				angle = -angle;
-			}
-			level->ballDirHud->rotate( angle*rad_to_deg, glm::vec3( 0.f, 0.f, -1.f ) );
-		}
-	}
+	luabind::call_function<int>(lua->getState(), "mousedrag_cb", x, y);
 }
 
 /*
@@ -230,47 +170,31 @@ void Game::keyboard(unsigned char key,int x, int y){
 			delete level;
 			resman->clearTextures();
 			level = resman->getTriangleLevel(levelID, sub_levelID);
-			level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+		    luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
 			level->camera->proj = glm::perspective(
 				glm::float_t(45),
 				glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
 				glm::float_t(0.1f),
 				glm::float_t(1000.0)
 				);
-			level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
 		}
 		break;
 	case 27: // escape
+		scores.saveProfile(profileName);
 		exit(0);
 		break;
 	case 43: // +
 		sub_levelID++;
 		level->clear();
 		delete level;
-		level = resman->getTriangleLevel(levelID, sub_levelID);
-		level->camera->cam = glm::lookAt(glm::vec3(0,4,6), glm::vec3(0,0,0), glm::vec3(0,1,0));
+		level = resman->getTriangleLevel(levelID, sub_levelID);		
+		luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );	
 		level->camera->proj = glm::perspective(
 			glm::float_t(45),
 			glm::float_t(getWinWidth()) / glm::float_t(getWinHeight()),
 			glm::float_t(0.1f),
 			glm::float_t(1000.0)
 			);
-		level->camera->lightPos = glm::vec3( 0.0, 100.0f, 0.0 );
-	case 119: //w
-		if ( sub_levelID >= 0 ) 
-			sendMessage(level->ball, NULL, "forward");
-		break;
-	case 97: //a
-		if ( sub_levelID >= 0 ) 
-			sendMessage(level->ball, NULL, "left");
-		break;
-	case 115: //s
-		if ( sub_levelID >= 0 ) 
-			sendMessage(level->ball, NULL, "back");
-		break;
-	case 100: //d
-		if ( sub_levelID >= 0 ) 
-			sendMessage(level->ball, NULL, "right");
 		break;
 	default:
 		break;
@@ -357,7 +281,7 @@ int Game::run(int argc, char** argv){
 	}
 
 
-	char* profileName = "default";
+	profileName = "default.sav";
 	if ( argc > 1 ) {
 		string directory = "Levels/";
 		levelID = directory + argv[1];
@@ -380,16 +304,8 @@ int Game::run(int argc, char** argv){
 		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
-	try {
 	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
-	}catch (luabind::error &e){
-		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-	}
-	try {
-	luabind::call_function<void>(lua->getState(), "setInitialCameraPos" );
-	}catch (luabind::error &e){
-		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-	}
+	luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );
 
 	glutMainLoop();
 	return 0;
@@ -455,6 +371,7 @@ void Game::exposeClassesToLua( ) {
 			luabind::class_<Camera>("Camera")
 			.def(luabind::constructor<>())
 			.def("switchProfile", &Camera::switchProfile)
+			.def("getDir", &Camera::getDir)
 			.def("changeEyePos", &Camera::changeEyePos)
 			.def("changeLookAtPos", &Camera::changeLookAtPos)
 			.def("changeLightPos", &Camera::changeLightPos),
@@ -469,8 +386,7 @@ void Game::exposeClassesToLua( ) {
 			.def(luabind::constructor<>())
 			.def(luabind::constructor<Mesh*>())
 			.def("translate", &Mesh::translate)
-			.def("rotate", (void( Mesh::*)(float, glm::vec3))&Mesh::rotate)
-			.def("rotate", (void( Mesh::*)(float, float, float))&Mesh::rotate)
+			.def("rotate", (void( Mesh::*)(float, float, float, float))&Mesh::rotate)
 			.def("scale", &Mesh::scale)
 			.def("addVert", (void( Mesh::*)(glm::vec3, glm::vec3, glm::vec3, glm::vec2))&Mesh::addVert)
 			.def("createYCube", (void( Mesh::*)( 

@@ -22,11 +22,11 @@ public:
 	//void changeLightPos( glm::vec3 pos );
 	//void changeEyePos( glm::vec3 pos );
 	//void changeLookAtPos( glm::vec3 pos );
+	glm::vec3 getDir( );
 
 	glm::vec3 camEye;
 	glm::vec3 camLookAt;
 	glm::vec3 camUp;
-	glm::vec3 getDir( );
 	glm::vec3 camDir;
 protected:
 

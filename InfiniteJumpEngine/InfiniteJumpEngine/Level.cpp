@@ -14,19 +14,13 @@ Level::Level ( string name ) {
 	//make a mesh batch for all of the hud elements
 	hudBatch = new MeshBatch( new Shader( "shaders/spriteBasic.vert", "shaders/spriteBasic.frag") );
 	hudBatch->texName = "hudAtlas";
-	//debug mesh batch used for picking
-	pickBatch = new MeshBatch( new Shader( "shaders/gles.vert", "shaders/gles.frag") );
-	hudElement1 = NULL;
-	ballDirHud = NULL;
 	ball = NULL;
-	orientation = 0.0f;
 }
 
 Level::~Level ( ) { 
 	clear();
 	vector<Entity*>().swap(entities);
 	delete meshBatch;
-	delete pickBatch;
 	delete hudBatch;
 }
 
@@ -41,18 +35,12 @@ void Level::update(float dT){
 		(*it)->update( dT );
 	}
 		
-	//hud stuff
-	glm::vec3 dir = camera->getDir();
-	dir.y = 0;
-	float dDotNorth = glm::dot( glm::normalize(dir), glm::vec3( 0, 0, -1 ) );
-	float theta = glm::acos( dDotNorth);
-	orientation = theta * rad_to_deg;
-	if ( dir.x < 0 ) {
-		orientation = -orientation;
-	}
-	//rotate the compass
-	if ( hudElement1  != NULL ) 
-		hudElement1->rotate( orientation, glm::vec3( 0, 0, 1 ) );
+	//the compass script works but trying to call update inside of component doesnt work...
+	/*try {
+		luabind::call_function<int>(Game::game()->getLuaBase()->getState(), "updateCompass", dT);
+	} catch (luabind::error &e){
+		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+	}*/
 }
 
 void Level::draw( ){

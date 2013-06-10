@@ -4,7 +4,7 @@
 
 class MeshBatch;
 
-class Drawable : public Updatable
+class Drawable: public Updatable
 {
 public:
 	virtual void draw(MeshBatch *){};

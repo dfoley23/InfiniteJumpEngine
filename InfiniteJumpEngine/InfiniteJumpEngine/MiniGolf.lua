@@ -1,3 +1,6 @@
+dofile( "GolfAttributes.lua" )
+
+profile = "Profiles/default.sav"
 
 function loadDefaultScene()
 	--Define Root
@@ -9,7 +12,6 @@ function loadDefaultScene()
 	--Define Course
 	local hole = 0
 	local filename = "Levels/course.db"
-	local profile = "Profiles/default.sav"
 	if argc > 1 then 
 		filename = argv[1]
 		if argc > 2 then
@@ -22,6 +24,12 @@ function loadDefaultScene()
 	print ("Filename:" .. filename)
 	print ("Hole:" .. hole)
 	print ("Profile:" .. profile)
+	local courseFile = io.open(filename, "r")
+	if courseFile ~= nil then
+		print ("(Lua)Successfully opened courses:" .. filename)
+	else
+		print ("(Lua)Failed to open courses:" .. filename)
+	end
 	--require(GolfHoleSelector)
 	--course = GolfHoleSelector.__init(filename, hole)
 	
@@ -33,9 +41,21 @@ function loadDefaultScene()
 	--hudRoot.addComponent(hudGLUI)
 	
 	--Define Profile
-	--open file
-	--read best scores into holes
-	
+	local profileFile = io.open(profile, "r")
+	if profileFile ~= nil then
+		local courseNum = 0
+		--read best scores into holes
+		while true do
+			line = profileFile.read(profileFile)
+			if not line then break end
+			--course.setBestScore(courseNum, int(line))
+			courseNum = courseNum + 1
+			print ("Course:" .. courseNum .. " Score:" .. line)
+		end
+	else
+		print("(Lua)Failed to open profile:" .. profile)
+	end
+
 	--root.addComponent(course)
 	--root.addComponent(hudRoot)
 	--root.branch = course
@@ -47,10 +67,8 @@ function onExit()
 	--save best scores from each hole into profile
 end
 
-function setInitialCameraPos( )
+function setInitialCameraPos( num )
 	registryTable["camera"]:changeEyePos( eyePosX, eyePosY, eyePosZ )
 	registryTable["camera"]:changeLookAtPos( lookAtX, lookAtY, lookAtZ )
 	registryTable["camera"]:changeLightPos( lightPosX, lightPosY,lightPosZ )
 end
-
-require( "GolfAttributes" )
