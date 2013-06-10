@@ -29,6 +29,14 @@ void KinematicComponent::applyImpulse( glm::vec3 impulse ) {
 	acc.setPosition( impulse );
 }
 
+glm::vec3 KinematicComponent::getDir( ) {
+	return vel.getPosition();
+}
+
+glm::vec3 KinematicComponent::getPos( ) {
+	return loc.getPosition();
+}
+
 /*
 * recieves messages to apply kinematics
 */

@@ -21,5 +21,4 @@ function registerArg( value )
 	print( out )
 end
 
-dofile( "MiniGolfInput.lua" )
-dofile( "MiniGolf.lua")
+dofile("MiniGolf.lua")

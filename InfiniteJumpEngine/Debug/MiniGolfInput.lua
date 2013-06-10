@@ -10,13 +10,13 @@ dofile( "GolfAttributes.lua" )
 
 function keyboard_cb( key )
 	if key == 48 then --0
-		registryTable["camera"]:switchProfile( 0 )
+		camProfile = 0
 	elseif key == 49 then --1
-		registryTable["camera"]:switchProfile( 1 )
+		camProfile = 1
 	elseif key == 50 then --2
-		registryTable["camera"]:switchProfile( 2 )
+		camProfile = 2
 	elseif key == 51 then --3
-		registryTable["camera"]:switchProfile( 3 )
+		camProfile = 3
 	elseif key == 119 then --w
 		registryTable["ball"]:sendMessage(registryTable["ball"], registryTable["ball"], "forward", 0.0,0.0,0.0,0.0);
 	elseif key == 97 then --a
@@ -99,7 +99,7 @@ function mousedrag_cb( x, y )
 	end
 	if dy > 0 then
 		scaleNum = 1+dy
-		registryTable["arrowMesh"]:scale( 1, scaleNum, 1 )
+		registryTable["arrowMesh"]:scale( arrowScaleWidth, scaleNum, 1 )
 		dir = normalize(clickPointX - dragPointX, 0, clickPointY - dragPointY )
 		cosineTheta = dot( dir.x, dir.y, dir.z, 0, 0, -1)
 		angle = acos( cosineTheta )

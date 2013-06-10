@@ -5,19 +5,18 @@ releasePointX = 0
 releasePointY = 0
 dragPointX = 0
 dragPointY = 0
-rad_to_deg = 57.2957795131
 
 dofile( "GolfAttributes.lua" )
 
 function keyboard_cb( key )
-	if key == 48 then
-		registryTable["camera"]:switchProfile( 0 )
-	elseif key == 49 then
-		registryTable["camera"]:switchProfile( 1 )
-	elseif key == 50 then
-		registryTable["camera"]:switchProfile( 2 )
-	elseif key == 51 then
-		registryTable["camera"]:switchProfile( 3 )
+	if key == 48 then --0
+		camProfile = 0
+	elseif key == 49 then --1
+		camProfile = 1
+	elseif key == 50 then --2
+		camProfile = 2
+	elseif key == 51 then --3
+		camProfile = 3
 	elseif key == 119 then --w
 		registryTable["ball"]:sendMessage(registryTable["ball"], registryTable["ball"], "forward", 0.0,0.0,0.0,0.0);
 	elseif key == 97 then --a

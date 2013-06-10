@@ -13,6 +13,8 @@ public:
 	void update(float dT);
 	void applyImpulse( glm::vec3 impulse );
 	void receiveMessage( IJMessage *m);
+	glm::vec3 getPos( );
+	glm::vec3 getDir( );
 
 	PositionComponent loc;
 	PositionComponent vel;

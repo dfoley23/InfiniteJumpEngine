@@ -54,26 +54,21 @@ void Game::display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
+	
+	luabind::call_function<int>(lua->getState(), "updateGame" );
+
 	t_delta = IJTime() - t_init;
 	if (level){
 		level->update((float)t_delta.getSeconds());
 		t_init.reset();
-
-		if (sub_levelID >= 0 ) {
-			glm::vec3 pos = level->ball->getPhysics()->getKinematics()->loc.getPosition();
-			glm::vec3 dir = level->ball->getPhysics()->getKinematics()->vel.getPosition();
-			
-			level->camera->update( pos, dir );
-		}
 		level->draw();
-
 	}
 	glutSwapBuffers();
-	if ( level->ball  != NULL ) {
+	/*if ( level->ball  != NULL ) {
 	if ( level->ball->hitCup ) {
 		switchLevel( );
 	}
-	}
+	}*/
 }
 
 void Game::displayForPick( int x, int y ) {
@@ -296,6 +291,9 @@ int Game::run(int argc, char** argv){
 		level = resman->getTriangleLevel(directory, sub_levelID);
 	}
 	
+	luabind::call_function<void>(lua->getState(), "init" );
+	luabind::call_function<void>(lua->getState(), "registerObject", "Game", boost::shared_ptr<Game>( this ) );
+
 	scores.loadProfile(profileName);
 	level->camera->proj = glm::perspective(
 		glm::float_t(45),
@@ -303,6 +301,8 @@ int Game::run(int argc, char** argv){
 		glm::float_t(0.1f),
 		glm::float_t(1000.0)
 		);
+	
+
 	luabind::call_function<void>(lua->getState(), "registerObject", "camera", boost::shared_ptr<Camera>( level->camera ) );
 	luabind::call_function<void>(lua->getState(), "setInitialCameraPos", 0 );
 
@@ -369,17 +369,25 @@ void Game::exposeClassesToLua( ) {
 
 			luabind::class_<Camera>("Camera")
 			.def(luabind::constructor<>())
-			.def("switchProfile", &Camera::switchProfile)
-			.def("getDir", &Camera::getDir)
 			.def("changeEyePos", &Camera::changeEyePos)
 			.def("changeLookAtPos", &Camera::changeLookAtPos)
-			.def("changeLightPos", &Camera::changeLightPos),
+			.def("changeLightPos", &Camera::changeLightPos)
+			.def("changeUpDir", &Camera::changeUpDir)
+			.def("getEye", &Camera::getEyePos)
+			.def("getLookAt", &Camera::getLookAtPos),
 
 			luabind::class_<Component>("Component")
 			.def(luabind::constructor<>())
 			.def("sendMessage", (void( Component::*)(Component*, Component*, const char*, float, float, float, float ))&Component::sendMessage )
 			.def("receiveMessage", &Component::receiveMessage )
 			.def("getParent", &Component::getParent ),
+
+			luabind::class_<Game>("Game")
+			.def("switchLevel", &Game::switchLevel ),
+
+			luabind::class_<KinematicComponent>("Kinematics")
+			.def("getPos", &KinematicComponent::getPos )
+			.def("getVel", &KinematicComponent::getDir ),
 
 			luabind::class_<Mesh>("Mesh")
 			.def(luabind::constructor<>())

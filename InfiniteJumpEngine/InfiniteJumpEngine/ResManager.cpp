@@ -19,7 +19,6 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 	Level* level = new Level( "golfLevel" );
 	level->maxSubLevels = 0;
 	Ball * ball = NULL;
-	Cup * cup = NULL;
 	vector<PlaneCollider*> tileColliders;
 	bool end_hole = false;
 	bool begin_hole = false;
@@ -46,6 +45,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		return level;
 	} else {
 		loadTextureList( "golfLevel" );
+		level->camera->setUsingScript( "updateCamera", Game::game()->getLuaBase() );
 	}
 	Entity* terrain = new Entity();
 	TileSet* tiles = new TileSet();
@@ -136,11 +136,14 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					//build ball on tee
 					Entity * ballEntity = new Entity();
 					ball = new Ball( glm::vec3(x, y, z), glm::vec3( 1, 1, 1), tiles, id );
-					//ball->setUpdateScript( "updateBall" );
+					ball->setUsingScript( "updateBall", Game::game()->getLuaBase() );
+					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "ball", 
+						boost::shared_ptr<Component>( ball ) );
+					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "ballKineMatics", 
+						boost::shared_ptr<KinematicComponent>( ball->getPhysics()->getKinematics() ) );
 					ballEntity->addComponent( ball );
 					level->addEntity( ballEntity );
 					level->ball = ball;
-					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "ball", boost::shared_ptr<Component>( ball ) );
 				}
 			} else if ( !type.compare( "cup" ) ) {
 				if ( !course || begin_hole ) {
@@ -154,11 +157,13 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 					float x = static_cast<float>(atof( str_x.c_str( ) ));
 					float y = static_cast<float>(atof( str_y.c_str( ) ));
 					float z = static_cast<float>(atof( str_z.c_str( ) ));
-					cup = new Cup( glm::vec3( x, y+0.001, z) );
-
-					cupEntity->addComponent( cup );
+					Mesh * cupMesh = readObjFile( "cupMesh.obj" );
+					glm::vec3 pos = glm::vec3(x, y, z);
+					cupMesh->translate( pos.x, pos.y, pos.z );
+					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "cupPosX", pos.x );
+					luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "cupPosZ", pos.z );
+					cupEntity->addComponent( cupMesh );
 					level->addEntity( cupEntity );
-
 				}
 			} else if ( !type.compare( "course" ) ) {
 				course = true;
@@ -214,17 +219,15 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				//return NULL;
 			}
 		}
-		if ( ball ) {
-			ball->cup = cup;
-		}
 		//insert all the colliders for the tiles
-		vector<PlaneCollider*> colliders = cup->edgeColliders;
+		vector<PlaneCollider*> colliders;
 		for( int i=0; i<static_cast<int>(colliders.size()); i++ ) {
 			ball->getPhysics()->addCollider(colliders.at(i));
 		}
 		//add all hud entities
 		Entity * hudEntity = new Entity( );
-		Mesh * hudMesh = new Mesh( );
+		Mesh * hudMesh = new Mesh( "updateCompass" );
+		hudMesh->setLuaBase(Game::game()->getLuaBase() );
 		glm::vec3 vert0 = glm::vec3( -0.16, -0.25, 0 );
 		glm::vec3 vert1 = glm::vec3( 0.16, -0.25, 0 );
 		glm::vec3 vert2 = glm::vec3( 0.16, 0.25, 0 );
@@ -237,8 +240,6 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 		hudMesh->addVert( vert2.x, vert2.y, vert2.z, norm.x, norm.y, norm.z, 1, 1, 1, 0.5, 0.0 );
 		hudMesh->addVert( vert3.x, vert3.y, vert3.z, norm.x, norm.y, norm.z, 1, 1, 1, 0, 0 );
 		hudMesh->translate( 0.77f, -0.70f, 0 );
-		hudMesh->setUpdateScript( "updateCompass" );
-		hudMesh->setLuaBase(Game::game()->getLuaBase() );
 		hudEntity->addComponent( hudMesh );
 		luabind::call_function<void>(Game::game()->getLuaBase()->getState(), "registerObject", "compassMesh", boost::shared_ptr<Mesh>( hudMesh ) );
 		//level->hudElement1 = hudMesh;

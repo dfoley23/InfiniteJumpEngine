@@ -31,16 +31,17 @@ Level::~Level ( ) {
 * updates all of the entities in the level
 */
 void Level::update(float dT){
+	camera->update();
 	for(entityIter it = entities.begin(); it != entities.end(); ++it) {
 		(*it)->update( dT );
 	}
 		
 	//the compass script works but trying to call update inside of component doesnt work...
-	/*try {
+	try {
 		luabind::call_function<int>(Game::game()->getLuaBase()->getState(), "updateCompass", dT);
 	} catch (luabind::error &e){
 		cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
-	}*/
+	}
 }
 
 void Level::draw( ){

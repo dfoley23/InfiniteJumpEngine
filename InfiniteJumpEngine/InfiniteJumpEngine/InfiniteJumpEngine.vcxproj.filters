@@ -77,9 +77,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\General</Filter>
     </ClCompile>
-    <ClCompile Include="Cup.cpp">
-      <Filter>Source Files\Minigolf-Specific</Filter>
-    </ClCompile>
     <ClCompile Include="Contact.cpp">
       <Filter>Source Files\General</Filter>
     </ClCompile>
@@ -224,9 +221,6 @@
       <Filter>Header Files\General\PhysicsComponents</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
-      <Filter>Header Files\Minigolf-Specific</Filter>
-    </ClInclude>
-    <ClInclude Include="Cup.h">
       <Filter>Header Files\Minigolf-Specific</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">

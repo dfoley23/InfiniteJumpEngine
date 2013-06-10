@@ -14,49 +14,23 @@ Camera::~Camera ( ) {
 //  
 // Methods
 //  
-void Camera::update (glm::vec3 pos, glm::vec3 dir){
-	//updates camera based on it current profile
-	glm::vec3 scaleDir = glm::normalize( dir ) * 0.25f;
-	camDir = camLookAt*10.f - camEye*10.f;
-	switch( cameraProfile ) {
-	case 0: //third person
-		camEye = glm::vec3( pos.x-scaleDir.x, pos.y + 0.2f, pos.z - scaleDir.z);
-		camLookAt = glm::vec3( pos.x, pos.y+0.1f, pos.z);
-		camUp = glm::vec3( 0, 1, 0 );
-		camDir = camLookAt*10.f - camEye*10.f;
-		break;
-	case 1: //first person
-		camEye = glm::vec3( pos.x,pos.y+0.1f,pos.z);
-		camLookAt = glm::vec3( pos.x+scaleDir.x, pos.y+0.01f,pos.z+scaleDir.z );
-		camUp = glm::vec3( 0, 1, 0 );
-		camDir = camLookAt*10.f - camEye*10.f;
-		break;
-	case 2: //top down
-		camEye = glm::vec3( pos.x, 
-			pos.y+6.0f,
-			pos.z );
-		camLookAt = pos;
-		camUp = glm::vec3( 0, 0, -1 );
-		camDir = camUp;
-		break;
-	default:
-		break;
+void Camera::update (){
+	if ( usingScript ) {
+		try {
+			luabind::call_function<int>(this->lua->getState(), "updateCamera", 0);
+		} catch (luabind::error &e){
+			cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+		}
 	}
 	//sets the current camera transformation matrix
 	cam = glm::lookAt( camEye, camLookAt, camUp );
 }
 
-/**
-* switches the current camera profile
-*/
-void Camera::switchProfile( int profile ) {
-	cameraProfile = profile;
+void Camera::setUsingScript( string scriptFile, LuaBaseComponent * luaBase ) {
+	usingScript = true;
+	updateScript = scriptFile;
+	lua = luaBase;
 }
-
-glm::vec3 Camera::getDir( ) {
-	return camDir;
-}
-
 
 void Camera::changeLightPos( float x, float y, float z ) {
 	lightPos = glm::vec3( x, y, z );
@@ -66,21 +40,22 @@ void Camera::changeEyePos( float x, float y, float z ){
 	camEye = glm::vec3( x, y, z );
 }
 
+glm::vec3 Camera::getEyePos(){
+	return camEye;
+}
+
+glm::vec3 Camera::getLookAtPos(){
+	return camLookAt;
+}
+
+void Camera::changeUpDir( float x, float y, float z ) {
+	camUp = glm::vec3( x, y, z );
+}
+
+
 void Camera::changeLookAtPos( float x, float y, float z ){
 	camLookAt = glm::vec3( x, y, z );
 }
-
-/*void Camera::changeLightPos( glm::vec3 pos ) {
-	lightPos = pos;
-}
-
-void Camera::changeEyePos( glm::vec3 pos ){
-	camEye = pos;
-}
-
-void Camera::changeLookAtPos( glm::vec3 pos ){
-	camLookAt = pos;
-}*/
 
 // Accessor methods
 //  
@@ -90,6 +65,8 @@ void Camera::changeLookAtPos( glm::vec3 pos ){
 //  
 
 void Camera::initAttributes ( ) {
+	usingScript = false;
+	updateScript = "";
 	camEye = glm::vec3( 0, 4, 6 );
 	camLookAt = glm::vec3( 0, 0, 0 );
 	camUp = glm::vec3( 0, 1, 0 );

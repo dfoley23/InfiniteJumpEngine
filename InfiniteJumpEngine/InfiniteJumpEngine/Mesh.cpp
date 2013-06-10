@@ -17,6 +17,13 @@ Mesh::Mesh ( ) {
 	initAttributes();
 }
 
+Mesh::Mesh( string scriptFile ) {
+	dynamic = false;
+	smooth = false;
+	this->updateScript = scriptFile;
+	this->usingScript = true;
+}
+
 /*
 * removes the mesh from memory
 */
@@ -44,6 +51,26 @@ Mesh::Mesh( Mesh * mesh) {
 */
 void Mesh::createMesh (string meshFile )
 {
+}
+
+void Mesh::setLuaBase( LuaBaseComponent * luaBase ){
+	this->lua = luaBase;
+}
+
+void Mesh::update(float dT ) {
+	if ( this->usingScript ) {
+		cout << "update using lua script" << this->updateScript << endl;
+		try {
+			luabind::call_function<int>(this->lua->getState(), this->updateScript.c_str(), dT);
+		} catch (luabind::error &e){
+			cerr << "Lua Error:" << lua_tostring( e.state(), -1) << "\n";
+		}
+	}
+}
+
+void Mesh::setUpdateScript( string scriptFile ) {
+	updateScript = scriptFile;
+	usingScript = true;
 }
 
 /*
@@ -138,14 +165,14 @@ void Mesh::scale (float x, float y, float z )
 /*
 * makes this model use seperate transformations
 */
-void Mesh::setDynamic( int setting ) {
+void Mesh::setDynamic( bool setting ) {
 	dynamic = setting;
 }
 
 /*
 * set to use smooth shading
 */
-void Mesh::setSmooth( int setting ) {
+void Mesh::setSmooth( bool setting ) {
 	smooth = setting;
 }
 
@@ -313,6 +340,10 @@ void Mesh::changeColor( float r, float g, float b ) {
 
 glm::vec3 Mesh::getCenter( ) {
 	return center;
+}
+
+void Mesh::setCenter( glm::vec3 pos ) {
+	center = pos;
 }
 
 vector<float> Mesh::getVerts(){

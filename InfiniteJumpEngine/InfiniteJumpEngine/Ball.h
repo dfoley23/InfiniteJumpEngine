@@ -6,11 +6,9 @@
 #include "Component.h"
 #include "Mesh.h"
 #include "PhysicsComponent.h"
-#include "Cup.h"
 
 class Tile;
 class TileSet;
-class Cup;
 
 using namespace std;
 /**
@@ -27,6 +25,7 @@ public:
 	Ball ( glm::vec3 pos, glm::vec3 color, TileSet * tiles, int tileId );
 	Mesh *getMesh();
 	Mesh *generateMesh();
+	void setUsingScript( string scriptFile, LuaBaseComponent * luaBase );
 	void deleteMesh();
 	void update( float dT );
 	void draw(MeshBatch * batch);
@@ -34,15 +33,16 @@ public:
 	void hitTile( Tile * tile );
 	void receiveMessage( IJMessage* message );
 	void resetCollisionData( );
-
+	glm::vec3 getVel( );
+	glm::vec3 getPos( );
 	PhysicsComponent *getPhysics();
-	bool hitCup;
-	Cup * cup;
 private:
 	PhysicsComponent * physComp;
 	Mesh * mesh;
 	TileSet * tileSet;
 	Tile * currentTile;
+	string scriptFile;
+	LuaBaseComponent * lua;
 	float radius;
 	float rotation;
 	Force forward;

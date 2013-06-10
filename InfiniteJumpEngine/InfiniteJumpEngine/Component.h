@@ -33,11 +33,11 @@ public:
 		}
 	}
 
-	void setLuaBase( LuaBaseComponent * luaBase ){
+	virtual void setLuaBase( LuaBaseComponent * luaBase ){
 		lua = luaBase;
 	}
 
-	void setUpdateScript( string scriptFile ) {
+	virtual void setUpdateScript( string scriptFile ) {
 		updateScript = scriptFile;
 		usingScript = true;
 	}
@@ -70,7 +70,7 @@ public:
 		if (that){
 			that->receiveMessage(m);
 		} else {
-			cout << "Message fell out of parent chain:" << m->content << " " << m->vecContent.x << " " << m->vecContent.y << " " << m->vecContent.z << endl;
+			//cout << "Message fell out of parent chain:" << m->content << " " << m->vecContent.x << " " << m->vecContent.y << " " << m->vecContent.z << endl;
 		}
 	}
 
