@@ -37,8 +37,13 @@ public:
 	inline score getHighScore(holeID i){return validHole(i)? highScores[i]:NO_SCORE;}
 	// Sets the current score for the hole.
 	inline void setCurrentScore(holeID i, score s){if (validHole(i)) currentScores[i] = s;}
-	// Sets the high score for the hole, ignoring the previous value.
+	// Sets the high score for the hole, discarding the previous value.
 	inline void setHighScore(holeID i, score s){if (validHole(i)) highScores[i] = s;}
+	// Sets the par for the hole.
+	inline void setPar(holeID i, score s){if (validHole(i)) pars[i] = s;}
+	// Returns the par of the hole.
+	inline score getPar(holeID i){return (validHole(i)? pars[i]:0);}
+
 	/* Registers a score for the given hole. 
 	* The current score will always be overwritten, as will the high score if the player has never
 	* cleared the hole before or if their current score is better than their previous best.
@@ -58,9 +63,9 @@ public:
 	//Initializes the score arrays to take in a given number of holes.
 	void loadHoles(holeID);
 	//Returns the total current score of the round.
-	score getTotalScore(holeID i);
+	score getTotalScore();
 	//Returns the total high score of the round.
-	score getTotalHighScore(holeID i);
+	score getTotalHighScore();
 	//Returns the hole with the player's best score.
 	holeID getBestHole();
 	//Returns the hole with the player's best current score.

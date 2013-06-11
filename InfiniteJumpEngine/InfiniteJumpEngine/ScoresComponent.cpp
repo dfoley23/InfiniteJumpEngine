@@ -62,22 +62,31 @@ void ScoresComponent::loadHoles(holeID last)
 	highScores.resize(last);
 }
 
-score ScoresComponent::getTotalScore(holeID i)
+score ScoresComponent::getTotalScore()
 {
-	score total = 0;
+	score totalScore = 0;
+	score totalPar = 0;
 	for (holeID i = firstHole+1; i < lastHole; i++){
-		total = total + currentScores[i] - pars[i];
+		if (currentScores[i] > NO_SCORE){
+			totalScore += currentScores[i];
+			totalPar += pars[i];
+		}
 	}
-	return total;
+	return totalScore - totalPar;
 }
 
-score ScoresComponent::getTotalHighScore(holeID i)
+score ScoresComponent::getTotalHighScore()
 {
-	score total = 0;
+	score totalScore = 0;
+	score totalPar = 0;
 	for (holeID i = firstHole+1; i < lastHole; i++){
-		total = total + highScores[i] - pars[i];
+		if (highScores[i] > NO_SCORE){
+			totalScore += highScores[i];
+			totalPar += pars[i];
+		}
+
 	}
-	return total;
+	return totalScore - totalPar;
 }
 
 holeID ScoresComponent::getBestHole()

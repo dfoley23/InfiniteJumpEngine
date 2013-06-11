@@ -206,6 +206,7 @@ Level* ResManager::getTriangleLevel(string filename, int holeID){
 				Game::game()->curPar = atoi( par_num.c_str() );
 				//Game::game()->holeStrokeCount = 0;
 				int score = 0 - atoi(par_num.c_str());
+				Game::game()->scores.setPar(holeID, atoi(par_num.c_str()));
 				string score_str;
 				stringstream out;
 				out << score;

@@ -54,7 +54,6 @@ void Game::display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	
 	luabind::call_function<int>(lua->getState(), "updateGame" );
 
 	t_delta = IJTime() - t_init;
@@ -63,12 +62,25 @@ void Game::display(){
 		t_init.reset();
 		level->draw();
 	}
+	updateInterface();
+
 	glutSwapBuffers();
 	/*if ( level->ball  != NULL ) {
 	if ( level->ball->hitCup ) {
 		switchLevel( );
 	}
 	}*/
+}
+
+void Game::updateInterface(){
+	lua_getglobal(lua->getState(), "holeStrokeCount");
+	int holeStrokeCount = lua_tointeger(lua->getState(),-1);
+	stringstream sT;
+	sT << "Score: " << holeStrokeCount - scores.getPar(sub_levelID);
+	holeScore->set_text(sT.str().c_str());
+	stringstream tT;
+	tT << "Total Score: " << scores.getTotalScore();
+	totalScore->set_text( tT.str().c_str() );	
 }
 
 void Game::displayForPick( int x, int y ) {
@@ -200,16 +212,6 @@ void Game::keyboard(unsigned char key,int x, int y){
 * switches the level
 */
 void Game::switchLevel( ) {
-	string totScore_str;
-	stringstream out;
-	totalStrokeCount+=curScore;
-	out << totalStrokeCount;
-	totScore_str = out.str();
-	if ( totalStrokeCount > 0 )
-		totScore_str = "+" + totScore_str;
-	string complete = "Total Score: " + totScore_str;
-	this->totalScore->set_text( complete.c_str() );
-	
 	lua_getglobal(lua->getState(), "holeStrokeCount");
 	int holeStrokeCount =lua_tointeger(lua->getState(),-1);
 	
@@ -217,11 +219,7 @@ void Game::switchLevel( ) {
 	
 	lua_pushnumber(lua->getState(), 0);
 	lua_setglobal(lua->getState(), "holeStrokeCount");
-	
-	cout << "Hole:" << sub_levelID
-		 << " Score:" << scores.getCurrentScore(sub_levelID) 
-		 << " Best:" << scores.getHighScore(sub_levelID)
-		 <<endl;
+
 	sub_levelID++;
 	if ( sub_levelID > level->maxSubLevels ) {
 		sub_levelID = 0;
@@ -343,7 +341,6 @@ float glmlength ( float ux, float uy, float uz ) {
 float glmacos( float dx ) {
 	return glm::acos( dx );
 }
-
 /*
 * exports useful functions and classes to the lua state
 *

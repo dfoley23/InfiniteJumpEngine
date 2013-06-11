@@ -66,6 +66,7 @@ public:
 	void keyboard(unsigned char, int, int);
 	void special_keyboard(int key, int x, int y);
 	void setupInterface(void(*cb)(int i));
+	void updateInterface();
 	void setupHighScoreScreen( );
 	void glui_callBack( int id );
 	void switchLevel( );
