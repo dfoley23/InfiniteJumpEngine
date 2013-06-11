@@ -88,7 +88,6 @@ public:
 	int totalPar;
 	int curPar;
 	int curScore;
-	int holeStrokeCount;
 	ScoresComponent scores;
 	char* profileName;
 private:

@@ -26,3 +26,5 @@ softShot = 2
 arrowScale = 16.0
 
 cupRadius = 0.11
+
+strokeNum = 0

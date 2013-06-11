@@ -5,6 +5,7 @@ releasePointX = 0
 releasePointY = 0
 dragPointX = 0
 dragPointY = 0
+holeStrokeCount = 0
 
 dofile( "GolfAttributes.lua" )
 
@@ -75,6 +76,7 @@ function mouseclick_cb( button, state, x, y )
 			end
 			if length( dir.x, dir.y, dir.z ) > 0.07 then
 				registryTable["ball"]:sendMessage(registryTable["ball"], registryTable["ball"], "shoot", dir.x, dir.y, dir.z, 0)
+				holeStrokeCount = holeStrokeCount + 1
 			end
 			registryTable["arrowMesh"]:scale( 1.0, 1.0, 1.0 )
 			registryTable["arrowMesh"]:rotate( 0, 0, 0, 1 )

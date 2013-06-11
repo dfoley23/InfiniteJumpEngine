@@ -45,7 +45,7 @@ public:
 	*/
 	inline void registerScore(holeID i, score s){
 		setCurrentScore(i,s);
-		setHighScore(i, std::min(s, highScores[i]>NO_SCORE? highScores[i]:s));
+		setHighScore(i, std::min(s, (highScores[i]>NO_SCORE)? highScores[i]:s));
 	}
 	/* Loads a profile from a text file.
 	* Format for the text file is as follows:

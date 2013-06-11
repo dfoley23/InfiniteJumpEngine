@@ -39,11 +39,13 @@ void ScoresComponent::saveProfile(char* filename)
 	proFile.open (filename);
 	if (!proFile.fail()){
 		int numHoles = highScores.size();
-		proFile << numHoles << endl;
+		proFile << numHoles;
 		score s;
+		cout << "High Scores:" << endl;
 		for (int i = 0; i < numHoles; i++){
 			s = highScores[i];
-			proFile << s << endl;
+			proFile << endl << s;
+			cout << "Hole " << i+1 << ":" << s << endl;
 		}
 		proFile.close();
 		cout << "Saving profile:" << filename << endl;

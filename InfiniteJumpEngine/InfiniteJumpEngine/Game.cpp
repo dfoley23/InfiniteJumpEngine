@@ -12,10 +12,10 @@ Game::Game(void)
 	level = NULL;
 	glui = NULL;
 	hasPressed = false;
-	holeStrokeCount = 0;
 	totalStrokeCount = 0;
 	totalPar = 0;
 	curPar = 0;
+	curScore = 0;
 	lua = new LuaBaseComponent();
 }
 
@@ -209,8 +209,15 @@ void Game::switchLevel( ) {
 		totScore_str = "+" + totScore_str;
 	string complete = "Total Score: " + totScore_str;
 	this->totalScore->set_text( complete.c_str() );
-
-	scores.registerScore(sub_levelID,holeStrokeCount);
+	
+	lua_getglobal(lua->getState(), "holeStrokeCount");
+	int holeStrokeCount =lua_tointeger(lua->getState(),-1);
+	
+	scores.registerScore(sub_levelID, holeStrokeCount);
+	
+	lua_pushnumber(lua->getState(), 0);
+	lua_setglobal(lua->getState(), "holeStrokeCount");
+	
 	cout << "Hole:" << sub_levelID
 		 << " Score:" << scores.getCurrentScore(sub_levelID) 
 		 << " Best:" << scores.getHighScore(sub_levelID)
